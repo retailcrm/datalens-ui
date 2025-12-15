@@ -60,6 +60,7 @@ import {
 import {WidgetContextProvider} from 'ui/components/DashKit/context/WidgetContext';
 import {getDashKitMenu} from 'ui/components/DashKit/helpers';
 import {openDialogDefault} from 'ui/components/DialogDefault/DialogDefault';
+import {getLocation} from 'ui/navigation';
 import {showToast} from 'ui/store/actions/toaster';
 import {isEmbeddedMode} from 'ui/utils/embedded';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
@@ -1236,7 +1237,7 @@ class Body extends React.PureComponent<BodyProps, DashBodyState> {
         }
 
         const shouldRenderMobileMenu = DL.IS_MOBILE && isMobileFixedHeaderEnabled;
-        const searchParams = new URLSearchParams(location.search);
+        const searchParams = getLocation().params();
         const focusedWidget = searchParams.get(FOCUSED_WIDGET_PARAM_NAME);
         const focusedWidgetParent = focusedWidget
             ? tabDataConfig?.layout?.find((item) => item.i === focusedWidget)?.parent

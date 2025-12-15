@@ -2,7 +2,6 @@ import React from 'react';
 
 import block from 'bem-cn-lite';
 import {usePrevious} from 'hooks/usePrevious';
-import type {DatalensGlobalState} from 'index';
 import type {SDK} from 'libs';
 import {connect} from 'react-redux';
 import type {RouteComponentProps} from 'react-router-dom';
@@ -11,11 +10,13 @@ import type {Dispatch} from 'redux';
 import {bindActionCreators} from 'redux';
 import {Feature} from 'shared';
 import {setCurrentPageEntry} from 'store/actions/asideHeader';
+import type {DatalensGlobalState} from 'ui';
+import {getIsAsideHeaderEnabled} from 'ui/components/AsideHeaderAdapter';
+import {useLocation} from 'ui/navigation';
 import {registry} from 'ui/registry';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 import {resetDatasetState} from 'units/datasets/store/actions/creators';
 
-import {getIsAsideHeaderEnabled} from '../../../../components/AsideHeaderAdapter';
 import withInaccessibleOnMobile from '../../../../hoc/withInaccessibleOnMobile';
 import DatasetPage from '../../containers/DatasetPage/DatasetPage';
 import {datasetKeySelector} from '../../store/selectors/dataset';
@@ -47,7 +48,8 @@ const getDatasetPaths = (end: string) => {
 const DatasetRouter = ({sdk, datasetKey, setCurrentPageEntry, resetDatasetState, match}: Props) => {
     const isAsideHeaderEnabled = getIsAsideHeaderEnabled();
     const {extractEntryId} = registry.common.functions.getAll();
-    const possibleEntryId = extractEntryId(window.location.pathname);
+    const location = useLocation();
+    const possibleEntryId = extractEntryId(location.pathname);
 
     React.useEffect(() => {
         return () => {

@@ -30,6 +30,7 @@ import type {
 } from 'shared';
 import {DashTabItemType, EntryScope, EntryUpdateMode, Feature} from 'shared';
 import {openDialogDefault} from 'ui/components/DialogDefault/DialogDefault';
+import {getRouter} from 'ui/navigation';
 import type {AppDispatch} from 'ui/store';
 import {
     addEditHistoryPoint,
@@ -48,7 +49,6 @@ import {loadRevisions, setEntryContent} from '../../../../store/actions/entryCon
 import {showToast} from '../../../../store/actions/toaster';
 import type {EntryGlobalState} from '../../../../store/typings/entryContent';
 import {RevisionsMode} from '../../../../store/typings/entryContent';
-import history from '../../../../utils/history';
 import type {DashTabChanged} from '../../containers/Dialogs/Tabs/TabItem';
 import {LOCK_DURATION, Mode} from '../../modules/constants';
 import type {CopiedConfigContext} from '../../modules/helpers';
@@ -410,15 +410,13 @@ export function setTabHashState(data: Omit<SetTabHashStateAction['payload'], 'ha
                 .sdk.us.createDashState({entryId, data: hashData})
                 .then(({hash}) => {
                     hashId = hash;
-                    const searchParams = new URLSearchParams(location.search);
+
+                    const router = getRouter();
+                    const search = router.location().params();
 
                     if (hash) {
-                        searchParams.set('state', hash);
-
-                        history.replace({
-                            ...location,
-                            search: `?${searchParams.toString()}`,
-                        });
+                        search.set('state', hash);
+                        router.replace({search});
                     }
                 })
                 .catch((error) => logger.logError('getDashState failed', error));
@@ -709,13 +707,11 @@ export function setActualDash(setForce?: boolean) {
             if (isEditMode) {
                 await dispatch(deleteLock());
             }
-            const searchParams = new URLSearchParams(location.search);
-            searchParams.delete(URL_QUERY.REV_ID);
-            searchParams.delete(URL_QUERY.UNRELEASED);
-            history.push({
-                ...location,
-                search: `?${searchParams.toString()}`,
-            });
+            const router = getRouter();
+            const search = router.location().params();
+            search.delete(URL_QUERY.REV_ID);
+            search.delete(URL_QUERY.UNRELEASED);
+            router.push({search});
 
             const newState = getState();
             await dispatch(setEntryContent(newState.dash.entry as unknown as EntryGlobalState));
@@ -757,13 +753,11 @@ export function setPublishDraft(setForce?: boolean) {
             await dispatch(deleteLock());
             dispatch(setDashUpdateStatus(DashUpdateStatus.Successed));
 
-            const searchParams = new URLSearchParams(location.search);
-            searchParams.delete(URL_QUERY.REV_ID);
-            searchParams.delete(URL_QUERY.UNRELEASED);
-            history.push({
-                ...location,
-                search: `?${searchParams.toString()}`,
-            });
+            const router = getRouter();
+            const search = router.location().params();
+            search.delete(URL_QUERY.REV_ID);
+            search.delete(URL_QUERY.UNRELEASED);
+            router.push({search});
 
             const newState = getState();
             await dispatch(setEntryContent(newState.dash.entry as unknown as EntryGlobalState));
@@ -813,13 +807,11 @@ export function saveDashAsDraft(setForce?: boolean) {
 
             const newState = getState();
             await dispatch(setEntryContent(newState.dash.entry as unknown as EntryGlobalState));
-            const searchParams = new URLSearchParams(location.search);
-            searchParams.delete(URL_QUERY.UNRELEASED);
-            searchParams.set(URL_QUERY.REV_ID, newState.dash.entry.savedId);
-            history.push({
-                ...location,
-                search: `?${searchParams.toString()}`,
-            });
+            const router = getRouter();
+            const search = router.location().params();
+            search.delete(URL_QUERY.UNRELEASED);
+            search.set(URL_QUERY.REV_ID, newState.dash.entry.savedId);
+            router.push({search});
 
             saveSuccessCallback({dispatch});
         } catch (error) {
