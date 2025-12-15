@@ -30,6 +30,7 @@ import {closeDialog, openDialog, openDialogParameter} from 'store/actions/dialog
 import type {DatalensGlobalState} from 'ui';
 import {DL, EntryDialogName, NavigationMinimal, URL_QUERY} from 'ui';
 import WorkbookNavigationMinimal from 'ui/components/WorkbookNavigationMinimal/WorkbookNavigationMinimal';
+import {getLocation, getRouter} from 'ui/navigation';
 import {selectDebugMode} from 'ui/store/selectors/user';
 import {matchDatasetFieldFilter} from 'ui/utils/helpers';
 import {openDialogMultidataset} from 'units/wizard/actions/dialog';
@@ -453,11 +454,15 @@ class SectionDataset extends React.Component<Props, State> {
     };
 
     onOpenDatasetClick = (id: string, isSharedDataset: boolean) => {
-        const url = new URL(`${DL.ENDPOINTS.dataset}/${id}`, window.location.origin);
+        const search = new URLSearchParams(window.location.search);
         if (isSharedDataset && this.props.workbookId) {
-            url.searchParams.set(URL_QUERY.BINDED_WORKBOOK, this.props.workbookId);
+            search.set(URL_QUERY.BINDED_WORKBOOK, this.props.workbookId);
         }
-        window.open(url);
+
+        getRouter().openTab({
+            pathname: `${DL.ENDPOINTS.dataset}/${id}`,
+            ...(String(search) && {search}),
+        });
     };
 
     onAddDatasetClick = () => {
@@ -499,7 +504,7 @@ class SectionDataset extends React.Component<Props, State> {
 
     onButtonDatasetTryAgainClick = () => {
         const {extractEntryId} = registry.common.functions.getAll();
-        const entryId = extractEntryId(window.location.pathname);
+        const entryId = extractEntryId(getLocation().pathname);
 
         if (entryId) {
             this.props.fetchWidget({entryId});

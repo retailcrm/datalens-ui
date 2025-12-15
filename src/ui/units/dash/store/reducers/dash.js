@@ -10,8 +10,8 @@ import {
     getUpdatedConnections,
     getUpdatedTextData,
 } from 'ui/utils/copyItems';
+import {isTvMode} from 'ui/utils/embedded';
 
-import {EMBEDDED_MODE} from '../../../../constants/embedded';
 import {Mode} from '../../modules/constants';
 import {getUniqIdsFromDashData} from '../../modules/helpers';
 import {getAllTabItems, isItemGlobal} from '../../utils/selectors';
@@ -56,7 +56,7 @@ const initialState = {
     // TODO: not yet MODE.ERROR is not used, but it is worth resetting to null
     error: null,
 
-    isFullscreenMode: new URLSearchParams(window.location.search).get('mode') === EMBEDDED_MODE.TV,
+    isFullscreenMode: isTvMode(),
 
     skipReload: false,
 

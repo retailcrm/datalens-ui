@@ -3,9 +3,9 @@ import React from 'react';
 import type {AdaptiveTabsProps, TabsSize} from '@gravity-ui/components';
 import {Link} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
+import {useHistory, useLocation} from 'react-router-dom';
+import {DatalensTabsQa} from 'shared/constants/qa/components';
 import {DL} from 'ui/constants/common';
-
-import {DatalensTabsQa} from '../../../shared/constants/qa/components';
 
 import './Tabs.scss';
 
@@ -39,6 +39,9 @@ function withDatalensSpecific<T>(Component: React.ElementType<AdaptiveTabsProps<
     function WithDatalensSpecific(props: TabsWithDatalensSpecificProps<T>) {
         const {size = 'm', disableOpacity, wrapperClassName, ...restProps} = props;
 
+        const history = useHistory();
+        const {pathname} = useLocation();
+
         const breakpointsConfig = DL.IS_MOBILE
             ? breakpointsWithoutCollapse
             : defaultBreakPointsConfig;
@@ -55,9 +58,8 @@ function withDatalensSpecific<T>(Component: React.ElementType<AdaptiveTabsProps<
                     breakpointsConfig={breakpointsConfig}
                     size={size}
                     wrapTo={(item, node) => {
-                        const isActive = item?.id === restProps.activeTab;
-
-                        let qa;
+                        const active = item?.id === restProps.activeTab;
+                        let qa: DatalensTabsQa;
                         if (item) {
                             qa = DL.IS_MOBILE ? DatalensTabsQa.MobileItem : DatalensTabsQa.Item;
                         } else {
@@ -67,16 +69,14 @@ function withDatalensSpecific<T>(Component: React.ElementType<AdaptiveTabsProps<
                         return item?.id ? (
                             <Link
                                 onClick={handleTabLinkClick}
-                                className={b('tab', {
-                                    active: isActive,
-                                })}
-                                href={`${window.location.pathname}?tab=${item.id}`}
+                                className={b('tab', {active})}
+                                href={history.createHref({pathname, search: `?tab=${item.id}`})}
                                 qa={qa}
                             >
                                 {node}
                             </Link>
                         ) : (
-                            <div data-qa={qa} className={b('tab', {active: isActive})}>
+                            <div data-qa={qa} className={b('tab', {active})}>
                                 {node}
                             </div>
                         );

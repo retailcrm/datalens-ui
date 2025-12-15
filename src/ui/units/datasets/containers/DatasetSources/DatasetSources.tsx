@@ -2,8 +2,8 @@ import React from 'react';
 
 import block from 'bem-cn-lite';
 import {i18n} from 'i18n';
-import type {ConnectedProps} from 'react-redux';
 import {connect} from 'react-redux';
+import type {ConnectedProps} from 'react-redux';
 import SplitPane from 'react-split-pane';
 import {createStructuredSelector} from 'reselect';
 import type {
@@ -19,6 +19,8 @@ import {showToast} from 'store/actions/toaster';
 import {SPLIT_PANE_RESIZER_CLASSNAME} from 'ui';
 import type {DataLensApiError, SDK} from 'ui';
 import {URL_QUERY} from 'ui/constants';
+import {getSdk} from 'ui/libs/schematic-sdk';
+import {getRouter} from 'ui/navigation';
 import {
     addAvatar,
     addAvatarPrototypes,
@@ -44,7 +46,6 @@ import {
 import {v1 as uuidv1} from 'uuid';
 
 import logger from '../../../../libs/logger';
-import {getSdk} from '../../../../libs/schematic-sdk';
 import DragAndDrop from '../../components/DragAndDrop/DragAndDrop';
 import RelationDialog from '../../components/RelationDialog/RelationDialog';
 import RelationsMap from '../../components/RelationsMap/RelationsMap';
@@ -823,20 +824,20 @@ export class DatasetSources extends React.Component<Props, State> {
 
     openConnection = (connectionId?: string) => {
         if (connectionId) {
-            const url = new URL(`/connections/${connectionId}`, window.location.origin);
+            const search = new URLSearchParams();
 
             // open connection in readonly mode
             if (this.props.readonly && this.props.bindedWorkbookId) {
-                url.searchParams.set(URL_QUERY.BINDED_WORKBOOK, this.props.bindedWorkbookId);
-                url.searchParams.append(URL_QUERY.BINDED_DATASET, this.props.datasetId);
+                search.set(URL_QUERY.BINDED_WORKBOOK, this.props.bindedWorkbookId);
+                search.append(URL_QUERY.BINDED_DATASET, this.props.datasetId);
             } else if (this.props.workbookId && this.props.selectedConnection?.collectionId) {
-                url.searchParams.set(URL_QUERY.BINDED_WORKBOOK, this.props.workbookId);
-                url.searchParams.append(URL_QUERY.BINDED_DATASET, this.props.datasetId);
+                search.set(URL_QUERY.BINDED_WORKBOOK, this.props.workbookId);
+                search.append(URL_QUERY.BINDED_DATASET, this.props.datasetId);
             } else if (this.props.collectionId && this.props.selectedConnection?.collectionId) {
-                url.searchParams.set(URL_QUERY.BINDED_DATASET, this.props.datasetId);
+                search.set(URL_QUERY.BINDED_DATASET, this.props.datasetId);
             }
 
-            window.open(url.pathname + url.search, '_blank', 'noopener');
+            getRouter().openTab({pathname: `/connections/${connectionId}`, search}, 'noopener');
         }
     };
 

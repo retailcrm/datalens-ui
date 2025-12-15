@@ -6,8 +6,8 @@ import {AccessRightsUrlOpen} from 'components/AccessRights/AccessRightsUrlOpen';
 import {I18n} from 'i18n';
 import logger from 'libs/logger';
 import {getSdk} from 'libs/schematic-sdk';
-import type {ResolveThunks} from 'react-redux';
 import {connect} from 'react-redux';
+import type {ResolveThunks} from 'react-redux';
 import type {RouteComponentProps} from 'react-router-dom';
 import type {DashSettings} from 'shared';
 import {Feature} from 'shared';
@@ -275,7 +275,6 @@ class DashComponent extends React.PureComponent<DashProps, DashState> {
                     <SlugifyUrl
                         entryId={entry ? entry.entryId : null}
                         name={entry ? Utils.getEntryNameFromKey(entry.key) : null}
-                        history={history}
                     />
                     <AccessRightsUrlOpen history={history} />
                     <Header
