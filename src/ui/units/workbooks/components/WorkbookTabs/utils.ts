@@ -35,16 +35,10 @@ export const getWorkbookTabs = (workbook: WorkbookWithPermissions): Item[] => {
     );
 
     if (showDataTabs) {
-        result.push(
-            {
-                id: EntryScope.Dataset,
-                title: i18n('switch_filter-by-scope-dataset'),
-            },
-            {
-                id: EntryScope.Connection,
-                title: i18n('switch_filter-by-scope-connection'),
-            },
-        );
+        result.push({
+            id: EntryScope.Dataset,
+            title: i18n('switch_filter-by-scope-dataset'),
+        });
     }
 
     return result;

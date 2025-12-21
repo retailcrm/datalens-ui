@@ -21,6 +21,7 @@ import {
     RESET_DIALOG,
     SET_ACTIVE_SELECTOR_INDEX,
     SET_SELECTOR_DIALOG_ITEM,
+    SET_SELECTOR_DIALOG_ITEM_NAME,
     UPDATE_SELECTORS_GROUP,
     SET_LAST_USED_DATASET_ID,
     SET_LAST_USED_CONNECTION_ID,
@@ -32,6 +33,7 @@ import type {
     InitDialogAction,
     ResetDialogAction,
     SetSelectorDialogItemAction,
+    SetSelectorDialogItemNameAction,
     SetActiveSelectorIndexAction,
     UpdateSelectorsGroupAction,
     AddSelectorToGroupAction,
@@ -208,6 +210,7 @@ export function controlDialog(
         | InitDialogAction
         | ResetDialogAction
         | SetSelectorDialogItemAction
+        | SetSelectorDialogItemNameAction
         | SetActiveSelectorIndexAction
         | UpdateSelectorsGroupAction
         | AddSelectorToGroupAction
@@ -377,6 +380,31 @@ export function controlDialog(
                 defaultValue,
                 validation: {...state.selectorDialog.validation, ...validation},
                 required,
+                ...payload,
+            };
+
+            const newSelectorsGroupState = {
+                ...selectorsGroup,
+            };
+
+            if (state.selectorsGroup.group.length) {
+                newSelectorsGroupState.group = [...selectorsGroup.group];
+                newSelectorsGroupState.group[activeSelectorIndex] = newSelectorState;
+            }
+
+            return {
+                ...state,
+                selectorDialog: newSelectorState,
+                selectorsGroup: newSelectorsGroupState,
+            };
+        }
+
+        case SET_SELECTOR_DIALOG_ITEM_NAME: {
+            const {selectorsGroup, activeSelectorIndex} = state;
+            const {payload} = action;
+
+            const newSelectorState = {
+                ...state.selectorDialog,
                 ...payload,
             };
 

@@ -2,13 +2,13 @@ import {stringify} from 'querystring';
 
 import {i18n} from 'i18n';
 import {isObject} from 'lodash';
-import {MenuItemsIds} from 'shared';
+import {Feature, MenuItemsIds} from 'shared';
 import type {ChartKitDataProvider} from 'ui/libs/DatalensChartkit/components/ChartKitBase/types';
+import {getChartkitMenuItems} from 'ui/libs/DatalensChartkit/menu/Menu';
 import {getRouter, toSearchParams} from 'ui/navigation';
 import {registry} from 'ui/registry';
 import type {GetChartkitMenuByType} from 'ui/registry/units/chart/types/functions/getChartkitMenuByType';
-
-import {getChartkitMenuItems} from '../../menu/Menu';
+import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
 export const getChartkitMenuByType = (props?: GetChartkitMenuByType) => {
     const {
@@ -24,7 +24,11 @@ export const getChartkitMenuByType = (props?: GetChartkitMenuByType) => {
 
     const chartsDataProvider = dataProvider as ChartKitDataProvider;
 
-    const isEditVisible = isEditAvaible === undefined ? {} : {isVisible: () => isEditAvaible};
+    const isEditVisible = isEnabledFeature(Feature.ReadOnlyMode)
+        ? {isVisible: () => false}
+        : isEditAvaible === undefined
+          ? {}
+          : {isVisible: () => isEditAvaible};
 
     return getChartkitMenuItems({
         type,

@@ -7,20 +7,19 @@ import {DashSchemeConverter, EntryScope, Feature} from 'shared';
 import type {GetEntryArgs} from 'shared/schema';
 import {closeDialog as closeDialogConfirm, openDialogConfirm} from 'store/actions/dialog';
 import type {DatalensGlobalState} from 'ui';
-import {MarkdownProvider, URL_QUERY, Utils} from 'ui';
+import {DL, MarkdownProvider, URL_QUERY, Utils} from 'ui';
+import {getSdk} from 'ui/libs/schematic-sdk';
 import {getRouter} from 'ui/navigation';
+import {registry} from 'ui/registry';
+import {showToast} from 'ui/store/actions/toaster';
 import type {ConnectionsReduxDispatch} from 'ui/units/connections/store';
 import type {ManualError} from 'ui/utils/errors/manual';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 import {getLoginOrIdFromLockedError, isEntryIsLockedError} from 'utils/errors/errorByCode';
 
 import type {DashDispatch} from '..';
-import {DL} from '../../../../../constants';
 import ChartKit from '../../../../../libs/DatalensChartkit';
 import logger from '../../../../../libs/logger';
-import {getSdk} from '../../../../../libs/schematic-sdk';
-import {registry} from '../../../../../registry';
-import {showToast} from '../../../../../store/actions/toaster';
 import {DashErrorCode, Mode} from '../../../modules/constants';
 import {collectDashStats} from '../../../modules/pushStats';
 import type {DashState} from '../../typings/dash';
@@ -46,74 +45,6 @@ import {
 import {getGlobalStatesForInactiveTabs} from './helpers';
 
 const i18n = I18n.keyset('dash.store.view');
-
-export const setSelectStateMode = ({
-    tabId: selectedTabId,
-    stateHash,
-    history,
-    location,
-}: {
-    tabId: string | null;
-    stateHash: string | null;
-    location: Location;
-    history: History;
-}) => {
-    return async function (dispatch: DashDispatch, getState: () => DatalensGlobalState) {
-        const {
-            dash: {tabId: stateTabId},
-        } = getState();
-
-        const tabId = selectedTabId || stateTabId;
-
-        const payload: Partial<DashState> = {
-            mode: Mode.SelectState,
-        };
-
-        const search = [];
-
-        if (tabId) {
-            payload.tabId = tabId;
-            search.push(`tab=${tabId}`);
-        }
-
-        if (stateHash) {
-            try {
-                dispatch({type: SET_STATE, payload: {mode: Mode.Loading}});
-
-                const {
-                    dash: {
-                        entry: {entryId},
-                    },
-                } = getState();
-
-                const hashData = await getSdk()
-                    .sdk.us.getDashState({entryId, hash: stateHash})
-                    .catch((error) => {
-                        logger.logError('getDashState failed', error);
-                        console.error('STATE_LOAD', error);
-                    });
-
-                if (hashData && tabId) {
-                    // TODO find out from what controls field is
-                    const {controls, ...states} = hashData.data as any;
-                    payload.hashStates = {
-                        [tabId]: {
-                            hash: stateHash,
-                            state: {...controls, ...states},
-                        },
-                    };
-                    search.push(`state=${stateHash}`);
-                }
-            } catch (error) {
-                logger.logError('dash: setSelectStateMode failed', error);
-                console.error('MAILING_MODE_STATE', error);
-            }
-        }
-
-        history.push({...location, search: `?${search.join('&')}`, hash: ''});
-        dispatch({type: SET_STATE, payload});
-    };
-};
 
 export const setEditMode = (successCallback = () => {}, failCallback = () => {}) => {
     return async function (dispatch: DashDispatch, getState: () => DatalensGlobalState) {
@@ -246,10 +177,11 @@ export const load = ({
             const {extractEntryId} = registry.common.functions.getAll();
 
             const entryId = extractEntryId(pathname);
-            const isFakeEntry =
-                !entryId && (pathname === '/dashboards/new' || pathname.startsWith('/workbooks/'));
 
-            if (isFakeEntry) {
+            if (
+                !entryId &&
+                (pathname === '/dashboards/new' || pathname.startsWith('/workbooks/'))
+            ) {
                 removeParamAndUpdate(history, searchParams, URL_QUERY.TAB_ID);
                 dispatch({
                     type: SET_STATE,
@@ -339,6 +271,11 @@ export const load = ({
                     },
                     ...(updatedHashStates || {}),
                 };
+            }
+
+            if (isEnabledFeature(Feature.ReadOnlyMode)) {
+                entry.permissions.admin = false;
+                entry.permissions.edit = false;
             }
 
             const isEmptyDash = data.tabs.length === 1 && !data.tabs[0].items.length;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {CodeTrunk, Copy, CopyArrowRight, FontCursor, Shield, TrashBin} from '@gravity-ui/icons';
+import {CodeTrunk, CopyArrowRight, FontCursor, Shield, TrashBin} from '@gravity-ui/icons';
 import type {DropdownMenuItemMixed} from '@gravity-ui/uikit';
 import {DropdownMenu} from '@gravity-ui/uikit';
 import {I18n} from 'i18n';
@@ -9,12 +9,12 @@ import type {ConnectorType} from 'shared/constants/connections';
 import {WorkbookPageQa} from 'shared/constants/qa/workbooks';
 import type {WorkbookWithPermissions} from 'shared/schema/us/types';
 import {EntryScope} from 'shared/types/common';
+import {DropdownAction} from 'ui/components/DropdownAction/DropdownAction';
 import {S3_BASED_CONNECTORS} from 'ui/constants';
+import {registry} from 'ui/registry';
 import {getSharedEntryMockText} from 'ui/units/collections/components/helpers';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
-import {DropdownAction} from '../../../../components/DropdownAction/DropdownAction';
-import {registry} from '../../../../registry';
 import type {WorkbookEntry} from '../../types';
 
 import iconId from 'ui/assets/icons/id-square.svg';
@@ -41,7 +41,6 @@ export const EntryActions = ({
     entry,
     onRenameClick,
     onDeleteClick,
-    onDuplicateEntry,
     onCopyEntry,
     onShowRelatedClick,
     onCopyId,
@@ -60,14 +59,6 @@ export const EntryActions = ({
         items.push({
             action: onRenameClick,
             text: <DropdownAction icon={FontCursor} text={i18n('action_rename')} />,
-        });
-    }
-
-    if (isFileConnection === false && onDuplicateEntry) {
-        items.push({
-            action: onDuplicateEntry,
-            text: <DropdownAction icon={Copy} text={i18n('action_duplicate')} />,
-            qa: WorkbookPageQa.MenuItemDuplicate,
         });
     }
 
