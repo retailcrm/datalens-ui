@@ -10,16 +10,17 @@ import DashAndWizardQLPages, {
     dashAndWizardQLRoutes,
 } from './pages/DashAndWizardQLPages/DashAndWizardQLPages';
 import {locationChangeHandler} from './helpers';
-import {isEmbeddedMode, isTvMode} from '../utils/embedded';
-import {reducerRegistry} from '../store';
+import {isEmbeddedMode, isTvMode} from 'utils/embedded';
+import {reducerRegistry} from 'store';
 import {AsideHeaderAdapter} from 'ui/components/AsideHeaderAdapter/AsideHeaderAdapter';
 import {MobileHeaderComponent} from 'ui/components/MobileHeader/MobileHeaderComponent/MobileHeaderComponent';
 import {DL} from 'ui/constants';
-import {useClearReloadedQuery} from '../units/auth/hooks/useClearReloadedQuery';
+import {useClearReloadedQuery} from 'units/auth/hooks/useClearReloadedQuery';
 import {reducer} from 'ui/units/auth/store/reducers';
 import {useIframeRender} from './hooks';
 import {OPEN_SOURCE_INSTALLATION_INFO} from 'ui/constants/navigation';
 import {chartkitApi} from 'ui/store/toolkit/chartkit/api';
+import {Capability, useCapabilities} from 'ui/capabilities';
 
 reducerRegistry.register(coreReducers);
 reducerRegistry.register({auth: reducer});
@@ -54,6 +55,8 @@ export type DatalensPageViewProps = {
 
 const DatalensPageView: React.FC<DatalensPageViewProps> = ({homePathname = '/collections'}) => {
     useClearReloadedQuery();
+
+    const capabilities = useCapabilities();
 
     const isLanding = useSelector(selectIsLanding);
     const location = useLocation();
@@ -90,25 +93,36 @@ const DatalensPageView: React.FC<DatalensPageViewProps> = ({homePathname = '/col
                 <Route path={['/connections/new/:type', '/connections/new']}>
                     <Redirect to={{pathname: homePathname, search: location.search}} />
                 </Route>
-                <Route
-                    path={[
-                        '/connections/:id',
-                        '/workbooks/:workbookId/connections/new/:type',
-                        '/workbooks/:workbookId/connections/new',
-                    ]}
-                    component={ConnectionsPage}
-                />
+
+                {capabilities[Capability.ManageableConnections] && (
+                    <Route
+                        path={[
+                            '/connections/:id',
+                            '/workbooks/:workbookId/connections/new/:type',
+                            '/workbooks/:workbookId/connections/new',
+                        ]}
+                        component={ConnectionsPage}
+                    />
+                )}
 
                 {DL.AUTH_ENABLED && <Route path="/profile" component={UserProfile} />}
 
-                <Route path="/settings" component={ServiceSettings} />
+                {capabilities[Capability.AccessibleSettings] && (
+                    <Route path="/settings" component={ServiceSettings} />
+                )}
 
-                <Route path={['/collections']} component={CollectionsNavigtaionPage} />
+                {capabilities[Capability.AccessibleCollectionsRoot] && (
+                    <Route path={['/collections']} component={CollectionsNavigtaionPage} />
+                )}
 
                 <Route exact path={dashAndWizardQLRoutes} component={DashAndWizardQLPages} />
 
                 <Route
-                    path={['/collections/:collectionId', '/workbooks/:workbookId']}
+                    path={
+                        capabilities[Capability.ManageableConnections]
+                            ? ['/collections/:collectionId', '/workbooks/:workbookId']
+                            : ['/workbooks/:workbookId']
+                    }
                     component={CollectionsNavigtaionPage}
                 />
 

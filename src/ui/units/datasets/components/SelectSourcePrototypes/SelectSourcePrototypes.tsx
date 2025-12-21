@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 
 import {Ellipsis, Plus} from '@gravity-ui/icons';
+import type {DropdownMenuItem} from '@gravity-ui/uikit';
 import {Button, DropdownMenu, Icon} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import {I18n} from 'i18n';
@@ -9,6 +10,7 @@ import type {CollectionId, ConnectorType, DatasetOptions, WorkbookId} from 'shar
 import {CollectionItemEntities, DatasetSourcesLeftPanelQA, EntryScope, PLACE} from 'shared';
 import type {BaseSource, GetEntryResponse} from 'shared/schema';
 import {NavigationMinimal, type SDK} from 'ui';
+import {Capability, useCapabilities} from 'ui/capabilities';
 import {ConnectorIcon} from 'ui/components/ConnectorIcon/ConnectorIcon';
 import {DIALOG_SELECT_SHARED_ENTRY} from 'ui/components/DialogSelectSharedEntry/DialogSelectSharedEntry';
 import {SharedEntryIcon} from 'ui/components/SharedEntryIcon/SharedEntryIcon';
@@ -110,6 +112,7 @@ type ConnectionMenuProps = {
 };
 
 function ConnectionMenu(props: ConnectionMenuProps) {
+    const capabilities = useCapabilities();
     const {
         connectionId,
         openEnabled,
@@ -169,14 +172,18 @@ function ConnectionMenu(props: ConnectionMenuProps) {
                 )}
                 popupProps={{placement: ['bottom-start', 'top-start']}}
                 items={[
-                    {
-                        text: i18n('label_menu-popup-open-connection'),
-                        disabled: !openEnabled,
-                        action: (e) => {
-                            e.stopPropagation();
-                            onClickOpenConnection(connectionId);
-                        },
-                    },
+                    ...(capabilities[Capability.ManageableConnections]
+                        ? [
+                              {
+                                  text: i18n('label_menu-popup-open-connection'),
+                                  disabled: !openEnabled,
+                                  action: (e) => {
+                                      e.stopPropagation();
+                                      onClickOpenConnection(connectionId);
+                                  },
+                              } as DropdownMenuItem,
+                          ]
+                        : []),
                     {
                         text: i18n('label_menu-popup-replace-connection'),
                         disabled: readonly,

@@ -2,18 +2,12 @@ import React from 'react';
 
 import {Breadcrumbs, Skeleton} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
-import {I18n} from 'i18n';
-import {useHistory} from 'react-router';
-
-import type {
-    GetCollectionBreadcrumbsResponse,
-    GetWorkbookResponse,
-} from '../../../../../shared/schema';
-import {COLLECTIONS_PATH, WORKBOOKS_PATH} from '../../constants';
+import type {GetCollectionBreadcrumbsResponse, GetWorkbookResponse} from 'shared/schema';
+import {useRouter} from 'ui/navigation';
+import type {Router} from 'ui/navigation';
+import {COLLECTIONS_PATH, WORKBOOKS_PATH} from 'ui/units/collections-navigation/constants';
 
 import './CollectionBreadcrumbs.scss';
-
-const i18n = I18n.keyset('component.collection-breadcrumbs');
 
 const b = block('dl-collection-breadcrumbs');
 
@@ -34,70 +28,45 @@ type Props = {
     onItemClick?: (args: {id: string | null; isCurrent: boolean}) => void;
 };
 
+const getFallbackItem = () => ({
+    id: LOADING_ITEM_ID,
+    text: '',
+    action: () => {},
+    path: '',
+});
+
+const getWorkbookItem = (workbook: GetWorkbookResponse, router: Router) => ({
+    id: workbook.workbookId,
+    text: workbook.title,
+    action: () => {
+        router.push(`${WORKBOOKS_PATH}/${workbook.workbookId}`);
+    },
+    path: `${WORKBOOKS_PATH}/${workbook.workbookId}`,
+});
+
 export const CollectionBreadcrumbs = React.memo<Props>(
     ({className, isLoading = false, collections, workbook, onItemClick}) => {
-        const history = useHistory();
-
+        const router = useRouter();
         const items = React.useMemo<BreadcrumbsItem[]>(() => {
-            const result: BreadcrumbsItem[] = [
-                {
-                    id: null,
-                    text: i18n('label_root-title'),
-                    action: () => {
-                        history.push(COLLECTIONS_PATH);
-                    },
-                    path: COLLECTIONS_PATH,
-                },
-            ];
-
-            if (isLoading) {
-                result.push({
-                    id: LOADING_ITEM_ID,
-                    text: '',
-                    action: () => {},
-                    path: '',
-                });
-            } else {
-                if (collections.length > 0) {
-                    collections.forEach((item) => {
-                        result.push({
-                            id: item.collectionId,
-                            text: item.title,
-                            action: () => {
-                                history.push(`${COLLECTIONS_PATH}/${item.collectionId}`);
-                            },
-                            path: `${COLLECTIONS_PATH}/${item.collectionId}`,
-                        });
-                    });
-                }
-
-                if (workbook) {
-                    result.push({
-                        id: workbook.workbookId,
-                        text: workbook.title,
-                        action: () => {
-                            history.push(`${WORKBOOKS_PATH}/${workbook.workbookId}`);
-                        },
-                        path: `${WORKBOOKS_PATH}/${workbook.workbookId}`,
-                    });
-                }
-            }
-
-            return result;
-        }, [isLoading, history, collections, workbook]);
+            return isLoading
+                ? [getFallbackItem()]
+                : collections
+                      .map((item) => ({
+                          id: item.collectionId,
+                          text: item.title,
+                          action: () => {
+                              router.push(`${COLLECTIONS_PATH}/${item.collectionId}`);
+                          },
+                          path: `${COLLECTIONS_PATH}/${item.collectionId}`,
+                      }))
+                      .concat(workbook ? [getWorkbookItem(workbook, router)] : []);
+        }, [isLoading, router, collections, workbook]);
 
         return (
             <div className={b(null, className)}>
                 <Breadcrumbs className={b('container')}>
                     {items.map((item, index, list) => {
                         const isLast = index === list.length - 1;
-
-                        let content: JSX.Element | string;
-                        if (item.id === LOADING_ITEM_ID) {
-                            content = <Skeleton className={b('skeleton')} />;
-                        } else {
-                            content = item.text;
-                        }
 
                         return (
                             <Breadcrumbs.Item
@@ -114,7 +83,11 @@ export const CollectionBreadcrumbs = React.memo<Props>(
                                 disabled={isLast}
                                 href={item.path}
                             >
-                                {content}
+                                {item.id === LOADING_ITEM_ID ? (
+                                    <Skeleton className={b('skeleton')} />
+                                ) : (
+                                    item.text
+                                )}
                             </Breadcrumbs.Item>
                         );
                     })}
