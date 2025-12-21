@@ -112,10 +112,8 @@ type ConnectionMenuProps = {
 function ConnectionMenu(props: ConnectionMenuProps) {
     const {
         connectionId,
-        openEnabled,
         deleteEnabled,
         onClickDeleteConnection,
-        onClickOpenConnection,
         onClickReplaceConnectionMenuItem,
         sdk,
         clickableTypes,
@@ -169,14 +167,6 @@ function ConnectionMenu(props: ConnectionMenuProps) {
                 )}
                 popupProps={{placement: ['bottom-start', 'top-start']}}
                 items={[
-                    {
-                        text: i18n('label_menu-popup-open-connection'),
-                        disabled: !openEnabled,
-                        action: (e) => {
-                            e.stopPropagation();
-                            onClickOpenConnection(connectionId);
-                        },
-                    },
                     {
                         text: i18n('label_menu-popup-replace-connection'),
                         disabled: readonly,

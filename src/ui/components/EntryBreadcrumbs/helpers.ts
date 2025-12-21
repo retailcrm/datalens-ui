@@ -1,12 +1,9 @@
 import type {History, Location} from 'history';
-import {I18n} from 'i18n';
 import type {
     BreadcrumbsItem,
     EntryBreadcrumbsProps,
 } from 'ui/registry/units/common/types/components/EntryBreadcrumbs';
 import Utils from 'ui/utils';
-
-const i18n = I18n.keyset('component.collection-breadcrumbs');
 
 type GetEntityBreadcrumbsItems = (props: {
     entry: EntryBreadcrumbsProps['entry'];
@@ -25,15 +22,7 @@ export const getEntityBreadcrumbsItems: GetEntityBreadcrumbsItems = ({
 }) => {
     if (!entry) return [];
 
-    const breadcrumbsItems: BreadcrumbsItem[] = [
-        {
-            text: i18n('label_root-title'),
-            action: () => {
-                history.push('/collections');
-            },
-            path: '/collections',
-        },
-    ];
+    const breadcrumbsItems: BreadcrumbsItem[] = [];
 
     if (entityBreadcrumbs && entityBreadcrumbs.length > 0) {
         entityBreadcrumbs.forEach((item: {title: string; collectionId: string}) => {

@@ -3,11 +3,11 @@ import React from 'react';
 import block from 'bem-cn-lite';
 import {I18n} from 'i18n';
 import {EntryScope} from 'shared';
+import type {WorkbookWithPermissions} from 'shared/schema';
 import {PlaceholderIllustration} from 'ui/components/PlaceholderIllustration/PlaceholderIllustration';
 import {DL} from 'ui/constants/common';
 import {CreateEntryActionType} from 'ui/units/workbooks/constants';
 
-import type {WorkbookWithPermissions} from '../../../../../../shared/schema/us/types';
 import type {ChunkItem, WorkbookEntry, WorkbookSharedEntry} from '../../../types';
 import {CreateEntry} from '../../CreateEntry/CreateEntry';
 
@@ -65,7 +65,7 @@ export const WorkbookEntriesTableTabs = ({
         return null;
     }
 
-    const [dashChunk = [], widgetChunk = [], datasetChunk = [], connChunk = []] = chunks ?? [];
+    const [dashChunk = [], widgetChunk = [], datasetChunk = []] = chunks ?? [];
 
     const isWidgetEmpty = widgetChunk.length === 0;
     const isDashEmpty = dashChunk.length === 0;
@@ -135,28 +135,6 @@ export const WorkbookEntriesTableTabs = ({
                     retryLoadEntries={() => retryLoadEntries?.(EntryScope.Dataset)}
                     isErrorMessage={mapErrors?.[EntryScope.Dataset]}
                     isLoading={mapLoaders?.[EntryScope.Dataset]}
-                    workbook={workbook}
-                    onRenameEntry={onRenameEntry}
-                    onDeleteEntry={onDeleteEntry}
-                    onDuplicateEntry={onDuplicateEntry}
-                    onCopyEntry={onCopyEntry}
-                    onShowRelatedClick={onShowRelated}
-                    onCopyId={onCopyId}
-                />
-            )}
-            {showDataEntities && (
-                <MainTabContent
-                    chunk={connChunk}
-                    actionCreateText={i18n('action_create-connection')}
-                    title={i18n('title_connections')}
-                    actionType={CreateEntryActionType.Connection}
-                    isShowMoreBtn={Boolean(
-                        connChunk?.length > 0 && mapTokens?.[EntryScope.Connection],
-                    )}
-                    loadMoreEntries={() => loadMoreEntries?.(EntryScope.Connection)}
-                    retryLoadEntries={() => retryLoadEntries?.(EntryScope.Connection)}
-                    isErrorMessage={mapErrors?.[EntryScope.Connection]}
-                    isLoading={mapLoaders?.[EntryScope.Connection]}
                     workbook={workbook}
                     onRenameEntry={onRenameEntry}
                     onDeleteEntry={onDeleteEntry}

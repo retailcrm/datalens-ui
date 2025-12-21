@@ -1,6 +1,7 @@
 export {createBrowserHistory, createHashHistory, createMemoryHistory} from 'history';
 export {getHistory, setHistory} from './history';
 export {getLocation, getRouter, useLocation, useRouter} from './router';
+export type {Router} from './router';
 export type {Target} from './router';
 
 export const toSearchParams = <T extends Record<string, unknown>>(params: T = {} as T) => {

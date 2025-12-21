@@ -34,11 +34,6 @@ export const useCreateEntryOptions = ({
             hasMenu = false;
             handleClick = () => handleAction(CreateEntryActionType.Dataset);
             break;
-        case EntryScope.Connection:
-            buttonText = i18n('action_create-connection');
-            hasMenu = false;
-            handleClick = () => handleAction(CreateEntryActionType.Connection);
-            break;
         case EntryScope.Widget:
             buttonText = i18n('action_create-chart');
             hasMenu = true;

@@ -29,18 +29,11 @@ reducerRegistry.registerMiddleware(chartkitApi.middleware);
 
 const DatasetPage = React.lazy(() => import('./pages/DatasetPage/DatasetPage'));
 const PreviewPage = React.lazy(() => import('./pages/PreviewPage/PreviewPage'));
-const ConnectionsPage = React.lazy(
-    () =>
-        import(
-            /* webpackChunkName: "connections-page" */ './pages/ConnectionsPage/ConnectionsPage'
-        ),
-);
 // comment till we have main page
 // const MainPage = React.lazy(() => import('./pages/MainPage/MainPage'));
 const CollectionsNavigtaionPage = React.lazy(
     () => import('./pages/CollectionsNavigationPage/CollectionsNavigationPage'),
 );
-const ServiceSettings = React.lazy(() => import('./pages/ServiceSettingsPage/ServiceSettingsPage'));
 const UserProfile = React.lazy(() => import('./pages/OwnUserProfilePage/OwnUserProfilePage'));
 
 const LandingPage = React.lazy(() => import('./pages/LandingPage/LandingPage'));
@@ -90,27 +83,12 @@ const DatalensPageView: React.FC<DatalensPageViewProps> = ({homePathname = '/col
                 <Route path={['/connections/new/:type', '/connections/new']}>
                     <Redirect to={{pathname: homePathname, search: location.search}} />
                 </Route>
-                <Route
-                    path={[
-                        '/connections/:id',
-                        '/workbooks/:workbookId/connections/new/:type',
-                        '/workbooks/:workbookId/connections/new',
-                    ]}
-                    component={ConnectionsPage}
-                />
 
                 {DL.AUTH_ENABLED && <Route path="/profile" component={UserProfile} />}
 
-                <Route path="/settings" component={ServiceSettings} />
-
-                <Route path={['/collections']} component={CollectionsNavigtaionPage} />
-
                 <Route exact path={dashAndWizardQLRoutes} component={DashAndWizardQLPages} />
 
-                <Route
-                    path={['/collections/:collectionId', '/workbooks/:workbookId']}
-                    component={CollectionsNavigtaionPage}
-                />
+                <Route path={['/workbooks/:workbookId']} component={CollectionsNavigtaionPage} />
 
                 <Route path="/">
                     <Redirect to={{pathname: homePathname, search: location.search}} />

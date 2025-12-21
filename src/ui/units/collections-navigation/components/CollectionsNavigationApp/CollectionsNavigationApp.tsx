@@ -2,13 +2,12 @@ import React from 'react';
 
 import {useDispatch} from 'react-redux';
 import {Redirect, Route, Switch} from 'react-router-dom';
+import type {AppDispatch} from 'ui/store';
 
-import type {AppDispatch} from '../../../../store';
-import {CollectionPage} from '../../../collections/components/CollectionPage';
 import {resetState as resetCollectionsState} from '../../../collections/store/actions';
 import {WorkbookPage} from '../../../workbooks/components/WorkbookPage/WorkbookPage';
 import {resetWorkbookState as resetWorkbooksState} from '../../../workbooks/store/actions';
-import {COLLECTIONS_PATH, WORKBOOKS_PATH} from '../../constants';
+import {WORKBOOKS_PATH} from '../../constants';
 import type {Layout, LayoutBlock, SkeletonsSettings} from '../../contexts/LayoutContext';
 import {LayoutContext} from '../../contexts/LayoutContext';
 import {resetState as resetCollectionsNavigationState} from '../../store/actions';
@@ -79,17 +78,8 @@ export const CollectionsNavigationApp = () => {
                 skeletonsSettings={skeletonsSettings}
             >
                 <Switch>
-                    <Route
-                        path={[`${COLLECTIONS_PATH}/:collectionId`, COLLECTIONS_PATH]}
-                        component={CollectionPage}
-                    />
                     <Route exact path={`${WORKBOOKS_PATH}/:workbookId`} component={WorkbookPage} />
-                    <Route
-                        path="*"
-                        component={() => {
-                            return <Redirect to="/" />;
-                        }}
-                    />
+                    <Route path="*" component={() => <Redirect to="/" />} />
                 </Switch>
             </CollectionsNavigationLayout>
         </LayoutContext.Provider>

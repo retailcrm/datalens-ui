@@ -171,6 +171,22 @@ export const setSelectorDialogItem = (
     };
 };
 
+export const SET_SELECTOR_DIALOG_ITEM_NAME = Symbol('controlDialog/SET_SELECTOR_DIALOG_ITEM_NAME');
+
+export type SetSelectorDialogItemNameAction = {
+    type: typeof SET_SELECTOR_DIALOG_ITEM_NAME;
+    payload: SetSelectorDialogItemArgs;
+};
+
+export const setSelectorDialogItemName = (
+    payload: SetSelectorDialogItemNameAction['payload'],
+): SetSelectorDialogItemNameAction => {
+    return {
+        type: SET_SELECTOR_DIALOG_ITEM_NAME,
+        payload,
+    };
+};
+
 export const SET_LAST_USED_DATASET_ID = Symbol('controlDialog/SET_LAST_USED_DATASET_ID');
 export type SetLastUsedDatasetIdAction = {
     type: typeof SET_LAST_USED_DATASET_ID;
