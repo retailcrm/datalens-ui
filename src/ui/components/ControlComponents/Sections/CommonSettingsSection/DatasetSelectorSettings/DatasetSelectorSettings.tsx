@@ -9,6 +9,7 @@ import type {Dataset} from 'shared';
 import {
     DATASET_FIELD_TYPES,
     DATASET_IGNORED_DATA_TYPES,
+    DATASET_IGNORED_NAME_DATA_TYPES,
     DatasetFieldType,
     EntryScope,
 } from 'shared';
@@ -16,6 +17,7 @@ import logger from 'ui/libs/logger';
 import {
     setLastUsedDatasetId,
     setSelectorDialogItem,
+    setSelectorDialogItemName,
 } from 'ui/store/actions/controlDialog/controlDialog';
 import {ELEMENT_TYPE} from 'ui/store/constants/controlDialog';
 import {
@@ -40,8 +42,15 @@ function DatasetSelectorSettings(props: {
     enableGlobalSelectors?: boolean;
 }) {
     const dispatch = useDispatch();
-    const {datasetId, datasetFieldId, isManualTitle, title, fieldType, validation} =
-        useSelector(selectSelectorDialog);
+    const {
+        datasetId,
+        datasetFieldId,
+        datasetFieldName,
+        isManualTitle,
+        title,
+        fieldType,
+        validation,
+    } = useSelector(selectSelectorDialog);
     const {workbookId} = useSelector(selectOpenedItemMeta);
     const {impactType, impactTabsIds, group} = useSelector(selectSelectorsGroup);
     const [isInvalid, setIsInvalid] = React.useState(false);
@@ -151,7 +160,26 @@ function DatasetSelectorSettings(props: {
 
             dispatch(setSelectorDialogItem(args));
         },
-        [datasetFieldId, isManualTitle, title],
+        [datasetFieldId, dispatch, fieldType, isManualTitle, title],
+    );
+
+    const handleDatasetFieldNameChange = React.useCallback(
+        (
+            data: {
+                fieldId: string;
+                fieldType: DATASET_FIELD_TYPES;
+                fieldName: string;
+                datasetFieldType: DatasetFieldType;
+            } | null,
+        ) => {
+            if (
+                data !== null &&
+                (datasetFieldName !== data.fieldId || fieldType !== data.fieldType)
+            ) {
+                dispatch(setSelectorDialogItemName({datasetFieldName: data.fieldId}));
+            }
+        },
+        [datasetFieldName, dispatch, fieldType],
     );
 
     return (
@@ -178,6 +206,19 @@ function DatasetSelectorSettings(props: {
                         fieldId={datasetFieldId}
                         onChange={handleDatasetFieldChange}
                         hasValidationError={Boolean(validation.datasetFieldId)}
+                    />
+                </FieldWrapper>
+            </FormRow>
+            <FormRow label={i18n('field_field')} className={props.rowClassName}>
+                <FieldWrapper>
+                    <DatasetField
+                        ignoredFieldTypes={[]}
+                        ignoredDataTypes={DATASET_IGNORED_NAME_DATA_TYPES}
+                        datasetId={datasetId}
+                        workbookId={workbookId}
+                        fieldId={datasetFieldName}
+                        onChange={handleDatasetFieldNameChange}
+                        hasValidationError={false}
                     />
                 </FieldWrapper>
             </FormRow>

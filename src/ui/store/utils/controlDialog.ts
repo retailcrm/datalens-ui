@@ -327,6 +327,7 @@ export const getItemDataSource = (selectorDialog: SelectorDialogState): ItemData
 
         datasetId,
         datasetFieldId,
+        datasetFieldName,
         fieldType,
         datasetFieldType,
         fieldName,
@@ -368,6 +369,7 @@ export const getItemDataSource = (selectorDialog: SelectorDialogState): ItemData
                 ...source,
                 datasetId,
                 datasetFieldId,
+                datasetFieldName,
                 fieldType,
                 datasetFieldType,
             };

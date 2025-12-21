@@ -3,13 +3,13 @@ import React from 'react';
 import block from 'bem-cn-lite';
 import {I18n} from 'i18n';
 import {EntryScope} from 'shared';
+import type {WorkbookWithPermissions} from 'shared/schema';
+import {Capability, useCapabilities} from 'ui/capabilities';
 import {PlaceholderIllustration} from 'ui/components/PlaceholderIllustration/PlaceholderIllustration';
 import {DL} from 'ui/constants/common';
+import {CreateEntry} from 'ui/units/workbooks/components/CreateEntry/CreateEntry';
 import {CreateEntryActionType} from 'ui/units/workbooks/constants';
-
-import type {WorkbookWithPermissions} from '../../../../../../shared/schema/us/types';
-import type {ChunkItem, WorkbookEntry, WorkbookSharedEntry} from '../../../types';
-import {CreateEntry} from '../../CreateEntry/CreateEntry';
+import type {ChunkItem, WorkbookEntry, WorkbookSharedEntry} from 'ui/units/workbooks/types';
 
 import {MainTabContent} from './MainTabContent/MainTabContent';
 
@@ -61,6 +61,8 @@ export const WorkbookEntriesTableTabs = ({
     onShowRelated,
     onCopyId,
 }: WorkbookEntriesTableTabsProps) => {
+    const capabilities = useCapabilities();
+
     if (scope) {
         return null;
     }
@@ -144,7 +146,7 @@ export const WorkbookEntriesTableTabs = ({
                     onCopyId={onCopyId}
                 />
             )}
-            {showDataEntities && (
+            {showDataEntities && capabilities[Capability.ManageableConnections] && (
                 <MainTabContent
                     chunk={connChunk}
                     actionCreateText={i18n('action_create-connection')}

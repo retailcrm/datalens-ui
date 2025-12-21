@@ -9,12 +9,13 @@ import type {ConnectorType} from 'shared/constants/connections';
 import {WorkbookPageQa} from 'shared/constants/qa/workbooks';
 import type {WorkbookWithPermissions} from 'shared/schema/us/types';
 import {EntryScope} from 'shared/types/common';
+import {Capability, useCapabilities} from 'ui/capabilities';
+import {DropdownAction} from 'ui/components/DropdownAction/DropdownAction';
 import {S3_BASED_CONNECTORS} from 'ui/constants';
+import {registry} from 'ui/registry';
 import {getSharedEntryMockText} from 'ui/units/collections/components/helpers';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
-import {DropdownAction} from '../../../../components/DropdownAction/DropdownAction';
-import {registry} from '../../../../registry';
 import type {WorkbookEntry} from '../../types';
 
 import iconId from 'ui/assets/icons/id-square.svg';
@@ -47,6 +48,7 @@ export const EntryActions = ({
     onCopyId,
     onUpdateSharedEntryBindings,
 }: EntryActionsProps) => {
+    const capabilities = useCapabilities();
     const {useAdditionalWorkbookEntryActions} = registry.workbooks.functions.getAll();
 
     const isConnection = entry.scope === EntryScope.Connection;
@@ -63,7 +65,11 @@ export const EntryActions = ({
         });
     }
 
-    if (isFileConnection === false && onDuplicateEntry) {
+    if (
+        !isFileConnection &&
+        capabilities[Capability.AccessibleWorkbookDuplication] &&
+        onDuplicateEntry
+    ) {
         items.push({
             action: onDuplicateEntry,
             text: <DropdownAction icon={Copy} text={i18n('action_duplicate')} />,

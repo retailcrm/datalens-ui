@@ -1,5 +1,6 @@
 import type {History, Location} from 'history';
 import {I18n} from 'i18n';
+import {Capability, capabilities} from 'ui/capabilities';
 import type {
     BreadcrumbsItem,
     EntryBreadcrumbsProps,
@@ -25,15 +26,15 @@ export const getEntityBreadcrumbsItems: GetEntityBreadcrumbsItems = ({
 }) => {
     if (!entry) return [];
 
-    const breadcrumbsItems: BreadcrumbsItem[] = [
-        {
+    const breadcrumbsItems: BreadcrumbsItem[] = [];
+
+    if (capabilities.has(Capability.AccessibleCollectionsRoot)) {
+        breadcrumbsItems.push({
             text: i18n('label_root-title'),
-            action: () => {
-                history.push('/collections');
-            },
+            action: () => history.push('/collections'),
             path: '/collections',
-        },
-    ];
+        });
+    }
 
     if (entityBreadcrumbs && entityBreadcrumbs.length > 0) {
         entityBreadcrumbs.forEach((item: {title: string; collectionId: string}) => {

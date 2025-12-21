@@ -81,6 +81,7 @@ export type ItemDataSource = {
     defaultValue?: string | string[];
     datasetId?: string;
     datasetFieldId?: string;
+    datasetFieldName?: string;
     fieldName?: string;
     fieldType?: DATASET_FIELD_TYPES;
     datasetFieldType?: DatasetFieldType;
@@ -123,6 +124,7 @@ export type SelectorDialogState = {
     connectionQueryTypes?: ConnectionQueryTypeOptions[];
     connectionQueryContent?: ConnectionQueryContent;
     datasetFieldId?: string;
+    datasetFieldName?: string;
     fieldName?: string;
     acceptableValues?: AcceptableValue[];
     isRange?: boolean;
