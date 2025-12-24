@@ -7,20 +7,20 @@ import {EntryIcon} from 'components/EntryIcon/EntryIcon';
 import {I18n} from 'i18n';
 import moment from 'moment';
 import {DlNavigationQA, PLACE} from 'shared';
+import type {NavigationEntry} from 'shared/schema';
+import {getPathDisplayName} from 'ui';
 import {DL} from 'ui/constants/common';
 import {useRouter} from 'ui/navigation';
 import {registry} from 'ui/registry';
 import {MOBILE_SIZE} from 'ui/utils/mobile';
 import Utils from 'utils';
 
-import type {NavigationEntry} from '../../../../../../shared/schema';
-import {getPathDisplayName} from '../../../util';
 import EntryContextButton from '../../EntryContextButton/EntryContextButton';
 import {FavoritesNameWithAliasItem} from '../../FavoritesNameWithAliasItem/FavoritesNameWithAliasItem';
 import type {HookBatchSelectResult, ParentFolderEntry, TableViewProps} from '../types';
 
-import collectionIcon from '../../../../../assets/icons/collections/collection.svg';
-import workbookIcon from '../../../../../assets/icons/collections/workbook.svg';
+import collectionIcon from 'ui/assets/icons/collections/collection.svg';
+import workbookIcon from 'ui/assets/icons/collections/workbook.svg';
 
 const b = block('dl-core-navigation-table-view');
 
