@@ -8,7 +8,7 @@ import {i18n} from 'i18n';
 import {DashTabItemType, DashboardAddWidgetQa} from 'shared';
 import type {GetBasicActionPanelItems} from 'ui/registry/units/common/types/functions/getBasicActionPanelItems';
 
-export const bEditPanelItem = block('edit-panel-item');
+export const bEditPanelItem: ReturnType<typeof block> = block('edit-panel-item');
 
 type DashkitBasicActionPanelItemKey =
     | DashTabItemType.GroupControl

@@ -5,7 +5,7 @@ import block from 'bem-cn-lite';
 
 import './FormSection.scss';
 
-export const b = block('form-section');
+const b = block('form-section');
 
 interface FormSectionProps {
     title: string;

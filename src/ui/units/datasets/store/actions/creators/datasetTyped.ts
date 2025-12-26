@@ -1495,7 +1495,7 @@ export function incrementSourcesPage(bindedWorkbookId?: WorkbookId) {
     };
 }
 
-interface GetSourcesProps {
+export interface GetSourcesProps {
     connectionId: string;
     workbookId?: string | null;
     searchText?: string;
@@ -1669,7 +1669,7 @@ function getDbNames({
     };
 }
 
-interface SaveDatasetProps {
+export interface SaveDatasetProps {
     key?: string;
     workbookId?: WorkbookId;
     collectionId?: CollectionId;

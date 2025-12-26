@@ -2,7 +2,7 @@ import {i18n} from 'i18n';
 import type {ThunkDispatch} from 'redux-thunk';
 import type {UserRole} from 'shared/components/auth/constants/role';
 import type {GetUserProfileResponse, UpdateUserProfileArgs} from 'shared/schema/auth/types/users';
-import type {DatalensGlobalState} from 'ui/index';
+import type {DatalensGlobalState} from 'ui';
 import logger from 'ui/libs/logger';
 import type {SdkError} from 'ui/libs/schematic-sdk';
 import {getSdk, isSdkError} from 'ui/libs/schematic-sdk';
@@ -100,7 +100,6 @@ export const resetUserProfileState = (): ResetUserProfileStateAction => ({
 });
 
 export type UserProfileAction =
-    | ResetUserProfileStateAction
     | GetUserProfileLoadingAction
     | GetUserProfileSuccessAction
     | GetUserProfileFailedAction
