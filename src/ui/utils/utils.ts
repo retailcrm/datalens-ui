@@ -3,7 +3,6 @@ import {settings as settingsDateUtils} from '@gravity-ui/date-utils';
 import type {ThemeSettings} from '@gravity-ui/uikit';
 import {configure as configureUikit} from '@gravity-ui/uikit';
 import {I18N} from 'i18n';
-import _get from 'lodash/get';
 import _isEmpty from 'lodash/isEmpty';
 import _mapKeys from 'lodash/mapKeys';
 import _snakeCase from 'lodash/snakeCase';

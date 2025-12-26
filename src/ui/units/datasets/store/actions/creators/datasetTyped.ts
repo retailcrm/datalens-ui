@@ -1482,7 +1482,7 @@ export function incrementSourcesPage() {
     };
 }
 
-interface GetSourcesProps {
+export interface GetSourcesProps {
     connectionId: string;
     workbookId: string | null;
     searchText?: string;
@@ -1623,7 +1623,7 @@ export function getDbNames(connectionIds: string[]) {
     };
 }
 
-interface SaveDatasetProps {
+export interface SaveDatasetProps {
     key?: string;
     workbookId?: WorkbookId;
     collectionId?: CollectionId;

@@ -1,7 +1,7 @@
 import type {SigninAction} from '../actions/signin';
 import {UPDATE_FORM_VALUES} from '../constants/signin';
 
-interface SigninState {
+export interface SigninState {
     login: string;
     password: string;
 }

@@ -53,7 +53,7 @@ export const extractHcTypeFromData = (data?: GraphWidget) => {
 };
 
 export function extractHcTypeFromSeries(series?: Highcharts.Series) {
-    return series?.options?.type || series?.chart.options.chart?.type;
+    return series?.options?.type ?? series?.chart.options.chart?.type;
 }
 
 export function getNormalizedClickActions(data: GraphWidget) {

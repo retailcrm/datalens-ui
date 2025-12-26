@@ -12,16 +12,16 @@ import {EntryUpdateMode, MenuItemsIds} from 'shared';
 import type {DatalensGlobalState} from 'ui';
 import {Utils} from 'ui';
 import {PlaceholderIllustration} from 'ui/components/PlaceholderIllustration/PlaceholderIllustration';
+import {ChartWrapper} from 'ui/components/Widgets/Chart/ChartWidgetWithProvider';
 import type {
     ChartProviderPropsWithRefProps,
     ChartWithWrapRefProps,
 } from 'ui/components/Widgets/Chart/types';
+import type {ChartKitWrapperOnLoadProps} from 'ui/libs/DatalensChartkit/components/ChartKitBase/types';
 import {getLocation} from 'ui/navigation';
 import {openDialogSaveChartConfirm} from 'ui/store/actions/dialog';
 import {getCustomExportActionWrapperWithSave} from 'ui/utils/custom-export-menu-item';
 
-import {ChartWrapper} from '../../../../components/Widgets/Chart/ChartWidgetWithProvider';
-import type {ChartKitWrapperOnLoadProps} from '../../../../libs/DatalensChartkit/components/ChartKitBase/types';
 import {VisualizationStatus} from '../../constants';
 import {prepareChartDataBeforeSave} from '../../modules/helpers';
 import type {SetQueryMetadataProps} from '../../store/actions/ql';
