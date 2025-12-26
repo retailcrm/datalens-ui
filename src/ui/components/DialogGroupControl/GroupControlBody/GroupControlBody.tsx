@@ -29,7 +29,7 @@ import {SimilarSelectorsBlock} from './SimilarSelectorsBlock/SimilarSelectorsBlo
 
 import '../DialogGroupControl.scss';
 
-export const b = block('group-control-dialog');
+const b = block('group-control-dialog');
 const i18n = I18n.keyset('dash.group-controls-dialog.edit');
 
 export const GroupControlBody: React.FC<{

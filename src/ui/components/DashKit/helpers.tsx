@@ -86,7 +86,7 @@ export function getDashKitMenu(onRemoveItem?: (configItem: ConfigItem) => void):
     ];
 }
 
-interface DashkitWrapperProps extends DashKitProps {
+export interface DashkitWrapperProps extends DashKitProps {
     // ref object
     ref?: React.ForwardedRef<DashKit>;
     // Make noOverlay partial

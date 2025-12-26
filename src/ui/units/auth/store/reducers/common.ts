@@ -1,7 +1,7 @@
 import type {CommonAction} from '../actions/common';
 import {SET_AUTH_PAGE_INITED} from '../constants/common';
 
-interface CommonState {
+export interface CommonState {
     authPageInited: boolean;
     rethPath: null | string;
 }

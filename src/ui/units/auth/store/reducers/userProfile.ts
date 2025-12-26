@@ -21,7 +21,7 @@ import {
     UPDATE_USER_ROLE_SUCCESS,
 } from '../constants/userProfile';
 
-interface UserProfileState {
+export interface UserProfileState {
     getProfile: {
         isLoading: boolean;
         data: {profile: UserProfile} | null;

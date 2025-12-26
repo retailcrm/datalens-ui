@@ -161,15 +161,12 @@ export const useOverlay = ({
                     title: i18n('dash.settings-dialog.edit', 'label_settings'),
                     className: b('global-icon'),
                     iconSize: 20,
-                    renderIcon: (widget) => {
-                        const dashItem = widget as DashTabItem;
-                        return getGlobalIcon(dashItem);
-                    },
+                    renderIcon: getGlobalIcon,
                     qa: ControlQA.controlSettings,
                     visible: (configItem) => {
                         return isConfigItemGlobal(configItem);
                     },
-                },
+                } as OverlayControlItem,
                 {
                     allWidgetsControls: true,
                     title: i18n('dash.main.view', 'button_links'),

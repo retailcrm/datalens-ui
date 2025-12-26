@@ -1,11 +1,7 @@
-import type {DatalensGlobalState} from 'index';
 import logger from 'libs/logger';
 import {getSdk} from 'libs/schematic-sdk';
 import type {ThunkDispatch} from 'redux-thunk';
 import {EntryScope} from 'shared';
-import {showToast} from 'store/actions/toaster';
-import {CounterName, GoalId, reachMetricaGoal} from 'ui/libs/metrica';
-
 import type {
     AddFavoriteResponse,
     DeleteEntryResponse,
@@ -16,7 +12,11 @@ import type {
     RenameEntryResponse,
     WorkbookPermission,
     WorkbookWithPermissions,
-} from '../../../../../shared/schema';
+} from 'shared/schema';
+import {showToast} from 'store/actions/toaster';
+import type {DatalensGlobalState} from 'ui';
+import {CounterName, GoalId, reachMetricaGoal} from 'ui/libs/metrica';
+
 import type {CreateEntryActionType} from '../../constants';
 import type {WorkbookEntriesFilters, WorkbookEntry} from '../../types';
 import {

@@ -1,4 +1,5 @@
 dist
+dist-lib
 node_modules
 src/i18n/keysets
 tests/dist

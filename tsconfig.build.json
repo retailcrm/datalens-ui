@@ -1,0 +1,63 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "useUnknownInCatchVariables": false,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "outDir": "dist-lib",
+    "paths": {
+      "components/*": ["./src/ui/components/*"],
+      "constants/*": ["./src/ui/constants/*"],
+      "datalens": ["./src/ui/datalens/index.tsx"],
+      "datalens/*": ["./src/ui/datalens/*"],
+      "hooks": ["./src/ui/hooks/index.ts"],
+      "hooks/*": ["./src/ui/hooks/*"],
+      "hoc": ["./src/ui/hoc"],
+      "hoc/*": ["./src/ui/hoc/*"],
+      "i18n": ["./src/i18n/index.ts"],
+      "i18n/*": ["./src/i18n/*"],
+      "index": ["./src/ui/index.ts"],
+      "libs": ["./src/ui/libs/index.ts"],
+      "libs/*": ["./src/ui/libs/*"],
+      "shared": ["./src/shared/index.ts"],
+      "shared/*": ["./src/shared/*"],
+      "store": ["./src/ui/store/index.ts"],
+      "store/*": ["./src/ui/store/*"],
+      "typings": ["./src/ui/typings/index.ts"],
+      "typings/*": ["./src/ui/typings/*"],
+      "ui": ["./src/ui/index.ts"],
+      "ui/*": ["./src/ui/*"],
+      "utils": ["./src/ui/utils/index.ts"],
+      "utils/*": ["./src/ui/utils/*"],
+      "units/*": ["./src/ui/units/*"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "target": "ES2022",
+    "types": [
+      "highcharts",
+      "webpack-env",
+      "gtag.js",
+      "./node_modules/@gravity-ui/chartkit/build/plugins/highcharts/types/highcharts-extends.d.ts"
+    ]
+  },
+  "include": [
+    "node_modules/@gravity-ui/chartkit/build/plugins/highcharts/types/highcharts-extends.d.ts",
+    "src/**/*",
+    "src/@types",
+    "src/i18n",
+    "src/shared/**/*"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.stories.tsx",
+    "**/__tests__/**",
+    "**/__stories__/**",
+    "tests"
+  ]
+}

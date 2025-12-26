@@ -2,6 +2,7 @@ import {GLOBAL_I18N_VAR} from './constants';
 import {initI18n} from './utils';
 
 const isBrowserEnv = typeof window === 'object';
+// @ts-ignore
 const isJestEnv = typeof jest !== 'undefined';
 
 export const lang =

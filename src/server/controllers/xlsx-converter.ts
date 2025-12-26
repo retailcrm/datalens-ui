@@ -114,12 +114,12 @@ export function xlsxConverter(
 
             const fileStream = fs.createReadStream(file);
             fileStream.pipe(res);
-
-            fileStream.on('close', async (error: Error) => {
-                if (error) {
-                    res.send(500);
-                    ctx.log(`error ${error.message}`);
-                }
+            fileStream.on('error', (error: Error) => {
+                res.send(500);
+                ctx.log(`error ${error.message}`);
+                fileStream.close();
+            });
+            fileStream.on('close', () => {
                 unlink(file).catch((e) => ctx.log(`error ${e.message}`));
             });
         });

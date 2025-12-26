@@ -62,18 +62,14 @@ function setPointSelectState(point: Point, selected: boolean) {
 }
 
 function setSeriesSelectState(series: Highcharts.Series, selected: boolean) {
-    const type = extractHcTypeFromSeries(series);
-    const opacity = selected ? Opacity.SELECTED : Opacity.UNSELECTED;
+    const type = extractHcTypeFromSeries(series) as string | undefined;
+    const opacity = Number(selected ? Opacity.SELECTED : Opacity.UNSELECTED);
 
     switch (type) {
         case 'area':
-        case 'line': {
-            series.update({opacity}, false);
+        case 'line':
+            series.update({type, opacity}, false);
             break;
-        }
-        default: {
-            break;
-        }
     }
 }
 

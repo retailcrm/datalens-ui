@@ -14,7 +14,7 @@ import type {
 
 import type {CommentsMatchType} from './constants';
 
-interface Comments {
+export interface Comments {
     feeds?: Feed[];
     matchedParams?: string[];
     matchType?: CommentsMatchType;
