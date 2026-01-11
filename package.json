@@ -1,5 +1,5 @@
 {
-  "name": "@datalens-platform/datalens-ui",
+  "name": "@retailcrm/datalens-ui",
   "version": "0.0.0",
   "files": [
     "build",
@@ -12,6 +12,7 @@
     "build": "npm run i18n:prepare && NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 APP_BUILDER_CDN=false app-builder build",
     "build:analyze": "npm run i18n:prepare && APP_BUILDER_ANALYZE_BUNDLE=statoscope UI_CORE_CDN=false APP_BUILDER_CDN=false NODE_ENV=production NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 app-builder build",
     "build:lib": "npm run i18n:prepare && NODE_ENV=production vite build",
+    "build:lib:analyze": "npm run i18n:prepare && NODE_ENV=production ANALYZE=true vite build",
     "cdn": "npm run i18n:prepare && NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 app-builder build",
     "start": "NODE_ENV=production node dist/server",
     "deps": "bash ./scripts/ci/cached-npm-install.sh",
@@ -57,7 +58,10 @@
     "type": "git",
     "url": "git@github.com:datalens-tech/datalens-ui.git"
   },
-  "author": "DataLens Team <https://github.com/datalens-tech>",
+  "author": "RetailDriverLLC <integration@retailcrm.ru>",
+  "contributors": [
+    "DataLens Team <https://github.com/datalens-tech>"
+  ],
   "license": "Apache-2.0",
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.1.0",
