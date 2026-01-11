@@ -1,0 +1,66 @@
+name: Release and Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Manual version (optional, e.g. 1.2.3)'
+        required: false
+        type: string
+      prerelease:
+        type: choice
+        description: 'Prerelease type'
+        options:
+          - 'none'
+          - 'alpha'
+          - 'beta'
+          - 'rc'
+        default: 'none'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Release version
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            ARGS="$ARGS --release-as ${{ github.event.inputs.version }}"
+          fi
+          if [ "${{ github.event.inputs.prerelease }}" != "none" ]; then
+            ARGS="$ARGS --prerelease ${{ github.event.inputs.prerelease }}"
+          fi
+          npx standard-version $ARGS
+
+      - name: Build library
+        run: npm run build:lib
+
+      - name: Push changes and tags
+        run: git push --follow-tags origin main
+
+      - name: Publish to NPM
+        run: |
+          cd dist-lib
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

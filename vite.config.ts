@@ -111,12 +111,16 @@ export default defineConfig({
             insertTypesEntry: true,
             staticImport: true,
         }),
-        visualizer({
-            filename: 'dist-lib/report.html',
-            open: true,
-            gzipSize: true,
-            brotliSize: true,
-        }),
+        ...(process.env.ANALYZE === 'true'
+            ? [
+                  visualizer({
+                      filename: 'dist-lib/report.html',
+                      open: true,
+                      gzipSize: true,
+                      brotliSize: true,
+                  }),
+              ]
+            : []),
         {
             name: 'npm-prerequisites',
             async closeBundle() {
@@ -150,11 +154,12 @@ export default defineConfig({
                     path.join(outDir, 'package.json'),
                     JSON.stringify(
                         {
-                            name: '@retailcrm/datalens-ui',
-                            version: '0.0.0',
+                            name: manifest.name,
+                            version: manifest.version,
                             description: 'Datalens UI packed as library',
-                            author: 'RetailCRM',
-                            license: 'Apache-2.0',
+                            author: manifest.author,
+                            contributors: manifest.contributors,
+                            license: manifest.license,
                             type: 'module',
                             main: './index.js',
                             types: './types/index.d.ts',
