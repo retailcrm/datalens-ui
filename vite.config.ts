@@ -54,6 +54,7 @@ const external = [
     /^@bem-react\/.*/,
     /^@braintree\/.*/,
     /^@diplodoc\/.*/,
+    /^@datalens-tech\/.*/,
     /^@floating-ui\/.*/,
     /^@gravity-ui\/(?!app-builder).*/,
     /^@reduxjs\/.*/,
