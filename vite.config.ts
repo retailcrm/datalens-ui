@@ -56,7 +56,8 @@ const external = [
     /^@diplodoc\/.*/,
     /^@datalens-tech\/.*/,
     /^@floating-ui\/.*/,
-    /^@gravity-ui\/(?!app-builder).*/,
+    // Изменяем это правило, чтобы оно не трогало .css и .scss файлы
+    /^@gravity-ui\/(?!app-builder)(?!.*\.s?css$).*/,
     /^@reduxjs\/.*/,
     /^@tanstack\/.*/,
 ];
