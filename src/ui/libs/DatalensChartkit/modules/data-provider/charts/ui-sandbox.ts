@@ -52,42 +52,59 @@ export const getUISandbox = async () => {
     return uiSandbox;
 };
 
-async function getUiSandboxLibs(libs: string[]) {
-    const getModule = (name: string) =>
-        import(`@datalens-tech/ui-sandbox-modules/dist/${name}.js?raw`).then(
-            (module) => module.default,
-        );
-    const additionalModules = libs.map((lib) => {
-        switch (lib) {
-            case 'date-utils@2.3.0': {
-                return getModule('@gravity-ui/date-utils/v2.3.0');
-            }
-            case 'date-utils':
-            case 'date-utils@2.5.3': {
-                return getModule('@gravity-ui/date-utils/v2.5.3');
-            }
-            case 'd3@7.9.0':
-            case 'd3': {
-                return getModule('d3/v7.9.0');
-            }
-            case 'd3-chord@3.0.1':
-            case 'd3-chord': {
-                return getModule('d3-chord/v3.0.1');
-            }
-            case 'd3-sankey@0.12.3':
-            case 'd3-sankey': {
-                return getModule('d3-sankey/v0.12.3');
-            }
-            default: {
-                throw new ChartKitCustomError(null, {
-                    details: `The library '${lib}' is not available`,
-                });
-            }
-        }
-    });
+type Module<D> = {
+    default: D;
+};
 
-    const modules = await Promise.all([getModule('dom-api'), ...additionalModules]);
-    return modules.filter(Boolean).join('');
+const resolve = <D>(request: Promise<Module<D>>) => request.then((module) => module.default);
+
+const contents = (library: string) => {
+    switch (library) {
+        case 'date-utils@2.3.0': {
+            return resolve(
+                import(
+                    '@datalens-tech/ui-sandbox-modules/dist/@gravity-ui/date-utils/v2.3.0.js?raw'
+                ),
+            );
+        }
+        case 'date-utils':
+        case 'date-utils@2.5.3': {
+            return resolve(
+                import(
+                    '@datalens-tech/ui-sandbox-modules/dist/@gravity-ui/date-utils/v2.5.3.js?raw'
+                ),
+            );
+        }
+        case 'd3@7.9.0':
+        case 'd3': {
+            return resolve(import('@datalens-tech/ui-sandbox-modules/dist/d3/v7.9.0.js?raw'));
+        }
+        case 'd3-chord@3.0.1':
+        case 'd3-chord': {
+            return resolve(import('@datalens-tech/ui-sandbox-modules/dist/d3-chord/v3.0.1.js?raw'));
+        }
+        case 'd3-sankey@0.12.3':
+        case 'd3-sankey': {
+            return resolve(
+                import('@datalens-tech/ui-sandbox-modules/dist/d3-sankey/v0.12.3.js?raw'),
+            );
+        }
+    }
+
+    throw new ChartKitCustomError(null, {
+        details: `The library '${library}' is not available`,
+    });
+};
+
+async function getUiSandboxLibs(libs: string[]) {
+    return (
+        await Promise.all([
+            resolve(import('@datalens-tech/ui-sandbox-modules/dist/dom-api.js?raw')),
+            ...libs.map(contents),
+        ])
+    )
+        .filter(Boolean)
+        .join('');
 }
 
 async function getUnwrappedFunction(args: {
