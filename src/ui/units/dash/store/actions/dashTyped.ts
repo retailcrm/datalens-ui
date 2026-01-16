@@ -68,7 +68,7 @@ import {
 } from '../selectors/dashTypedSelectors';
 import type {DashState, UpdateTabsWithGlobalStateArgs} from '../typings/dash';
 
-import {save} from './base/actions';
+import {save} from './base/save';
 import {
     getPreparedCopiedSelectorData,
     migrateDataSettings,
