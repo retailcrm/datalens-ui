@@ -51,7 +51,9 @@ import {getItemForShapeSection} from '../utils/shapes';
 
 import {openDialogColor} from './dialogColor';
 import {updatePreviewAndClientChartsConfig} from './preview';
-import {setColorsConfig, setPointsSizeConfig, setShapesConfig} from './visualization';
+import {setColorsConfig} from './visualization/colors';
+import {setPointsSizeConfig} from './visualization/geometry';
+import {setShapesConfig} from './visualization/shapes';
 import {setExtraSettings} from './widget';
 
 import {setVisualization} from './index';

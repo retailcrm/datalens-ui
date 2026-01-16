@@ -49,6 +49,7 @@ import type {
     InitDashChangesBufferAction,
     UpdateDashChangesBufferAction,
 } from '../../actions/controlDialog/controlDialog';
+import {getGroupSelectorDialogInitialState} from '../../selectors/controlDialog/controlDialog';
 import {
     getActualUniqueFieldNameValidation,
     getInitialDefaultValue,
@@ -130,19 +131,7 @@ export function getSelectorDialogInitialState(
     };
 }
 
-export function getGroupSelectorDialogInitialState(): SelectorsGroupDialogState {
-    return {
-        showGroupName: false,
-        autoHeight: false,
-        buttonApply: false,
-        buttonReset: false,
-        updateControlsOnChange: true,
-        impactType: undefined,
-        impactTabsIds: undefined,
-        group: [],
-        validation: {},
-    };
-}
+export {getGroupSelectorDialogInitialState};
 
 export function getSelectorDialogFromData(
     data: DashTabItemControlData & {source: {[key: string]: any}},
