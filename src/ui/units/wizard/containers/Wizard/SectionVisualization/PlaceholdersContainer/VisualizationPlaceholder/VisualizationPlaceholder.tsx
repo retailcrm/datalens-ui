@@ -7,17 +7,13 @@ import {i18n} from 'i18n';
 import {connect} from 'react-redux';
 import type {Dispatch} from 'redux';
 import {bindActionCreators} from 'redux';
+import type {Field, Placeholder, PointSizeConfig, VisualizationLayerType} from 'shared';
 import type {DatalensGlobalState} from 'ui';
+import {CHART_SETTINGS, VISUALIZATION_IDS} from 'ui/constants/visualizations';
 import {selectPointSizeConfig, selectVisualization} from 'units/wizard/selectors/visualization';
 import {selectExtraSettings} from 'units/wizard/selectors/widget';
 import {getGeolayerGroups} from 'units/wizard/utils/helpers';
 
-import type {
-    Field,
-    Placeholder,
-    PointSizeConfig,
-    VisualizationLayerType,
-} from '../../../../../../../../shared';
 import {
     DatasetFieldType,
     PlaceholderActionQa,
@@ -50,7 +46,7 @@ import {
 import {forceDisableTotalsAndPagination, setExtraSettings} from '../../../../../actions/widget';
 import type {DialogColumnSettingsFields} from '../../../../../components/Dialogs/DialogColumnSettings/DialogColumnSettings';
 import type {ColumnSettingsState} from '../../../../../components/Dialogs/DialogColumnSettings/hooks/useDialogColumnSettingsState';
-import {CHART_SETTINGS, ITEM_TYPES, VISUALIZATION_IDS} from '../../../../../constants';
+import {ITEM_TYPES} from '../../../../../constants';
 import PlaceholderComponent from '../Placeholder/Placeholder';
 import type {CommonPlaceholderProps} from '../PlaceholdersContainer';
 

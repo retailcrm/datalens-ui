@@ -1,4 +1,5 @@
-import {getSdk, isSdkError} from 'libs/schematic-sdk';
+import {getSdk} from 'libs/schematic-sdk';
+import {isSdkError} from 'libs/schematic-sdk/parse-error';
 import logger from 'libs/logger';
 import {showToast} from 'store/actions/toaster';
 import {showCollectionEntityErrorToast} from './showCollectionEntityErrorToast';

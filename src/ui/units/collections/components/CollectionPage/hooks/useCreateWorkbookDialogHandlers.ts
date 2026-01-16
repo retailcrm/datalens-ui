@@ -8,7 +8,7 @@ import type {
     UseCreateWorkbookDialogHandlers,
 } from 'ui/registry/units/collections/types';
 
-import {DIALOG_CREATE_WORKBOOK} from '../../../../../components/CollectionsStructure';
+import {DIALOG_CREATE_WORKBOOK} from '../../../../../components/CollectionsStructure/CreateWorkbookDialog/CreateWorkbookDialog';
 import type {AppDispatch} from '../../../../../store';
 import {closeDialog, openDialog} from '../../../../../store/actions/dialog';
 import {WORKBOOKS_PATH} from '../../../../collections-navigation/constants';

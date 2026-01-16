@@ -9,12 +9,12 @@ import type {
 } from 'shared';
 import type {DatalensGlobalState} from 'ui';
 import {WIZARD_DATASET_ID_PARAMETER_KEY} from 'ui/constants/misc';
+import {CHART_SETTINGS} from 'ui/constants/visualizations';
 import {getRouter} from 'ui/navigation';
 import type {SaveWidgetArgs} from 'ui/store/actions/chartWidget';
 import {saveWidget} from 'ui/store/actions/chartWidget';
 import {updateClientChartsConfig} from 'ui/units/wizard/actions/preview';
 
-import {CHART_SETTINGS} from '../constants';
 import type {WizardDispatch} from '../reducers';
 import {mapClientConfigToChartsConfig} from '../utils/mappers/mapClientToChartsConfig';
 import {removeUrlParameters} from '../utils/wizard';

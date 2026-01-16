@@ -25,6 +25,7 @@ import {
     isPseudoField,
     isVisualizationWithLayers,
 } from 'shared';
+import {VISUALIZATION_IDS} from 'ui/constants/visualizations';
 
 import type {ResetWizardStoreAction} from '../actions';
 import type {HighchartsWidget, PreviewAction} from '../actions/preview';
@@ -35,10 +36,9 @@ import {
     UPDATE_CLIENT_CHARTS_CONFIG,
     UPDATE_PREVIEW,
 } from '../actions/preview';
-import {VISUALIZATION_IDS} from '../constants';
 import {getSelectedLayer, versionExtractor} from '../utils/helpers';
 
-import {clearUnusedVisualizationItems} from './utils';
+import {clearUnusedVisualizationItems} from './utils/clearUnusedVisualizationItems';
 import {getConfigData} from './utils/getConfigData';
 import {updateColorsHierarchies} from './utils/updateColorHierarchies';
 import {updateVisualizationHierarchies} from './visualization';

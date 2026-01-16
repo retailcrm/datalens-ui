@@ -6,12 +6,13 @@ import {Button, Icon, TextInput} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import {I18n} from 'i18n';
 import {EntryDialogQA, EntryScope, PLACE} from 'shared';
+import NavigationMinimal from 'ui/components/Navigation/NavigationMinimal';
 
 import {Scope} from '../../constants';
 import {sdk} from '../../libs/sdk';
 import {registry} from '../../registry';
 import {EntityIcon} from '../EntityIcon/EntityIcon';
-import {NavigationMinimal, getPathDisplayName} from '../Navigation';
+import {getPathDisplayName} from '../Navigation';
 
 import './PathSelect.scss';
 

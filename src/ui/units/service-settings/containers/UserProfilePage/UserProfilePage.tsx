@@ -6,7 +6,7 @@ import {I18n, i18n as i18nGlobal} from 'i18n';
 import {useSelector} from 'react-redux';
 import {useParams} from 'react-router';
 import {Feature} from 'shared';
-import {ActionPanel} from 'ui/components/ActionPanel';
+import ActionPanel from 'ui/components/ActionPanel/ActionPanel';
 import {BreadcrumbsItemLink} from 'ui/components/BreadcrumbsItemLink/BreadcrumbsItemLink';
 import {PageTitle} from 'ui/components/PageTitle';
 import {DL} from 'ui/constants/common';

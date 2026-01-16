@@ -14,11 +14,11 @@ import type {
 } from 'shared';
 import {isVisualizationWithLayers} from 'shared';
 import type {DatalensGlobalState} from 'ui';
+import {VISUALIZATION_IDS} from 'ui/constants/visualizations';
 import {registry} from 'ui/registry';
 import {setSelectedLayerId} from 'units/wizard/actions';
 import {updatePreviewAndClientChartsConfig} from 'units/wizard/actions/preview';
 import {updateLayers} from 'units/wizard/actions/visualization';
-import {VISUALIZATION_IDS} from 'units/wizard/constants';
 import {getChangedPlaceholderSettings} from 'units/wizard/reducers/utils/getPlaceholdersWithMergedSettings';
 import {selectHighchartsWidget} from 'units/wizard/selectors/preview';
 import {selectSort, selectVisualization} from 'units/wizard/selectors/visualization';

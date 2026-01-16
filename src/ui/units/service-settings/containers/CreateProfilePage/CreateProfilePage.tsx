@@ -3,7 +3,7 @@ import React from 'react';
 import {Breadcrumbs, Flex} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import {I18n} from 'i18n';
-import {ActionPanel} from 'ui/components/ActionPanel';
+import ActionPanel from 'ui/components/ActionPanel/ActionPanel';
 import {BreadcrumbsItemLink} from 'ui/components/BreadcrumbsItemLink/BreadcrumbsItemLink';
 import {DL} from 'ui/constants';
 

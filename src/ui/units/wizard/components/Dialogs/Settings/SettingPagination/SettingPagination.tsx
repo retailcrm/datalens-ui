@@ -2,8 +2,8 @@ import React from 'react';
 
 import type {PopupPlacement} from '@gravity-ui/uikit';
 import {i18n} from 'i18n';
+import {CHART_SETTINGS} from 'ui/constants/visualizations';
 
-import {CHART_SETTINGS} from '../../../../constants';
 import SettingSwitcher from '../SettingSwitcher/SettingSwitcher';
 
 type PaginationProps = {

@@ -33,7 +33,7 @@ import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
 import type {ErrorViewProps} from '../';
 import {AccessRightsUrlOpen} from '../../../../components/AccessRights/AccessRightsUrlOpen';
-import {ActionPanel} from '../../../../components/ActionPanel';
+import ActionPanel from '../../../../components/ActionPanel/ActionPanel';
 import withErrorPage from '../../../../components/ErrorPage/withErrorPage';
 import {FieldKey} from '../../constants';
 import {

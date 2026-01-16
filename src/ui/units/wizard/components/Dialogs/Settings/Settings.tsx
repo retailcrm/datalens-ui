@@ -39,6 +39,7 @@ import {
     isTreeField,
 } from 'shared';
 import type {DatalensGlobalState} from 'ui';
+import {CHART_SETTINGS, SETTINGS, VISUALIZATION_IDS} from 'ui/constants/visualizations';
 import type {Widget} from 'ui/libs/DatalensChartkit/types/widget';
 import {getFirstFieldInPlaceholder} from 'ui/units/wizard/utils/placeholder';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
@@ -48,7 +49,6 @@ import {selectHighchartsWidget, selectIsLoading} from 'units/wizard/selectors/pr
 import DialogManager from '../../../../../components/DialogManager/DialogManager';
 import {DEFAULT_PAGE_ROWS_LIMIT} from '../../../../../constants/misc';
 import {getQlAutoExecuteChartValue} from '../../../../ql/utils/chart-settings';
-import {CHART_SETTINGS, SETTINGS, VISUALIZATION_IDS} from '../../../constants';
 import {getDefaultChartName} from '../../../utils/helpers';
 
 import {CenterSetting} from './CenterSetting/CenterSetting';

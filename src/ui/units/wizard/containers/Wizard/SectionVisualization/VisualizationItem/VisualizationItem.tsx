@@ -16,8 +16,8 @@ import {i18n} from 'i18n';
 import type {SDK} from 'libs';
 import {cloneDeep} from 'lodash';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
+import {bindActionCreators} from 'redux';
 import type {
     DatasetField,
     DatasetFieldCalcMode,
@@ -41,6 +41,7 @@ import {
 } from 'shared';
 import {closeDialog, openDialog} from 'store/actions/dialog';
 import type {DatalensGlobalState} from 'ui';
+import {SETTINGS} from 'ui/constants/visualizations';
 import {getChartType} from 'ui/units/ql/store/reducers/ql';
 import {selectExtraSettings} from 'ui/units/wizard/selectors/widget';
 import Utils from 'ui/utils/utils';
@@ -67,7 +68,6 @@ import {
     AVAILABLE_DATETIME_FORMATS,
     AVAILABLE_DATE_FORMATS,
     CONFLICT_TOOLTIPS,
-    SETTINGS,
 } from 'units/wizard/constants';
 import {
     selectDataset,

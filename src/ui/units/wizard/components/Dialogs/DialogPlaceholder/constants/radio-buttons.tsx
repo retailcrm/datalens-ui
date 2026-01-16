@@ -3,8 +3,7 @@ import React from 'react';
 import type {SegmentedRadioGroupOptionProps} from '@gravity-ui/uikit';
 import {i18n} from 'i18n';
 import {AxisAutoScaleModes} from 'shared/types';
-
-import {SETTINGS} from '../../../../constants';
+import {SETTINGS} from 'ui/constants/visualizations';
 
 export const SCALE_RADIO_BUTTON_OPTIONS: SegmentedRadioGroupOptionProps[] = [
     {
