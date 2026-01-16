@@ -1,3 +1,5 @@
+import {DL} from 'ui/constants/common';
+
 export enum MenuType {
     Wizard = 'wizard',
     Widget = 'widget',
@@ -7,3 +9,5 @@ export enum MenuType {
     None = 'none',
     ChartRecipe = 'chart-recipe',
 }
+
+export const ICONS_MENU_DEFAULT_SIZE = DL.IS_MOBILE ? 18 : 16;

@@ -15,6 +15,7 @@ import {I18n, i18n} from 'i18n';
 import {FOCUSED_WIDGET_PARAM_NAME, Feature, MenuItemsIds, PREVIEW_ROUTE, WidgetKind} from 'shared';
 import {isWidgetTypeDoNotNeedOverlay} from 'ui/components/DashKit/plugins/Widget/components/helpers';
 import {URL_OPTIONS as COMMON_URL_OPTIONS, DL} from 'ui/constants';
+import {ICONS_MENU_DEFAULT_SIZE} from 'ui/libs/DatalensChartkit/menu/constants';
 import {getLocation} from 'ui/navigation';
 import {registry} from 'ui/registry';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
@@ -33,7 +34,7 @@ import type {AlertsActionArgs} from '../types/menu';
 
 import type {MenuItemConfig, MenuItemModalProps, MenuLoadedData} from './Menu';
 
-export const ICONS_MENU_DEFAULT_SIZE = DL.IS_MOBILE ? 18 : 16;
+export {ICONS_MENU_DEFAULT_SIZE};
 
 export type MenuItemArgs = {
     loadedData: MenuLoadedData;
