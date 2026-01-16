@@ -6,8 +6,9 @@ import {connect, useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import type {DatalensGlobalState} from 'ui';
 import {registry} from 'ui/registry';
+import {DIALOG_CONN_CREATE_CONNECTION} from 'ui/units/connections/components/dialogs/CreateConnection/CreateConnection';
+import {DIALOG_CONN_CREATE_IN_WB_OR_COLLECTION} from 'ui/units/connections/components/dialogs/CreateConnectionInWbOrCollection/CreateConnectionInWbOrCollection';
 
-import {DIALOG_CONN_CREATE_CONNECTION, DIALOG_CONN_CREATE_IN_WB_OR_COLLECTION} from '../../';
 import type {
     DialogCreateWorkbookEntryProps,
     EntryDialogBaseProps,

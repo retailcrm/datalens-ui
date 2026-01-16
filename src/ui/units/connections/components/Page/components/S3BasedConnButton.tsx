@@ -7,9 +7,10 @@ import {useParams} from 'react-router-dom';
 import {ConnectionsBaseQA} from 'shared';
 import type {DatalensGlobalState} from 'ui';
 import {registry} from 'ui/registry';
+import {DIALOG_CONN_CREATE_CONNECTION} from 'ui/units/connections/components/dialogs/CreateConnection/CreateConnection';
+import {DIALOG_CONN_CREATE_IN_WB_OR_COLLECTION} from 'ui/units/connections/components/dialogs/CreateConnectionInWbOrCollection/CreateConnectionInWbOrCollection';
 
 import type {DialogCreateConnectionInWbOrCollectionProps, DialogCreateConnectionProps} from '../..';
-import {DIALOG_CONN_CREATE_CONNECTION, DIALOG_CONN_CREATE_IN_WB_OR_COLLECTION} from '../..';
 import {CreationPlaces} from '../../../constants';
 import {
     connectionTypeSelector,
