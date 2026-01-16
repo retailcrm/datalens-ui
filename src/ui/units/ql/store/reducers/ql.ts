@@ -7,25 +7,9 @@ import type {QlConfig} from 'shared/types/config/ql';
 import {QlConfigVersions} from 'shared/types/ql/versions';
 import type {DatalensGlobalState} from 'ui';
 import {DL} from 'ui/constants';
-import {
-    selectVisualization as getWizardVisualization,
-    selectColors,
-    selectColorsConfig,
-    selectLabels,
-    selectPointSizeConfig,
-    selectShapes,
-    selectShapesConfig,
-    selectTooltips,
-} from 'units/wizard/selectors/visualization';
-import {selectExtraSettings as getExtraSettingsWizard} from 'units/wizard/selectors/widget';
+import {selectPointSizeConfig} from 'units/wizard/selectors/visualization';
 
-import {
-    AppStatus,
-    ConnectionStatus,
-    DEFAULT_SALT,
-    PANE_VIEWS,
-    VisualizationStatus,
-} from '../../constants';
+import {AppStatus, ConnectionStatus, DEFAULT_SALT, VisualizationStatus} from '../../constants';
 import {isPromQlQueriesEmpty, isQLQueryEmpty} from '../../utils/query';
 import {
     ADD_PARAM,
@@ -59,6 +43,22 @@ import {
     UPDATE_PARAM_IN_QUERY,
     UPDATE_QUERY,
 } from '../actions/ql';
+import {
+    getChartType,
+    getConnection,
+    getConnectionSources,
+    getConnectionStatus,
+    getEntry,
+    getExtraSettings,
+    getGridSchemes,
+    getOrder,
+    getPlaceholdersContent,
+    getPreviewData,
+    getQueries,
+    getQueryValue,
+    getValid,
+    getVisualization,
+} from '../selectors/ql';
 import type {
     QLAction,
     QLActionAddParamInQuery,
@@ -86,8 +86,6 @@ import type {
     QLActionUpdateParam,
     QLActionUpdateParamInQuery,
     QLActionUpdateQuery,
-    QLGridScheme,
-    QLGridSchemes,
     QLState,
 } from '../typings/ql';
 import {Helper} from '../utils/grid';
@@ -137,13 +135,10 @@ const initialState: QLState = {
 
 /* --- SELECTORS --- */
 
-export const getChartType = (state: DatalensGlobalState) => state.ql?.chartType;
-
-export const getConnection = (state: DatalensGlobalState) => state.ql.connection;
-
-export const getConnectionStatus = (state: DatalensGlobalState) => state.ql.connectionStatus;
-
-export const getConnectionSources = (state: DatalensGlobalState) => state.ql.connectionSources;
+export {getChartType};
+export {getConnection};
+export {getConnectionSources};
+export {getConnectionStatus};
 
 export const getConnectionSourcesSchemas = (state: DatalensGlobalState) =>
     state.ql.connectionSourcesSchemas;
@@ -154,13 +149,12 @@ export const getAppError = (state: DatalensGlobalState) => state.ql.error;
 
 export const getVisualizationStatus = (state: DatalensGlobalState) => state.ql.visualizationStatus;
 
-export const getExtraSettings = getExtraSettingsWizard;
+export {getExtraSettings};
 
 export const getTablePreviewVisible = (state: DatalensGlobalState) => state.ql.tablePreviewVisible;
 
-export const getQueryValue = (state: DatalensGlobalState) => state.ql.queryValue;
-
-export const getQueries = (state: DatalensGlobalState) => state.ql.queries;
+export {getQueryValue};
+export {getQueries};
 
 export const getRedirectUrl = (state: DatalensGlobalState) => state.ql.redirectUrl;
 
@@ -177,111 +171,17 @@ export const getIsDescriptionChanged = createSelector(
     (initialDescription, description) => initialDescription !== description,
 );
 
-export const getGridSchemes = createSelector(
-    [getVisualizationStatus, getTablePreviewVisible],
-    (visualizationStatus, tablePreviewVisible): QLGridSchemes => {
-        const visualizationAndChartPreviewPane: QLGridScheme = {
-            name: 'pane',
-            props: {
-                split: 'vertical',
-                defaultSize: 240,
-                minSize: 200,
-                maxSize: -200,
-            },
-            childNodes: [
-                {
-                    name: 'child',
-                    index: 1,
-                },
-                {
-                    name: 'child',
-                    index: 2,
-                    props: {
-                        loader: visualizationStatus === VisualizationStatus.LoadingChart,
-                    },
-                },
-            ],
-        };
-
-        const tablePreviewPane: QLGridScheme = {
-            name: 'child',
-            index: 3,
-        };
-
-        return {
-            ids: ['1-3'],
-            default: '1-3',
-            schemes: {
-                '1-3': {
-                    panes: [
-                        PANE_VIEWS.MAIN,
-                        PANE_VIEWS.SETTINGS,
-                        PANE_VIEWS.PREVIEW,
-                        PANE_VIEWS.TABLE_PREVIEW,
-                    ],
-                    scheme: [
-                        {
-                            name: 'pane',
-                            props: {
-                                split: 'vertical',
-                                minSize: 452,
-                                maxSize: -500,
-                                defaultSize: '40%',
-                            },
-                            childNodes: [
-                                {
-                                    name: 'child',
-                                    index: 0,
-                                },
-                                {
-                                    name: 'pane',
-                                    props: {
-                                        split: 'horizontal',
-                                        defaultSize: '75%',
-                                        minSize: 150,
-                                        maxSize: -150,
-                                        pane1Style: tablePreviewVisible
-                                            ? undefined
-                                            : {
-                                                  height: '100%',
-                                              },
-                                        resizerStyle: tablePreviewVisible
-                                            ? undefined
-                                            : {
-                                                  display: 'none',
-                                              },
-                                        pane2Style: tablePreviewVisible
-                                            ? undefined
-                                            : {
-                                                  display: 'none',
-                                              },
-                                        loader:
-                                            visualizationStatus ===
-                                            VisualizationStatus.LoadingEverything,
-                                    },
-                                    childNodes: [
-                                        visualizationAndChartPreviewPane,
-                                        tablePreviewPane,
-                                    ],
-                                },
-                            ],
-                        },
-                    ],
-                },
-            },
-        };
-    },
-);
+export {getGridSchemes};
 
 export const getGridPanesIds = (state: DatalensGlobalState) => state.ql.grid?.panes;
 
-export const getEntry = (state: DatalensGlobalState) => state.ql.entry;
+export {getEntry};
 
 export const getQueryMetadata = (state: DatalensGlobalState) => state.ql.metadata;
 
 export const getTablePreviewData = (state: DatalensGlobalState) => state.ql.tablePreviewData;
 
-export const getOrder = (state: DatalensGlobalState) => state.ql.order;
+export {getOrder};
 
 export const getChart = (state: DatalensGlobalState) => state.ql.chart;
 
@@ -289,47 +189,12 @@ export const getDefaultPath = (state: DatalensGlobalState) => state.ql.defaultPa
 
 export const getParams = (state: DatalensGlobalState) => state.ql.params;
 
-export const getValid = createSelector(
-    [getEntry, getConnection, getParams],
-    (entry, connection, params): boolean => {
-        if (!entry) {
-            return false;
-        }
-
-        if (!connection) {
-            return false;
-        }
-
-        return params.every((param) => {
-            return param.type && param.name;
-        });
-    },
-);
-
-export const getVisualization = getWizardVisualization;
+export {getValid};
+export {getVisualization};
 
 export const getEntryIsLocked = createSelector([getEntry], (entry): boolean => {
     return Boolean(entry && entry.permissions && entry.permissions.edit === false);
 });
-
-const getPlaceholdersContent = createSelector(
-    selectColors,
-    selectColorsConfig,
-    selectLabels,
-    selectTooltips,
-    selectShapes,
-    selectShapesConfig,
-    (colors, colorsConfig, labels, tooltips, shapes, shapesConfig) => {
-        return {
-            colors,
-            colorsConfig,
-            labels,
-            tooltips,
-            shapes,
-            shapesConfig,
-        };
-    },
-);
 
 export const getEntryNotChanged = createSelector(
     getEntry,
@@ -421,60 +286,7 @@ export const getEntryCanBeSaved = createSelector(
     },
 );
 
-export const getPreviewData = createSelector(
-    getChartType,
-    getQueryValue,
-    getQueries,
-    getExtraSettings,
-    getConnection,
-    getVisualization,
-    getParams,
-    getPlaceholdersContent,
-    getOrder,
-    selectPointSizeConfig,
-    (
-        chartType,
-        queryValue,
-        queries,
-        extraSettings,
-        connection,
-        visualization,
-        params,
-        placeholdersContent,
-        order,
-        geopointsConfig,
-    ): QlConfig | null => {
-        if (chartType && connection && visualization) {
-            const result: QlConfig = {
-                type: 'ql',
-                chartType,
-                connection: {
-                    entryId: connection.entryId,
-                    type: connection.type,
-                    dataExportForbidden: Boolean(connection.data?.data_export_forbidden),
-                },
-                colors: placeholdersContent.colors || [],
-                colorsConfig: placeholdersContent.colorsConfig || {},
-                labels: placeholdersContent.labels || [],
-                tooltips: placeholdersContent.tooltips || [],
-                shapes: placeholdersContent.shapes || [],
-                shapesConfig: placeholdersContent.shapesConfig || [],
-                extraSettings,
-                queryValue,
-                queries,
-                params: params,
-                visualization,
-                order,
-                version: QlConfigVersions.V7,
-                geopointsConfig,
-            };
-
-            return result;
-        } else {
-            return null;
-        }
-    },
-);
+export {getPreviewData};
 
 const getPaneCurrentTabId = (state: DatalensGlobalState, props: {paneId: string}) => {
     return state.ql.panes.byId[props.paneId].currentTab;

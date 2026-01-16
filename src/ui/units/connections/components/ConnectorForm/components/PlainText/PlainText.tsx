@@ -3,7 +3,7 @@ import React from 'react';
 import block from 'bem-cn-lite';
 import type {PlainTextItem} from 'shared/schema/types';
 
-import {MarkdownItem} from '../';
+import {MarkdownItem} from '../MarkdownItem/MarkdownItem';
 
 import './PlainText.scss';
 

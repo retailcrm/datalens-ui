@@ -18,7 +18,7 @@ import type {ApplyData, DatalensGlobalState, Filter} from '../../../../ui';
 import {fetchColorPalettes} from '../../../store/actions/colorPaletteEditor';
 import {closeDialog, openDialog, openDialogFilter} from '../../../store/actions/dialog';
 import {selectColorPalettes} from '../../../store/selectors/colorPaletteEditor';
-import {getChartType} from '../../ql/store/reducers/ql';
+import {getChartType} from '../../ql/store/selectors/ql';
 import type {DialogColumnSettingsFields} from '../components/Dialogs/DialogColumnSettings/DialogColumnSettings';
 import {DIALOG_COLUMN_SETTINGS} from '../components/Dialogs/DialogColumnSettings/DialogColumnSettings';
 import type {ColumnSettingsState} from '../components/Dialogs/DialogColumnSettings/hooks/useDialogColumnSettingsState';

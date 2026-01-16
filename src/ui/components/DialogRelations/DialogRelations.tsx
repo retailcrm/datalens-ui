@@ -25,7 +25,7 @@ import {Content} from './components/Content/Content';
 import {AliasesInvalidList} from './components/DialogAliases/components/AliasesList/AliasesInvalidList';
 import type {FiltersTypes} from './components/Filters/Filters';
 import {Filters} from './components/Filters/Filters';
-import {DEFAULT_ALIAS_NAMESPACE, RELATION_TYPES} from './constants';
+import {DEFAULT_ALIAS_NAMESPACE, DIALOG_RELATIONS, RELATION_TYPES} from './constants';
 import {
     getPairedRelationType,
     getRelationsForSave,
@@ -51,7 +51,7 @@ const i18n = I18n.keyset('component.dialog-relations.view');
 
 const ICON_SIZE = 16;
 
-export const DIALOG_RELATIONS = Symbol('dash/DIALOG_RELATIONS');
+export {DIALOG_RELATIONS};
 
 export type DialogRelationsProps = {
     onClose: () => void;

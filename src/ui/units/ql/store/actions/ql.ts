@@ -77,7 +77,7 @@ import {
     getPreviewData,
     getValid,
     selectInitalQlChartConfig,
-} from '../reducers/ql';
+} from '../selectors/ql';
 import type {
     QLChart,
     QLConnectionEntry,
