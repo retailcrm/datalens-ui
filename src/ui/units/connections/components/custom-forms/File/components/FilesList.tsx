@@ -4,8 +4,8 @@ import type {ListItemData} from '@gravity-ui/uikit';
 import {List} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import {ConnectorType} from 'shared';
+import {FormTitle} from 'ui/units/connections/components/FormTitle/FormTitle';
 
-import {FormTitle} from '../../../';
 import type {ListItemProps} from '../../../../store';
 import {getConnectorTitle} from '../../../../utils';
 import {useFileContext} from '../context';
