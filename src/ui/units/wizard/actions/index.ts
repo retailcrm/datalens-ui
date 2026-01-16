@@ -70,7 +70,7 @@ import {selectWizardWorkbookId} from '../selectors/settings';
 import {selectVisualization} from '../selectors/visualization';
 import {filterVisualizationColors} from '../utils/colors';
 import {getChartFiltersWithDisabledProp} from '../utils/filters';
-import {getVisualization, transformSchema} from '../utils/helpers';
+import {getVisualization} from '../utils/helpers';
 import {
     mapChartsConfigToClientConfig,
     selectChartsConfigUpdates,
@@ -122,39 +122,6 @@ const i18n = I18n.keyset('wizard');
 
 export const RESET_WIZARD_STORE = Symbol('wizard/RESET_WIZARD_STORE');
 export const SET_WIZARD_STORE = Symbol('wizard/SET_WIZARD_STORE');
-
-type ApplyLocalFieldsArgs = {
-    dataset: Dataset;
-    localFields: Field[];
-};
-
-export function applyLocalFields({dataset, localFields}: ApplyLocalFieldsArgs) {
-    const schema = getResultSchemaFromDataset(dataset);
-
-    schema.push(...localFields);
-
-    delete dataset.raw_schema;
-}
-
-type PrepareDatasetArgs = {
-    dataset: Dataset;
-    widgetDataset?: Dataset;
-};
-
-export function prepareDataset({dataset, widgetDataset}: PrepareDatasetArgs) {
-    const {options} = dataset;
-    const schema = getResultSchemaFromDataset(dataset);
-
-    const widgetSchema = getResultSchemaFromDataset(widgetDataset);
-
-    const localFields = widgetSchema.filter((field) => field.local);
-
-    applyLocalFields({dataset, localFields});
-
-    const {dimensions, measures} = transformSchema({schema, widgetDataset, dataset});
-
-    return {dataset, measures, dimensions, options};
-}
 
 type GetDatasetArgs = {
     id: string;
