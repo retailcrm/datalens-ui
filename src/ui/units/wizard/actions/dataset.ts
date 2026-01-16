@@ -8,11 +8,11 @@ import type {
     Link,
     Update,
 } from 'shared';
+import {getResultSchemaFromDataset} from 'shared';
 import type {DataLensApiError} from 'typings';
 import type {DatalensGlobalState} from 'ui';
 import {selectDimensionsByDataset} from 'units/wizard/selectors/dataset';
-
-import {prepareDataset} from './index';
+import {transformSchema} from 'units/wizard/utils/helpers';
 
 export const SET_DATASET = Symbol('wizard/dataset/SET_DATASET');
 export const SET_DATASET_LOADING = Symbol('wizard/dataset/SET_DATASET_LOADING');
@@ -23,6 +23,29 @@ export const SET_DATASETS = Symbol('wizard/dataset/SET_DATASETS');
 export const SET_ORIGINAL_DATASETS = Symbol('wizard/dataset/SET_ORIGINAL_DATASETS');
 export const SET_DATASET_API_ERRORS = Symbol('wizard/dataset/SET_DATASET_API_ERRORS');
 export const SET_DATASET_DELEGATION = Symbol('wizard/dataset/SET_DATASET_DELEGATION');
+
+type PrepareDatasetArgs = {
+    dataset: Dataset;
+    widgetDataset?: Dataset;
+};
+
+function prepareDataset({dataset, widgetDataset}: PrepareDatasetArgs) {
+    const {options} = dataset;
+    const schema = getResultSchemaFromDataset(dataset);
+
+    const widgetSchema = getResultSchemaFromDataset(widgetDataset);
+
+    const localFields = widgetSchema.filter((field) => field.local);
+    const localShema = getResultSchemaFromDataset(dataset);
+
+    localShema.push(...localFields);
+
+    delete dataset.raw_schema;
+
+    const {dimensions, measures} = transformSchema({schema, widgetDataset, dataset});
+
+    return {dataset, measures, dimensions, options};
+}
 
 interface SetDatasetsAction {
     type: typeof SET_DATASETS;
