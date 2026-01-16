@@ -1,8 +1,7 @@
 import _ from 'lodash';
-
-import type {ChartkitGlobalSettings, Field} from '../../../../shared';
-import {DatasetFieldAggregation, isParameter} from '../../../../shared';
-import {DL} from '../../../../ui';
+import type {ChartkitGlobalSettings, Field} from 'shared';
+import {DatasetFieldAggregation, isParameter} from 'shared';
+import {DL} from 'ui/constants/common';
 import {
     AREA_100P_VISUALIZATION,
     AREA_VISUALIZATION,
@@ -25,7 +24,8 @@ import {
     POLYLINE_VISUALIZATION,
     SCATTER_VISUALIZATION,
     TREEMAP_VISUALIZATION,
-} from '../../../../ui/constants/visualizations';
+} from 'ui/constants/visualizations';
+
 import {ITEM_TYPES} from '../constants';
 
 import {getCommonDataType} from './helpers';

@@ -443,8 +443,7 @@ export const getDefaultExtraSettings = (
     return defaultExtraSettings;
 };
 
-export const isFieldVisible = (field: Field) =>
-    !(field.quickFormula || field.hidden || field.virtual);
+export {isFieldVisible} from './predicates';
 
 export const getFieldFormat = (field: Field) => {
     let format = field.format;
