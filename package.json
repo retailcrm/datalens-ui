@@ -281,5 +281,17 @@
   ],
   "optionalDependencies": {
     "fsevents": "^2.3.2"
+  },
+  "madge": {
+    "detectiveOptions": {
+      "ts": {
+        "skipTypeImports": true,
+        "skipAsyncImports": true
+      },
+      "tsx": {
+        "skipTypeImports": true,
+        "skipAsyncImports": true
+      }
+    }
   }
 }
