@@ -8,7 +8,8 @@ import {registry} from '../../../../registry';
 import {EntityIcon} from '../../../EntityIcon/EntityIcon';
 import {PLACE} from '../../constants';
 
-import {type CreateEntryProps, CreateMenuValue} from './CreateEntry';
+import type {CreateEntryProps} from './CreateEntry';
+import {CreateMenuValue} from './constants';
 
 import iconFolder from '../../../../assets/icons/folder.svg';
 

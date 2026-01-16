@@ -40,14 +40,14 @@ import {
     isPseudoField,
     isVisualizationWithLayers,
 } from 'shared';
-
 import type {
     CommonPlaceholdersKeys,
     CommonPlaceholdersKeysWithoutConfigs,
-} from '../../../../shared/types/wizard/misc';
+} from 'shared/types/wizard/misc';
+
 import {CLIENT_SIDE_FIELD_PROPS} from '../constants';
 
-import {isFieldVisible} from './wizard';
+import {isFieldVisible} from './predicates';
 
 export function getUniqueId(prefix = 'id') {
     return `${prefix}-${Date.now()}`;

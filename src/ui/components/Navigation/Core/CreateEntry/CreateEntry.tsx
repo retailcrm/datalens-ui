@@ -10,6 +10,7 @@ import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 import {registry} from '../../../../registry';
 import {PLACE} from '../../constants';
 
+import {CreateMenuValue} from './constants';
 import {getCreateEntryItems} from './getCreateEntryItems';
 
 import './CreateEntry.scss';
@@ -23,15 +24,7 @@ const popupPlacement: PopupPlacement = [
     'left-end',
 ];
 
-export enum CreateMenuValue {
-    Folder = 'folder',
-    Script = 'script',
-    Widget = 'widget',
-    QL = 'ql',
-    Dashboard = 'dashboard',
-    Connection = 'connection',
-    Dataset = 'dataset',
-}
+export {CreateMenuValue};
 
 export interface CreateEntryProps {
     place: string;
