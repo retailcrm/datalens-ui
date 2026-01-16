@@ -1,5 +1,6 @@
 import type {FetchBaseQueryError} from '@reduxjs/toolkit/query';
 import {isAxiosError} from 'axios';
+import {isOperationError, isSdkError} from 'libs/schematic-sdk/parse-error';
 import isObject from 'lodash/isObject';
 import {REQUEST_ID_HEADER, TRACE_ID_HEADER} from 'shared';
 import {isManualError} from 'utils/errors/manual';
@@ -9,7 +10,6 @@ import type {
     ChartKitCustomError,
     CustomErrorDebugFullArgs,
 } from '../../libs/DatalensChartkit/ChartKit/modules/chartkit-custom-error/chartkit-custom-error';
-import {isOperationError, isSdkError} from '../../libs/schematic-sdk';
 import type {DataLensApiError, ParsedError, RtkQueryError} from '../../typings';
 
 function isCustomError(error: DataLensApiError): error is ChartKitCustomError {
