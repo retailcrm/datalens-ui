@@ -9,7 +9,7 @@ import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 import {selectIsChartSaved} from 'units/wizard/selectors/preview';
 
 import type {DatalensGlobalState} from '../../../../../';
-import {ActionPanel} from '../../../../../';
+import ActionPanel from '../../../../../components/ActionPanel/ActionPanel';
 import {ChartSaveControls} from '../../../../../components/ActionPanel/components/ChartSaveControls/ChartSaveControl';
 import {registry} from '../../../../../registry';
 import {selectCanGoBack, selectCanGoForward} from '../../../../../store/selectors/editHistory';

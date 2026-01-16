@@ -5,7 +5,8 @@ import type {Unionize} from 'utility-types';
 import {RELOADED_URL_QUERY} from '../../../../../shared/components/auth/constants/url';
 import logger from '../../../../libs/logger';
 import type {SdkError} from '../../../../libs/schematic-sdk';
-import {getSdk, isSdkError} from '../../../../libs/schematic-sdk';
+import {getSdk} from '../../../../libs/schematic-sdk';
+import {isSdkError} from '../../../../libs/schematic-sdk/parse-error';
 import {showToast} from '../../../../store/actions/toaster';
 import {UPDATE_FORM_VALUES} from '../constants/signin';
 

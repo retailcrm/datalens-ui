@@ -7,13 +7,14 @@ import type {Dispatch} from 'redux';
 import {bindActionCreators} from 'redux';
 import type {Field} from 'shared';
 import type {DatalensGlobalState} from 'ui';
+import {VISUALIZATION_IDS} from 'ui/constants/visualizations';
 import {selectFilters} from 'units/wizard/selectors/visualization';
 
 import type {PlaceholderAction} from '../../../../../actions/dndItems';
 import {updateFilters} from '../../../../../actions/placeholder';
 import {updatePreviewAndClientChartsConfig} from '../../../../../actions/preview';
 import {onFilterItemClick, setFilters} from '../../../../../actions/visualization';
-import {ITEM_TYPES, PRIMITIVE_DATA_TYPES, VISUALIZATION_IDS} from '../../../../../constants';
+import {ITEM_TYPES, PRIMITIVE_DATA_TYPES} from '../../../../../constants';
 import type {CustomPlaceholderAction} from '../Placeholder/Placeholder';
 import PlaceholderComponent from '../Placeholder/Placeholder';
 import type {CommonPlaceholderProps} from '../PlaceholdersContainer';

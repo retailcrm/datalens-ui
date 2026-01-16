@@ -3,8 +3,8 @@ import React from 'react';
 import {TextInput} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import {i18n} from 'i18n';
+import {CHART_SETTINGS} from 'ui/constants/visualizations';
 
-import {CHART_SETTINGS} from '../../../../constants';
 import SettingSwitcher from '../SettingSwitcher/SettingSwitcher';
 
 import './SettingTitleMode.scss';

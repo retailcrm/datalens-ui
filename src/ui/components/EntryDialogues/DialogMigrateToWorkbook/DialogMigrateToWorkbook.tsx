@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {SelectMigrationToWorkbookDialog} from '../../SelectMigrationToWorkbookDialog';
+import {SelectMigrationToWorkbookDialog} from '../../SelectMigrationToWorkbookDialog/SelectMigrationToWorkbookDialog';
 import {EntryDialogResolveStatus} from '../constants';
 import type {EntryDialogProps} from '../types';
 

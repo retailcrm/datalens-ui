@@ -62,8 +62,9 @@ import {
 import {getSelectedLayer, getSelectedLayerId} from '../utils/helpers';
 import {getPlaceholderAxisModeMap, isPlaceholderWithAxisMode} from '../utils/placeholder';
 
-import {clearUnusedVisualizationItems, getPlaceholdersWithMergedSettings} from './utils';
+import {getPlaceholdersWithMergedSettings} from './utils';
 import {isTableColorValid} from './utils/checkTableColor';
+import {clearUnusedVisualizationItems} from './utils/clearUnusedVisualizationItems';
 import {updateColorsHierarchies} from './utils/updateColorHierarchies';
 
 export interface VisualizationState {

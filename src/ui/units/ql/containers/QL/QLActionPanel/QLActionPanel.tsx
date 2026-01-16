@@ -12,14 +12,9 @@ import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 import {isDraftVersion} from 'ui/utils/revisions';
 
 import type {DatalensGlobalState, EntryDialogues} from '../../../../../';
-import {
-    ActionPanel,
-    DialogNoRights,
-    EntryDialogName,
-    EntryDialogResolveStatus,
-    Utils,
-} from '../../../../../';
+import {DialogNoRights, EntryDialogName, EntryDialogResolveStatus, Utils} from '../../../../../';
 import type {GetEntryResponse} from '../../../../../../shared/schema';
+import ActionPanel from '../../../../../components/ActionPanel/ActionPanel';
 import {ChartSaveControls} from '../../../../../components/ActionPanel/components/ChartSaveControls/ChartSaveControl';
 import type {EntryContextMenuItems} from '../../../../../components/EntryContextMenu/helpers';
 import {registry} from '../../../../../registry';

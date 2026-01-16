@@ -4,7 +4,7 @@ import {Icon, SegmentedRadioGroup as RadioButton} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import {useDispatch, useSelector} from 'react-redux';
 import type {VisualizationLayerType} from 'shared';
-import {VISUALIZATION_IDS} from 'units/wizard/constants';
+import {VISUALIZATION_IDS} from 'ui/constants/visualizations';
 import {selectSubVisualization} from 'units/wizard/selectors/visualization';
 
 import {changeVisualizationLayerType} from '../../../../actions';

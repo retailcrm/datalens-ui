@@ -36,10 +36,11 @@ import {
     isYAGRVisualization,
 } from 'shared';
 import {AREA_OR_AREA100P} from 'ui/constants/misc';
+import {SETTINGS} from 'ui/constants/visualizations';
 import {withHiddenUnmount} from 'ui/hoc';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
-import {AVAILABLE_DATE_FORMATS, SETTINGS} from '../../../constants';
+import {AVAILABLE_DATE_FORMATS} from '../../../constants';
 import {DialogFieldSelect} from '../DialogField/components/DialogFieldSelect/DialogFieldSelect';
 import {DialogRadioButtons} from '../components/DialogRadioButtons/DialogRadioButtons';
 

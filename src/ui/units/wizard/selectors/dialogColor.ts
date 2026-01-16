@@ -7,9 +7,9 @@ import {
 } from 'shared';
 import type {DatalensGlobalState} from 'ui';
 import {selectPalette} from 'ui';
+import {VISUALIZATION_IDS} from 'ui/constants/visualizations';
 
 import type {OpenDialogColorArgs} from '../components/Dialogs/DialogColor/DialogColor';
-import {VISUALIZATION_IDS} from '../constants';
 
 export const selectDialogColorPaletteState = (state: DatalensGlobalState) =>
     state.wizard.dialogColor.paletteState;

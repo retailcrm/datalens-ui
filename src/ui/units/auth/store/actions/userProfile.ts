@@ -5,7 +5,8 @@ import type {GetUserProfileResponse, UpdateUserProfileArgs} from 'shared/schema/
 import type {DatalensGlobalState} from 'ui';
 import logger from 'ui/libs/logger';
 import type {SdkError} from 'ui/libs/schematic-sdk';
-import {getSdk, isSdkError} from 'ui/libs/schematic-sdk';
+import {getSdk} from 'ui/libs/schematic-sdk';
+import {isSdkError} from 'ui/libs/schematic-sdk/parse-error';
 import {showToast} from 'ui/store/actions/toaster';
 
 import {

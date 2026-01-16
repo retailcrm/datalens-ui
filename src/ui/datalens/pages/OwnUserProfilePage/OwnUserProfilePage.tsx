@@ -6,7 +6,7 @@ import {UserProfile} from 'ui/units/auth/containers/UserProfile/UserProfile';
 
 import {DL} from 'ui/constants';
 import {PageTitle} from 'ui/components/PageTitle';
-import {ActionPanel} from 'ui/components/ActionPanel';
+import ActionPanel from 'ui/components/ActionPanel/ActionPanel';
 
 import './OwnUserProfilePage.scss';
 
