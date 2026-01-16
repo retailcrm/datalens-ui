@@ -26,10 +26,12 @@ import {
 } from 'ui/store/actions/dialog';
 import type {DataLensApiError} from 'ui/typings';
 import {getSharedEntryMockText} from 'ui/units/collections/components/helpers';
+import {ErrorView} from 'ui/units/connections/components/ErrorView/ErrorView';
+import {Router} from 'ui/units/connections/components/Router/Router';
+import {WrappedLoader} from 'ui/units/connections/components/WrappedLoader/WrappedLoader';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
 import type {ErrorViewProps} from '../';
-import {ErrorView, Router, WrappedLoader} from '../';
 import {AccessRightsUrlOpen} from '../../../../components/AccessRights/AccessRightsUrlOpen';
 import {ActionPanel} from '../../../../components/ActionPanel';
 import withErrorPage from '../../../../components/ErrorPage/withErrorPage';

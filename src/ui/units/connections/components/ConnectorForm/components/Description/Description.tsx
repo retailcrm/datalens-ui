@@ -4,7 +4,7 @@ import {Loader} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import type {DescriptionItem} from 'shared/schema/types';
 
-import {MarkdownItem} from '../';
+import {MarkdownItem} from '../MarkdownItem/MarkdownItem';
 
 import './Description.scss';
 

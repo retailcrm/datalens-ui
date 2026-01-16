@@ -2,7 +2,8 @@ import mergeWith from 'lodash/mergeWith';
 import type {Shared} from 'shared';
 import {QlVisualizationId, WizardVisualizationId} from 'shared';
 
-import {getAvailableQlVisualizations, getDefaultQlVisualization} from '../visualization';
+import {getAvailableQlVisualizations} from '../visualization/getAvailableQlVisualizations';
+import {getDefaultQlVisualization} from '../visualization/getDefaultQlVisualization';
 
 export const getQlVisualization = (
     loadedVisualization: Shared['visualization'],

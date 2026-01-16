@@ -97,24 +97,20 @@ import {
 import {actualizeAndSetUpdates, setUpdates, updatePreviewAndClientChartsConfig} from './preview';
 import {setDefaultsSet, setRouteWorkbookId, toggleNavigation} from './settings';
 import {getDatasetUpdates, isSharedPlaceholder, mutateAndValidateItem} from './utils';
+import {setColors, setColorsConfig} from './visualization/colors';
 import {
-    _setSelectedLayerId,
     _setVisualization,
     _setVisualizationPlaceholderItems,
-    setColors,
-    setColorsConfig,
-    setDashboardParameters,
-    setFilters,
     setLabels,
-    setLayerFilters,
-    setPointsSizeConfig,
     setSegments,
-    setShapes,
-    setShapesConfig,
-    setSort,
     setTooltips,
-    updateLayers,
-} from './visualization';
+} from './visualization/contents';
+import {setDashboardParameters} from './visualization/dashboard';
+import {setFilters} from './visualization/filters';
+import {setPointsSizeConfig} from './visualization/geometry';
+import {_setSelectedLayerId, setLayerFilters, updateLayers} from './visualization/layers';
+import {setShapes, setShapesConfig} from './visualization/shapes';
+import {setSort} from './visualization/sort';
 import {
     forceEnablePivotFallback,
     receiveWidgetAndPrepareMetadata,
