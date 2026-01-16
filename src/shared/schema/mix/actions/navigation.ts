@@ -1,5 +1,5 @@
-import {getTypedApi} from '../..';
 import {MAP_PLACE_TO_SCOPE, PLACE} from '../../../constants';
+import {getTypedApi} from '../../api';
 import {createAction} from '../../gateway-utils';
 import type {GetEntriesResponse, GetFavoritesResponse, ListDirectoryResponse} from '../../us/types';
 import type {GetNavigationListArgs, GetNavigationListResponse, NavigationEntry} from '../types';

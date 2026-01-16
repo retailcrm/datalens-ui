@@ -24,6 +24,7 @@ import {
     resolveOperation,
     resolveRelativeDate,
 } from './charts-shared';
+import {isParameter} from './predicates';
 
 function getEntryId(str: string): string | null {
     const possibleEntryId = str.slice(0, ENTRY_ID_LENGTH);
@@ -184,9 +185,7 @@ export function getIsNavigatorEnabled(shared: ServerChartsConfig) {
     return getIsNavigatorAvailable(shared.visualization) && navigatorMode === NavigatorModes.Show;
 }
 
-export const isParameter = (field: Partial<Field> | Partial<ServerField>) => {
-    return field.calc_mode === 'parameter';
-};
+export {isParameter};
 
 export const isDimensionField = (field: Partial<Field> | Partial<ServerField> | undefined) => {
     return field?.type === DatasetFieldType.Dimension && !isParameter(field);

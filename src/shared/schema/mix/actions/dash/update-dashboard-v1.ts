@@ -1,7 +1,7 @@
-import {getTypedApi} from '../../..';
 import {EntryScope, EntryUpdateMode} from '../../../..';
 import {Dash} from '../../../../../server/components/sdk';
 import {ServerError} from '../../../../constants/error';
+import {getTypedApi} from '../../../api';
 import {createTypedAction} from '../../../gateway-utils';
 import {DASH_VERSION_1} from '../../schemas/dash/dash-v1';
 import {

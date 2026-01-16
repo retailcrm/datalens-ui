@@ -1,5 +1,5 @@
-import {getTypedApi} from '../../..';
 import {ENTRY_TYPES, EntryScope} from '../../../..';
+import {getTypedApi} from '../../../api';
 import {createTypedAction} from '../../../gateway-utils';
 import {deleteWizardChartArgsSchema, deleteWizardChartResultSchema} from '../../schemas/wizard';
 import type {DeleteWizardResult} from '../../types';

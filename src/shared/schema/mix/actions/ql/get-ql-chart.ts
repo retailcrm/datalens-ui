@@ -1,6 +1,6 @@
-import {getTypedApi} from '../../..';
 import {ENTRY_TYPES, EntryScope} from '../../../..';
 import {ServerError} from '../../../../constants/error';
+import {getTypedApi} from '../../../api';
 import {createTypedAction} from '../../../gateway-utils';
 import {getQLChartArgsSchema, getQLChartResultSchema} from '../../schemas/ql';
 import type {GetQLChartResult} from '../../types';

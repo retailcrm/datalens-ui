@@ -1,5 +1,5 @@
-import {getTypedApi} from '../..';
 import {DeveloperModeCheckStatus} from '../../../types';
+import {getTypedApi} from '../../api';
 import {createAction} from '../../gateway-utils';
 import type {
     CreateEditorChartArgs,

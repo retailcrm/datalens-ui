@@ -1,7 +1,7 @@
 import type {GetDashV1Result} from '../../..';
-import {getTypedApi} from '../../..';
 import {EntryScope} from '../../../..';
 import {ServerError} from '../../../../constants/error';
+import {getTypedApi} from '../../../api';
 import {createTypedAction} from '../../../gateway-utils';
 import {migrateDashToV1} from '../../helpers/dash/migrate-dash-to-v1';
 import {getDashV1ArgsSchema, getDashV1ResultSchema} from '../../schemas/dash/get-dashboard-v1';

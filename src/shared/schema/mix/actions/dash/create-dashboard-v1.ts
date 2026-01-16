@@ -1,6 +1,6 @@
-import {getTypedApi} from '../../..';
 import {DASH_CURRENT_SCHEME_VERSION, EntryScope} from '../../../..';
 import {Dash} from '../../../../../server/components/sdk';
+import {getTypedApi} from '../../../api';
 import {createTypedAction} from '../../../gateway-utils';
 import {
     createDashV1ArgsSchema,

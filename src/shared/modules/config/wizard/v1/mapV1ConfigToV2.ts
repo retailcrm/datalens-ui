@@ -1,5 +1,5 @@
 import type {Dataset, GraphShared, ServerDatasetField, Shared} from '../../../../index';
-import {ChartsConfigVersion} from '../../../../index';
+import {ChartsConfigVersion} from '../../../../types';
 import type {V2ChartsConfig} from '../../../../types';
 
 export const mapV1ConfigToV2 = (config: Shared): V2ChartsConfig => {

@@ -1,6 +1,6 @@
-import {getTypedApi} from '../../..';
 import {ENTRY_TYPES, EntryScope, mapChartsConfigToLatestVersion} from '../../../..';
 import {ServerError} from '../../../../constants/error';
+import {getTypedApi} from '../../../api';
 import {createTypedAction} from '../../../gateway-utils';
 import {getWizardChartArgsSchema, getWizardChartResultSchema} from '../../schemas/wizard';
 import type {GetWizardResult} from '../../types';
