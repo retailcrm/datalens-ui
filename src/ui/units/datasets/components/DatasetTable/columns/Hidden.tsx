@@ -8,7 +8,7 @@ import block from 'bem-cn-lite';
 import {I18n} from 'i18n';
 import type {DatasetField} from 'shared';
 
-import {isHiddenSupported} from '../utils';
+import {isHiddenSupported} from '../predicates';
 
 const b = block('dataset-table');
 const i18n = I18n.keyset('dataset.dataset-editor.modify');

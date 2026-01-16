@@ -6,8 +6,8 @@ import {I18n} from 'i18n';
 import type {DatasetField} from 'shared';
 
 import {TableTextInput} from '../components';
+import {sortIdColumn} from '../sort';
 import type {ColumnItem} from '../types';
-import {sortIdColumn} from '../utils';
 
 const b = block('dataset-table');
 const i18n = I18n.keyset('dataset.dataset-editor.modify');

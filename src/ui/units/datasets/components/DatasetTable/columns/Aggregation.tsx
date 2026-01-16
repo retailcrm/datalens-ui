@@ -6,7 +6,7 @@ import {I18n} from 'i18n';
 import type {DatasetField, DatasetFieldAggregation, DatasetOptionFieldItem} from 'shared';
 
 import {AggregationSelect} from '../components';
-import {sortAggregationColumn} from '../utils';
+import {sortAggregationColumn} from '../sort';
 
 const b = block('dataset-table');
 const i18n = I18n.keyset('dataset.dataset-editor.modify');

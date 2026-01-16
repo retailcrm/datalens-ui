@@ -38,8 +38,9 @@ import type {DialogChangeDatasetFieldsProps} from './components/BatchActionPanel
 import {DIALOG_CHANGE_DATASET_FIELDS} from './components/BatchActionPanel/components/DialogChangeDatasetFields/DialogChangeDatasetFields';
 import {ObservedTableResizer} from './components/ObservedDataTable';
 import {BatchFieldAction, FieldAction} from './constants';
+import {isHiddenSupported} from './predicates';
 import type {BatchUpdateFields, UpdatePayload} from './types';
-import {getAggregationSwitchTo, getColumns, isHiddenSupported} from './utils';
+import {getAggregationSwitchTo, getColumns} from './utils';
 
 import './DatasetTable.scss';
 

@@ -6,7 +6,7 @@ import {I18n} from 'i18n';
 import type {DATASET_FIELD_TYPES, DatasetField, DatasetOptionFieldItem} from 'shared';
 
 import {TypeSelect} from '../components';
-import {sortCastColumn} from '../utils';
+import {sortCastColumn} from '../sort';
 
 const b = block('dataset-table');
 const i18n = I18n.keyset('dataset.dataset-editor.modify');
