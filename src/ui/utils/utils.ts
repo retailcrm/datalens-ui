@@ -9,9 +9,11 @@ import _snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 import type {StringParams} from 'shared';
 import {ENABLE, SHARED_URL_OPTIONS, SUPERUSER_SWITCH_MODE_COOKIE_NAME, SYSTEM_THEME} from 'shared';
+import {getSdk} from 'ui/libs/schematic-sdk';
+import {getCookie} from 'ui/utils/cookies';
+import {getCSRFToken} from 'ui/utils/csrf';
 
 import {DL, URL_OPTIONS} from '../constants';
-import {getSdk} from '../libs/schematic-sdk';
 import type {DataLensApiError, ParsedError} from '../typings';
 
 import {parseError, parseRtkQueryError} from './errors/parse';
@@ -57,8 +59,7 @@ export default class Utils {
     }
 
     static getCookie(name: string) {
-        const cookie = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-        return cookie ? cookie.pop() || '' : '';
+        return getCookie(name);
     }
 
     static isSuperUser() {
@@ -207,8 +208,7 @@ export default class Utils {
     }
 
     static getCSRFToken() {
-        const csrfMetaTag: HTMLMetaElement | null = document.querySelector('meta[name=csrf-token]');
-        return csrfMetaTag ? csrfMetaTag.content : null;
+        return getCSRFToken();
     }
 
     static getOptionsFromSearch(search: string) {
