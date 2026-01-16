@@ -21,13 +21,13 @@ import {
 } from 'shared';
 import {isChartSupportMultipleColors} from 'shared/modules/colors/common-helpers';
 import type {ApplyData, DatalensGlobalState} from 'ui';
+import {SETTINGS} from 'ui/constants/visualizations';
 import {
     getAxisModePlaceholderSettings,
     getFirstFieldInPlaceholder,
 } from 'ui/units/wizard/utils/placeholder';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
-import {SETTINGS} from '../../../constants/visualizations';
 import type {AppDispatch} from '../../../store';
 import {getChartType} from '../../ql/store/reducers/ql';
 import {
@@ -40,7 +40,7 @@ import {
 import {getExistedParameterKeys, removeUrlParameters} from '../utils/wizard';
 
 import {openWizardDialogFilter} from './dialog';
-import {PlaceholderAction} from './dndItems';
+import {PlaceholderAction} from './dndItemsEnums';
 import {updatePreviewAndClientChartsConfig} from './preview';
 import {
     setAvailable,

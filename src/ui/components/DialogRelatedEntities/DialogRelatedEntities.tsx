@@ -26,7 +26,7 @@ import {
     CONTEXT_MENU_COPY_ID,
     CONTEXT_MENU_COPY_LINK,
     ENTRY_CONTEXT_MENU_ACTION,
-} from '../EntryContextMenu';
+} from '../EntryContextMenu/constants';
 import type {WrapperParams} from '../EntryContextMenu/helpers';
 import {type EntryDialogProps, EntryDialogResolveStatus} from '../EntryDialogues';
 import type {RowEntryData} from '../EntryRow/EntryRow';

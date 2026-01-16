@@ -10,6 +10,7 @@ import {FILTER_SECTIONS} from '../constants';
 import type {VisualizationState} from '../reducers/visualization';
 import {getSelectedLayer, getUniqueId} from '../utils/helpers';
 
+import {PlaceholderAction} from './dndItemsEnums';
 import {
     updateAvailable,
     updateColors,
@@ -25,11 +26,7 @@ import {
 } from './placeholder';
 import {updatePreviewAndClientChartsConfig} from './preview';
 
-export const enum PlaceholderAction {
-    Insert = 'insert',
-    Remove = 'remove',
-    Move = 'move',
-}
+export {PlaceholderAction};
 
 export const placeholderIdToReduxActionMap = {
     [PlaceholderId.Segments]: updateSegments,
