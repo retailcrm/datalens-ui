@@ -3,6 +3,8 @@ import type {ApiByScope, SdkActionOptions, SdkConfig} from '@gravity-ui/sdk';
 import sdkFactory from '@gravity-ui/sdk';
 import type {Lang} from '@gravity-ui/sdk/build/constants';
 import type {AxiosError} from 'axios';
+import {getCookie} from 'ui/utils/cookies';
+import {getCSRFToken} from 'ui/utils/csrf';
 import {v4 as uuidv4} from 'uuid';
 
 import {
@@ -17,7 +19,6 @@ import {
 import type {WithRequired, authSchema, schema} from '../../../shared';
 import {DL} from '../../constants';
 import {registry} from '../../registry';
-import Utils from '../../utils';
 import {refreshAuthToken} from '../auth/refreshToken';
 
 import {emitCancelRequest, initBeforeRequestDecorator} from './decorator';
@@ -41,7 +42,7 @@ export type DatalensSdk<TSchema extends SchemasByScope> = (<T>(
     ApiByScope<TSchema>;
 
 const sdkConfig: SdkConfig = {
-    csrfToken: Utils.getCSRFToken() || '',
+    csrfToken: getCSRFToken() || '',
     axiosConfig: {
         'axios-retry': {
             retries: 3,
@@ -107,7 +108,7 @@ export const initSdk = (options: SdkOptions = {}) => {
     }
 
     if (DL.DISPLAY_SUPERUSER_SWITCH) {
-        const superuserModeEnabled = Utils.getCookie(SUPERUSER_SWITCH_MODE_COOKIE_NAME) === ENABLE;
+        const superuserModeEnabled = getCookie(SUPERUSER_SWITCH_MODE_COOKIE_NAME) === ENABLE;
         sdk.setDefaultHeader({
             name: SuperuserHeader.XDlAllowSuperuser,
             value: String(superuserModeEnabled),
