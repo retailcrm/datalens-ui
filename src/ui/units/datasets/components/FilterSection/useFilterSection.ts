@@ -6,7 +6,7 @@ import type {DatasetField, DatasetOptions} from 'shared';
 import type {ApplyData} from 'ui';
 
 import {openDialogFilter} from '../../../../store/actions/dialog';
-import {useDatasetPageContext} from '../../containers/DatasetPage/DatasetPage';
+import {useDatasetPageContext} from '../../containers/DatasetPage/DatasetPageContext';
 import {filteredDatasetParametersSelector, workbookIdSelector} from '../../store/selectors';
 import type {ObligatoryFilter} from '../../typings/dataset';
 import type {
