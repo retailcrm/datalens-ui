@@ -1,6 +1,6 @@
 import type {FeatureConfig, Link} from '../../shared';
-import {Feature, WizardVisualizationId} from '../../shared';
-import {QLChartType} from '../constants';
+import {Feature} from '../../shared/types';
+import {QLChartType, WizardVisualizationId} from '../constants';
 
 export function isMonitoringOrPrometheusChart(chartType: string | null | undefined) {
     return chartType === QLChartType.Monitoringql || chartType === QLChartType.Promql;

@@ -1,5 +1,5 @@
-import {getTypedApi} from '../../..';
 import {ENTRY_TYPES, EntryScope} from '../../../..';
+import {getTypedApi} from '../../../api';
 import {createTypedAction} from '../../../gateway-utils';
 import {deleteQLChartArgsSchema, deleteQLChartResultSchema} from '../../schemas/ql';
 import type {DeleteQLChartResult} from '../../types';

@@ -1,7 +1,7 @@
 import type {DeepNonNullable} from 'utility-types';
 
-import {getTypedApi} from '../../..';
 import type {ChartsStats} from '../../../../types/charts';
+import {getTypedApi} from '../../../api';
 import {createAction} from '../../../gateway-utils';
 import {getEntryVisualizationType} from '../../helpers';
 import type {DatasetDictResponse, DatasetFieldsDictResponse} from '../../helpers/dash';

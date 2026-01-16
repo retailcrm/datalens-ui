@@ -1,8 +1,8 @@
 import keyBy from 'lodash/keyBy';
 import type {Required} from 'utility-types';
 
-import {getTypedApi} from '../..';
 import {EntryScope} from '../../../types';
+import {getTypedApi} from '../../api';
 import {createAction} from '../../gateway-utils';
 import type {
     GetEntriesEntryResponse,

@@ -1,10 +1,10 @@
 import type {Request, Response} from '@gravity-ui/expresskit';
 import z from 'zod';
 
-import {getTypedApi} from '../../..';
 import {ENTRY_TYPES, EntryScope, EntryUpdateMode} from '../../../..';
 import type {ChartsEngine} from '../../../../../server/components/charts-engine';
 import {ServerError} from '../../../../constants/error';
+import {getTypedApi} from '../../../api';
 import {createTypedAction} from '../../../gateway-utils';
 
 const paramsSchema = z.looseObject({

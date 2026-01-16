@@ -3,7 +3,7 @@ import type {DurationUnit} from '@gravity-ui/date-utils';
 
 import type {ServerDatasetField} from '../types';
 
-import {isParameter} from './helpers';
+import {isParameter} from './predicates';
 
 export type Scale = 'y' | 'Q' | 'M' | 'w' | 'd' | 'h' | 'm' | 's' | 'ms';
 

@@ -1,6 +1,6 @@
 import type {DeleteDashResult} from '../../..';
-import {getTypedApi} from '../../..';
 import {EntryScope} from '../../../..';
+import {getTypedApi} from '../../../api';
 import {createTypedAction} from '../../../gateway-utils';
 import {deleteDashArgsSchema, deleteDashResultSchema} from '../../schemas/dash/delete-dashboard';
 
