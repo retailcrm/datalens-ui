@@ -1,6 +1,6 @@
 import {drawComments, hideComments} from '../../comments/drawing';
 
-import {isNavigatorSerie} from './config';
+import {isNavigatorSerie} from './predicates';
 
 const needSetVisible = (serieName, serieVisible, chartSeries) => {
     if (!serieVisible) {

@@ -212,9 +212,7 @@ const throttledAppendTooltip = throttle((container, tooltipMarkup) => {
     container.innerHTML = tooltipMarkup;
 }, 500);
 
-export function isNavigatorSerie(serie) {
-    return serie.options.className === 'highcharts-navigator-series';
-}
+export {isNavigatorSerie} from './predicates';
 
 export function buildLegend(options) {
     // https://api.highcharts.com/highcharts/legend

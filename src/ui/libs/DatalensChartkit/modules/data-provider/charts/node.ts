@@ -40,6 +40,7 @@ import DatalensChartkitCustomError from '../../datalens-chartkit-custom-error/da
 import {getParseHtmlFn} from '../../html-generator/utils';
 
 import {ChartkitHandlersDict} from './chartkit-handlers';
+import {CHARTS_ERROR_CODE} from './constants';
 import {getChartsInsightsData} from './helpers';
 import type {ChartsData, ResponseSuccessControls, ResponseSuccessNode, UI} from './types';
 import {
@@ -50,8 +51,6 @@ import {
     unwrapPossibleFunctions,
 } from './ui-sandbox';
 import {getSafeChartWarnings, isPotentiallyUnsafeChart} from './utils';
-
-import {CHARTS_ERROR_CODE} from '.';
 
 type CurrentResponse = ResponseSuccessNode | ResponseSuccessControls;
 

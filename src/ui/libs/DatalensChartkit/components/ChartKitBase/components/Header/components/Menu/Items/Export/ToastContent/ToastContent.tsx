@@ -5,8 +5,8 @@ import {Icon, Loader, Toast} from '@gravity-ui/uikit';
 import {toaster} from '@gravity-ui/uikit/toaster-singleton';
 import block from 'bem-cn-lite';
 
+import {truncateTextWithEllipsis} from '../content';
 import type {ExportChartArgs} from '../types';
-import {truncateTextWithEllipsis} from '../utils';
 
 import './ToastContent.scss';
 

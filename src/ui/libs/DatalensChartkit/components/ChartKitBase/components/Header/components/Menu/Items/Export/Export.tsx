@@ -9,10 +9,11 @@ import type {ExportFormatsType} from 'shared';
 import {EXPORT_FORMATS, Feature, MenuItemsIds} from 'shared';
 import {URL_OPTIONS} from 'ui/constants/common';
 import type {MenuItemConfig, MenuItemModalProps} from 'ui/libs/DatalensChartkit/menu/Menu';
+import {ICONS_MENU_DEFAULT_SIZE} from 'ui/libs/DatalensChartkit/menu/constants';
 import {registry} from 'ui/registry';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
-import {ICONS_MENU_DEFAULT_SIZE, type MenuItemArgs} from '../../../../../../../../menu/MenuItems';
+import type {MenuItemArgs} from '../../../../../../../../menu/MenuItems';
 import type {ChartKitDataProvider} from '../../../../../../types';
 
 import {csvExportAction} from './CsvExport/CsvExport';

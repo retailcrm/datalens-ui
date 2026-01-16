@@ -28,7 +28,8 @@ import {
     ENTRY_CONTEXT_MENU_ACTION,
 } from '../EntryContextMenu/constants';
 import type {WrapperParams} from '../EntryContextMenu/helpers';
-import {type EntryDialogProps, EntryDialogResolveStatus} from '../EntryDialogues';
+import {EntryDialogResolveStatus} from '../EntryDialogues/constants';
+import type {EntryDialogProps} from '../EntryDialogues/types';
 import type {RowEntryData} from '../EntryRow/EntryRow';
 import {PlaceholderIllustration} from '../PlaceholderIllustration/PlaceholderIllustration';
 
