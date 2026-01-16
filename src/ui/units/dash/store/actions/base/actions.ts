@@ -2,7 +2,6 @@ import {lockedTextInfo} from 'components/RevisionsPanel/RevisionsPanel';
 import type {History, Location} from 'history';
 import {I18n} from 'i18n';
 import {sdk} from 'libs/sdk';
-import type {DashEntry, EntryUpdateMode} from 'shared';
 import {DashSchemeConverter, EntryScope, Feature} from 'shared';
 import type {GetEntryArgs} from 'shared/schema';
 import {closeDialog as closeDialogConfirm, openDialogConfirm} from 'store/actions/dialog';
@@ -18,7 +17,6 @@ import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 import {getLoginOrIdFromLockedError, isEntryIsLockedError} from 'utils/errors/errorByCode';
 
 import type {DashDispatch} from '..';
-import ChartKit from '../../../../../libs/DatalensChartkit';
 import logger from '../../../../../libs/logger';
 import {DashErrorCode, Mode} from '../../../modules/constants';
 import {collectDashStats} from '../../../modules/pushStats';
@@ -27,7 +25,6 @@ import {getFakeDashEntry} from '../../utils';
 import {
     SET_ERROR_MODE,
     SET_STATE,
-    purgeData,
     resetDashEditHistory,
     setDashViewMode,
     setLock,
@@ -38,7 +35,6 @@ import {
     NOT_FOUND_ERROR_TEXT,
     applyDataProviderChartSettings,
     getCurrentTab,
-    isCallable,
     removeParamAndUpdate,
 } from '../helpers';
 
@@ -363,77 +359,10 @@ export const load = ({
     };
 };
 
-export const SAVE_DASH_SUCCESS = Symbol('dash/SAVE_DASH_SUCCESS');
-export type SaveDashSuccessAction = {
-    type: typeof SAVE_DASH_SUCCESS;
-    payload: Partial<DashState>;
-};
+export {SAVE_DASH_SUCCESS} from './save';
+export type {SaveDashSuccessAction} from './save';
 
-export const SAVE_DASH_ERROR = Symbol('dash/SAVE_DASH_ERROR');
-export type SaveDashErrorAction = {
-    type: typeof SAVE_DASH_ERROR;
-};
+export {SAVE_DASH_ERROR} from './save';
+export type {SaveDashErrorAction} from './save';
 
-export const save = (mode: EntryUpdateMode, isDraft = false) => {
-    return async function (dispatch: DashDispatch, getState: () => DatalensGlobalState) {
-        try {
-            const isPublishing = mode === 'publish';
-            const {entry: prevEntry, data, lockToken, annotation} = getState().dash;
-
-            // TODO Refactor old api schema
-            const updateData: {
-                id: string;
-                data: Partial<DashEntry> & {
-                    lockToken: string | null;
-                    description?: string;
-                };
-            } = {
-                id: prevEntry.entryId,
-                data: {
-                    lockToken,
-                    mode: mode,
-                    meta: isPublishing ? {is_release: true} : {},
-                    annotation: {
-                        description: annotation?.description ?? '',
-                    },
-                },
-            };
-            if (isDraft && isPublishing) {
-                updateData.data.revId = prevEntry.revId;
-            } else {
-                updateData.data.data = purgeData(data);
-            }
-
-            // TODO Refactor old api schema
-            const entry = await (sdk.charts as any).updateDash(updateData);
-
-            const newMaxConcurrentRequestsValue = entry.data.settings?.maxConcurrentRequests;
-            const prevMaxConcurrentRequestsValue = prevEntry.data.settings?.maxConcurrentRequests;
-
-            if (newMaxConcurrentRequestsValue !== prevMaxConcurrentRequestsValue) {
-                isCallable(ChartKit.setDataProviderSettings)({
-                    maxConcurrentRequests: newMaxConcurrentRequestsValue,
-                });
-            }
-
-            dispatch({
-                type: SAVE_DASH_SUCCESS,
-                payload: {
-                    mode: Mode.View,
-                    data: entry.data,
-                    convertedEntryData: null,
-                    initialTabsSettings: null,
-                    entry: {
-                        ...prevEntry,
-                        ...entry,
-                    },
-                    annotation: entry.annotation,
-                },
-            });
-        } catch (error) {
-            logger.logError('save dash failed', error);
-            dispatch({type: SAVE_DASH_ERROR});
-            throw error;
-        }
-    };
-};
+export {save} from './save';

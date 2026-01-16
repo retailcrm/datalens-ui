@@ -12,12 +12,11 @@ import type {
     StateAndParamsMetaData,
 } from '@gravity-ui/dashkit';
 import type {ThemeType} from '@gravity-ui/uikit';
-import isEmpty from 'lodash/isEmpty';
-import {batch} from 'react-redux';
-
 import {i18n} from 'i18n';
 import type {DatalensGlobalState} from 'index';
 import {URL_QUERY, sdk} from 'index';
+import isEmpty from 'lodash/isEmpty';
+import {batch} from 'react-redux';
 import type {
     DashData,
     DashEntry,
@@ -69,7 +68,7 @@ import {
 } from '../selectors/dashTypedSelectors';
 import type {DashState, UpdateTabsWithGlobalStateArgs} from '../typings/dash';
 
-import {save} from './base/actions';
+import {save} from './base/save';
 import {
     getPreparedCopiedSelectorData,
     migrateDataSettings,
