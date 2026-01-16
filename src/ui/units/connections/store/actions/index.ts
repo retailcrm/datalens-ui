@@ -1,8 +1,8 @@
 import {I18n} from 'i18n';
 import {flow} from 'lodash';
 import {batch} from 'react-redux';
-import type {ConnectionData, ConnectorType} from 'shared';
-import type {ConnectorItem, FormSchema, GetEntryResponse} from 'shared/schema/types';
+import type {ConnectorType} from 'shared';
+import type {FormSchema, GetEntryResponse} from 'shared/schema/types';
 import {URL_QUERY} from 'ui';
 import {getRouter} from 'ui/navigation';
 import {registry} from 'ui/registry';
@@ -17,12 +17,7 @@ import {getEntityIdFromPathname} from '../../../../utils';
 import {FieldKey, InnerFieldKey} from '../../constants';
 import {getIsRevisionsSupported} from '../../utils';
 import {connectionIdSelector, newConnectionSelector} from '../selectors';
-import type {
-    ConnectionEntry,
-    ConnectionsReduxDispatch,
-    ConnectionsReduxState,
-    GetState,
-} from '../typings';
+import type {ConnectionsReduxDispatch, ConnectionsReduxState, GetState} from '../typings';
 import {
     getConnectorItemFromFlattenList,
     getDataForParamsChecking,
@@ -40,7 +35,6 @@ import {
     setCheckData,
     setCheckLoading,
     setConectorData,
-    setEntry,
     setFlattenConnectors,
     setForm,
     setGroupedConnectors,
@@ -52,6 +46,7 @@ import {
     setSubmitLoading,
     setValidationErrors,
 } from './base';
+import {getConnectionDataRequest} from './connection';
 
 export * from './api';
 export * from './base';
@@ -78,134 +73,7 @@ function updateRevisions(entry: GetEntryResponse) {
     };
 }
 
-interface GetConnectionDataRequestProps {
-    entry?: GetEntryResponse;
-    flattenConnectors: ConnectorItem[];
-    rev_id?: string;
-    bindedWorkbookId?: string | null;
-    bindedDatasetId?: string | null;
-}
-
-async function getConnectionDataRequest({
-    entry,
-    bindedWorkbookId,
-    bindedDatasetId,
-    flattenConnectors,
-    rev_id,
-}: GetConnectionDataRequestProps) {
-    let revId: string | undefined;
-    let connectionData: ConnectionData | undefined;
-    let connectionError: DataLensApiError | undefined;
-
-    if (entry) {
-        const isRevisionsSupported = getIsRevisionsSupported({entry, flattenConnectors});
-        if (isRevisionsSupported) {
-            revId = rev_id;
-        }
-        ({connectionData, error: connectionError} = await api.fetchConnectionData({
-            connectionId: entry.entryId,
-            workbookId: entry?.workbookId || bindedWorkbookId,
-            bindedDatasetId,
-            revId,
-        }));
-    }
-    return {connectionData, connectionError};
-}
-
-export function setPageData({
-    entryId,
-    workbookId,
-    collectionId,
-    rev_id,
-    bindedWorkbookId,
-    bindedDatasetId,
-}: {
-    entryId?: string | null;
-    workbookId?: string;
-    collectionId?: string;
-    rev_id?: string;
-    bindedWorkbookId?: string | null;
-    bindedDatasetId?: string | null;
-}) {
-    return async (dispatch: ConnectionsReduxDispatch, getState: GetState) => {
-        dispatch(setPageLoading({pageLoading: true}));
-        const groupedConnectors = await api.fetchConnectors();
-        const flattenConnectors = getFlattenConnectors(groupedConnectors);
-        const {checkData, form, validationErrors} = getState().connections;
-        let entry: ConnectionEntry | undefined;
-        let entryError: DataLensApiError | undefined;
-        let connectionData: ConnectionData | undefined;
-        let connectionError: DataLensApiError | undefined;
-
-        if (entryId) {
-            ({entry, error: entryError} = await api.fetchEntry({
-                entryId,
-                bindedDatasetId,
-                bindedWorkbookId,
-            }));
-            ({connectionData, connectionError} = await getConnectionDataRequest({
-                entry,
-                flattenConnectors,
-                bindedWorkbookId,
-                bindedDatasetId,
-                rev_id,
-            }));
-        }
-
-        if (entry?.collectionId && bindedWorkbookId && !bindedDatasetId) {
-            const {delegation, error: delegationError} = await api.fetchSharedEntryDelegation(
-                entry.entryId,
-                bindedWorkbookId,
-            );
-            if (delegationError) {
-                dispatch(
-                    showToast({
-                        title: delegationError.message,
-                        error: delegationError,
-                    }),
-                );
-            } else {
-                entry.isDelegated = delegation?.isDelegated;
-            }
-        }
-
-        if (!entry) {
-            const getFakeEntry = registry.connections.functions.get('getFakeEntry');
-            entry = getFakeEntry(workbookId, collectionId);
-        }
-
-        batch(() => {
-            dispatch(setGroupedConnectors({groupedConnectors}));
-            dispatch(setFlattenConnectors({flattenConnectors}));
-            dispatch(
-                setEntry({
-                    entry: {...entry, revId: rev_id ?? entry?.publishedId ?? ''},
-                    error: entryError,
-                }),
-            );
-
-            if (Object.keys(form).length) {
-                dispatch(resetFormsData());
-            }
-
-            if (entryId) {
-                dispatch(
-                    setConectorData({connectionData: connectionData || {}, error: connectionError}),
-                );
-            }
-
-            if (checkData.status !== 'unknown') {
-                dispatch(setCheckData({status: 'unknown'}));
-            }
-
-            if (validationErrors.length) {
-                dispatch(setValidationErrors({errors: []}));
-            }
-
-            dispatch(setPageLoading({pageLoading: false}));
-        });
-    };
-}
+export {setPageData} from './data';
 
 export function setFormData(args: {type: ConnectorType; schema: FormSchema}) {
     return (dispatch: ConnectionsReduxDispatch, getState: GetState) => {

@@ -19,8 +19,7 @@ import {
     setInitialForm,
     setSubmitLoading,
 } from './base';
-
-import {setPageData} from '.';
+import {setPageData} from './data';
 
 const i18n = I18n.keyset('connections.form');
 
