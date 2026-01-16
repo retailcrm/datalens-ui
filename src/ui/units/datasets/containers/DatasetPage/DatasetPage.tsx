@@ -12,7 +12,7 @@ import {ActionQueryParam, QueryParam, mapYTClusterToConnId} from '../../constant
 import DatasetUtils, {isCreationProcess} from '../../helpers/utils';
 import Dataset from '../Dataset/Dataset';
 
-import {createDatasetPageContext} from './createDatasetPageContext';
+import {DatasetPageContext} from './DatasetPageContext';
 
 import './DatasetPage.scss';
 
@@ -24,9 +24,7 @@ interface DatasetPageProps extends RouteComponentProps<Record<string, string>> {
     bindedWorkbookId?: string | null;
 }
 
-export const DatasetPageContext = createDatasetPageContext({sdk: {} as SDK, datasetId: ''});
-export const DatasetPageProvider = DatasetPageContext.Provider;
-export const DatasetPageConsumer = DatasetPageContext.Consumer;
+export {DatasetPageContext};
 
 const b = block('dataset-page');
 
@@ -36,7 +34,7 @@ class DatasetPage extends React.Component<DatasetPageProps> {
 
         return (
             <div className={b()}>
-                <DatasetPageProvider value={this.providerValue}>
+                <DatasetPageContext.Provider value={this.providerValue}>
                     <Dataset
                         sdk={this.props.sdk}
                         connectionId={this.connectionId}
@@ -50,7 +48,7 @@ class DatasetPage extends React.Component<DatasetPageProps> {
                         isCreationProcess={isCreationProcess(router.location().pathname)}
                         isAuto={this.isAuto}
                     />
-                </DatasetPageProvider>
+                </DatasetPageContext.Provider>
             </div>
         );
     }
@@ -102,7 +100,5 @@ class DatasetPage extends React.Component<DatasetPageProps> {
         };
     }
 }
-
-export const useDatasetPageContext = () => React.useContext(DatasetPageContext);
 
 export default DatasetPage;
