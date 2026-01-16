@@ -1,4 +1,4 @@
-const CHARTS_API_SCHEMA = require('./charts').default;
+import CHARTS_API_SCHEMA from './charts';
 
 const SCHEMA_API = {
     charts: {
