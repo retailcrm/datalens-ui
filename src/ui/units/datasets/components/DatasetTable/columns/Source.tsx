@@ -9,7 +9,8 @@ import {I18n} from 'i18n';
 import type {DatasetField, DatasetSourceAvatar} from 'shared';
 
 import {FORMULA_CALC_MODE} from '../constants';
-import {getFieldSourceTitle, sortSourceColumn} from '../utils';
+import {getFieldSourceTitle} from '../fields';
+import {sortSourceColumn} from '../sort';
 
 const b = block('dataset-table');
 const i18n = I18n.keyset('dataset.dataset-editor.modify');
