@@ -4,120 +4,63 @@ import type {
     HierarchyField,
     Placeholder,
     PlaceholderSettings,
-    PointSizeConfig,
     ServerTooltipConfig,
-    ShapesConfig,
     Shared,
-    Sort,
-    TableShared,
-    VisualizationWithLayersShared,
 } from 'shared';
 import {PlaceholderId, isFieldHierarchy} from 'shared';
 import type {ApplyData, DatalensGlobalState} from 'ui';
 
-import type {ColumnSettingsState} from '../components/Dialogs/DialogColumnSettings/hooks/useDialogColumnSettingsState';
-import type {WizardDispatch} from '../reducers';
+import type {ColumnSettingsState} from '../../components/Dialogs/DialogColumnSettings/hooks/useDialogColumnSettingsState';
+import type {WizardDispatch} from '../../reducers';
+import type {SetHierarchiesAction} from '../dataset';
+import {setHierarchies} from '../dataset';
+import {openWizardDialogFilter} from '../dialog';
+import {setVisualizationPlaceholderItems} from '../index';
+import {updatePreviewAndClientChartsConfig} from '../preview';
 
-import type {SetHierarchiesAction} from './dataset';
-import {setHierarchies} from './dataset';
-import {openWizardDialogFilter} from './dialog';
-import {updatePreviewAndClientChartsConfig} from './preview';
+import type {SetColorsAction, SetColorsConfigAction} from './colors';
+import type {
+    SetLabelsAction,
+    SetSegmentsAction,
+    SetTooltipsAction,
+    SetVisualizationAction,
+    SetVisualizationPlaceholderItemsAction,
+} from './contents';
+import type {SetDashboardParametersAction} from './dashboard';
+import {setFilters} from './filters';
+import type {SetFiltersAction} from './filters';
+import type {SetGeopointsConfigAction} from './geometry';
+import type {SetLayerFiltersAction, SetSelectedLayerIdAction, UpdateLayersAction} from './layers';
+import type {SetShapesAction, SetShapesConfigAction} from './shapes';
+import type {SetSortAction} from './sort';
 
-import {setVisualizationPlaceholderItems} from './index';
-
-export const SET_VISUALIZATION = Symbol('wizard/visualization/SET_VISUALIZATION');
-export const SET_VISUALIZATION_PLACEHOLDER_ITEMS = Symbol(
-    'wizard/visualization/SET_VISUALIZATION_PLACEHOLDER_ITEMS',
-);
-export const SET_FILTERS = Symbol('wizard/visualization/SET_FILTERS');
-export const SET_COLORS = Symbol('wizard/visualization/SET_COLORS');
+export {SET_VISUALIZATION} from './contents';
+export {SET_VISUALIZATION_PLACEHOLDER_ITEMS} from './contents';
+export {SET_FILTERS} from './filters';
+export {SET_COLORS} from './colors';
 export const SET_AVAILABLE = Symbol('wizard/visualization/SET_AVAILABLE');
 export const SET_Y_AXIS_CONFLICT = Symbol('wizard/visualization/SET_Y_AXIS_CONFLICT');
 export const SET_DISTINCTS = Symbol('wizard/visualization/SET_DISTINCTS');
-export const SET_COLORS_CONFIG = Symbol('wizard/visualization/SET_COLORS_CONFIG');
-export const SET_POINTS_SIZE_CONFIG = Symbol('wizard/visualization/SET_POINTS_SIZE_CONFIG');
-export const SET_SORT = Symbol('wizard/visualization/SET_SORT');
-export const SET_LABELS = Symbol('wizard/visualization/SET_LABELS');
-export const SET_TOOLTIPS = Symbol('wizard/visualization/SET_TOOLTIPS');
-export const SET_SELECTED_LAYER_ID = Symbol('wizard/visualization/SET_SELECTED_LAYER_ID');
-export const SET_LAYER_FILTERS = Symbol('wizard/visualization/SET_LAYER_FILTERS');
-export const UPDATE_LAYERS = Symbol('wizard/visualization/UPDATE_LAYERS');
-export const SET_SHAPES = Symbol('wizard/visualization/SET_SHAPES');
-export const SET_SHAPES_CONFIG = Symbol('wizard/visualization/SET_SHAPES_CONFIG');
-export const SET_DASHBOARD_PARAMETERS = Symbol('wizard/visualization/SET_DASHBOARD_PARAMETERS');
-export const SET_SEGMENTS = Symbol('wizard/visualization/SET_SEGMENTS');
+export {SET_COLORS_CONFIG} from './colors';
+export {SET_POINTS_SIZE_CONFIG} from './geometry';
+export {SET_SORT} from './sort';
+export {SET_LABELS} from './contents';
+export {SET_TOOLTIPS} from './contents';
+export {SET_SELECTED_LAYER_ID} from './layers';
+export {SET_LAYER_FILTERS} from './layers';
+export {UPDATE_LAYERS} from './layers';
+export {SET_SHAPES} from './shapes';
+export {SET_SHAPES_CONFIG} from './shapes';
+export {SET_DASHBOARD_PARAMETERS} from './dashboard';
+export {SET_SEGMENTS} from './contents';
 export const UPDATE_PLACEHOLDER_SETTINGS = Symbol(
     'wizard/visualization/UPDATE_PLACEHOLDER_SETTINGS',
 );
 export const SET_DRILL_DOWN_LEVEL = Symbol('wizard/SET_DRILL_DOWN_LEVEL');
 
-interface SetVisualizationAction extends SetVisualizationArgs {
-    type: typeof SET_VISUALIZATION;
-}
+export {setFilters};
 
-interface SetVisualizationArgs {
-    visualization: Shared['visualization'];
-    qlMode?: boolean;
-}
-
-export function _setVisualization({
-    visualization,
-    qlMode,
-}: SetVisualizationArgs): SetVisualizationAction {
-    return {
-        type: SET_VISUALIZATION,
-        qlMode,
-        visualization,
-    };
-}
-
-interface SetVisualizationPlaceholderItemsAction {
-    type: typeof SET_VISUALIZATION_PLACEHOLDER_ITEMS;
-    visualization: Shared['visualization'];
-    colors: Field[];
-    shapes: Field[];
-}
-
-export function _setVisualizationPlaceholderItems({
-    visualization,
-    colors,
-    shapes,
-}: {
-    visualization: Shared['visualization'];
-    colors: Field[];
-    shapes: Field[];
-}): SetVisualizationPlaceholderItemsAction {
-    return {
-        type: SET_VISUALIZATION_PLACEHOLDER_ITEMS,
-        visualization,
-        colors,
-        shapes,
-    };
-}
-
-interface SetFiltersAction {
-    type: typeof SET_FILTERS;
-    filters: FilterField[];
-}
-
-export function setFilters({filters}: {filters: FilterField[]}): SetFiltersAction {
-    return {
-        type: SET_FILTERS,
-        filters,
-    };
-}
-
-interface SetColorsAction {
-    type: typeof SET_COLORS;
-    colors: Field[];
-}
-
-export function setColors({colors}: {colors: Field[]}): SetColorsAction {
-    return {
-        type: SET_COLORS,
-        colors,
-    };
-}
+export {setColors} from './colors';
 
 interface SetAvailableAction {
     type: typeof SET_AVAILABLE;
@@ -163,165 +106,17 @@ export function setDistincts({
     };
 }
 
-interface SetColorsConfigAction {
-    type: typeof SET_COLORS_CONFIG;
-    colorsConfig: TableShared['colorsConfig'];
-}
-
-export function setColorsConfig({colorsConfig}: {colorsConfig: TableShared['colorsConfig']}) {
-    return {
-        type: SET_COLORS_CONFIG,
-        colorsConfig,
-    };
-}
-
-interface SetGeopointsConfigAction {
-    type: typeof SET_POINTS_SIZE_CONFIG;
-    geopointsConfig: PointSizeConfig;
-}
-
-export function setPointsSizeConfig({
-    geopointsConfig,
-}: {
-    geopointsConfig: PointSizeConfig;
-}): SetGeopointsConfigAction {
-    return {
-        type: SET_POINTS_SIZE_CONFIG,
-        geopointsConfig,
-    };
-}
-
-interface SetSortAction {
-    type: typeof SET_SORT;
-    sort: Sort[];
-}
-
-export function setSort({sort}: {sort: Sort[]}): SetSortAction {
-    return {
-        type: SET_SORT,
-        sort,
-    };
-}
-
-interface SetLabelsAction {
-    type: typeof SET_LABELS;
-    labels: Field[];
-}
-
-export function setLabels({labels}: {labels: Field[]}): SetLabelsAction {
-    return {
-        type: SET_LABELS,
-        labels,
-    };
-}
-
-interface SetTooltipsAction {
-    type: typeof SET_TOOLTIPS;
-    tooltips: Field[];
-}
-
-export function setTooltips({tooltips}: {tooltips: Field[]}): SetTooltipsAction {
-    return {
-        type: SET_TOOLTIPS,
-        tooltips,
-    };
-}
-
-interface UpdateLayersAction {
-    type: typeof UPDATE_LAYERS;
-    layers: VisualizationWithLayersShared['visualization']['layers'];
-}
-
-export function updateLayers({
-    layers,
-}: {
-    layers: VisualizationWithLayersShared['visualization']['layers'];
-}): UpdateLayersAction {
-    return {
-        type: UPDATE_LAYERS,
-        layers,
-    };
-}
-
-interface SetSelectedLayerIdAction {
-    type: typeof SET_SELECTED_LAYER_ID;
-    layerId: string;
-}
-
-export function _setSelectedLayerId({layerId}: {layerId: string}): SetSelectedLayerIdAction {
-    return {
-        type: SET_SELECTED_LAYER_ID,
-        layerId,
-    };
-}
-
-interface SetLayerFiltersAction {
-    type: typeof SET_LAYER_FILTERS;
-    filters: FilterField[];
-}
-
-export function setLayerFilters({filters}: {filters: FilterField[]}): SetLayerFiltersAction {
-    return {
-        type: SET_LAYER_FILTERS,
-        filters,
-    };
-}
-
-interface SetShapesAction {
-    type: typeof SET_SHAPES;
-    shapes: Field[];
-}
-
-export function setShapes({shapes}: {shapes: Field[]}): SetShapesAction {
-    return {
-        type: SET_SHAPES,
-        shapes,
-    };
-}
-
-interface SetShapesConfigAction {
-    type: typeof SET_SHAPES_CONFIG;
-    shapesConfig: ShapesConfig;
-}
-
-export function setShapesConfig({
-    shapesConfig,
-}: {
-    shapesConfig: ShapesConfig;
-}): SetShapesConfigAction {
-    return {
-        type: SET_SHAPES_CONFIG,
-        shapesConfig,
-    };
-}
-
-interface SetDashboardParametersAction {
-    type: typeof SET_DASHBOARD_PARAMETERS;
-    dashboardParameters: Field[];
-}
-
-export function setDashboardParameters({
-    dashboardParameters,
-}: {
-    dashboardParameters: Field[];
-}): SetDashboardParametersAction {
-    return {
-        type: SET_DASHBOARD_PARAMETERS,
-        dashboardParameters,
-    };
-}
-
-type SetSegmentsAction = {
-    type: typeof SET_SEGMENTS;
-    segments: Field[];
-};
-
-export function setSegments({segments}: {segments: Field[]}): SetSegmentsAction {
-    return {
-        type: SET_SEGMENTS,
-        segments,
-    };
-}
+export {setColorsConfig} from './colors';
+export {setPointsSizeConfig} from './geometry';
+export {setSort} from './sort';
+export {setLabels} from './contents';
+export {setTooltips} from './contents';
+export {updateLayers} from './layers';
+export {setLayerFilters} from './layers';
+export {setShapes} from './shapes';
+export {setShapesConfig} from './shapes';
+export {setDashboardParameters} from './dashboard';
+export {setSegments} from './contents';
 
 type OnFilterItemClickArgs = {
     filterItem: Field;

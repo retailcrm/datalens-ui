@@ -5,7 +5,7 @@ import block from 'bem-cn-lite';
 import type {LabelItem} from 'shared/schema/types';
 import {Interpolate} from 'ui';
 
-import {MarkdownItem} from '../';
+import {MarkdownItem} from '../MarkdownItem/MarkdownItem';
 
 import './Label.scss';
 
