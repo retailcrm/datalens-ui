@@ -8,7 +8,7 @@ import {I18n} from 'i18n';
 import {ConnectionsS3BaseQA, ConnectionsYadocsQA} from 'shared/constants/qa/connections';
 import type {YadocItem} from 'ui/units/connections/store';
 
-import {YadocListItemView} from '../components';
+import {YadocListItemView} from '../components/YadocListItemView';
 import type {HandleItemClick, YadocListItem} from '../types';
 
 const b = block('conn-form-yadocs');

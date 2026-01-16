@@ -2,9 +2,8 @@ import React from 'react';
 
 import {Icon} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
+import {ICONS_MENU_DEFAULT_SIZE} from 'libs/DatalensChartkit/menu/constants';
 import type {ChartsInsightsItemLevels} from 'shared';
-
-import {ICONS_MENU_DEFAULT_SIZE} from '../../../../../../../../menu/MenuItems';
 
 import {getIconData} from './getIconData';
 
