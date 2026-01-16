@@ -6,7 +6,7 @@ import type {
 
 import type {DashkitMetaDataItemNoRelations, Datasets, DatasetsFlatListData} from '../types';
 
-import {isControl} from './helpersControls';
+import {isControl} from './predicates';
 
 const mapFieldsListGuid = (list: Array<DatasetsFieldsListData>, result: Record<string, string>) => {
     list.forEach((listItem) => {

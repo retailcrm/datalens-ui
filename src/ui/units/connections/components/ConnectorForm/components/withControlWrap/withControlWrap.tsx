@@ -4,9 +4,9 @@ import block from 'bem-cn-lite';
 import {FieldWrapper} from 'components/FieldWrapper/FieldWrapper';
 import type {BaseControlItem} from 'shared/schema/types';
 
-import {MarkdownItem} from '../';
 import type {ValidationError} from '../../../../typings';
 import {getErrorMessage, getValidationError} from '../../../../utils';
+import {MarkdownItem} from '../MarkdownItem/MarkdownItem';
 
 import './withControlWrap.scss';
 

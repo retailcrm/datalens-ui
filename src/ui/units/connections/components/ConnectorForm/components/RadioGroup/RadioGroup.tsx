@@ -11,8 +11,8 @@ import {bindActionCreators} from 'redux';
 import type {RadioGroupItem, RadioGroupItemOption} from 'shared/schema/types';
 import type {DatalensGlobalState} from 'ui';
 
-import {MarkdownItem} from '../';
 import {changeForm, changeInnerForm} from '../../../../store';
+import {MarkdownItem} from '../MarkdownItem/MarkdownItem';
 
 import './RadioGroup.scss';
 

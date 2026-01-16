@@ -1,47 +1,26 @@
 /* eslint-disable complexity */
 import intersection from 'lodash/intersection';
-import type {StringParams} from 'shared';
 import {getDefaultTypeByIgnore} from 'ui/components/DialogRelations/hooks/helpers';
-import {DASH_WIDGET_TYPES} from 'ui/units/dash/modules/constants';
 
 import {FULL_RELATIONS, INPUT_RELATIONS, OUTPUT_RELATIONS, RELATION_TYPES} from '../constants';
-import type {
-    DashkitMetaDataItem,
-    DashkitMetaDataItemNoRelations,
-    Datasets,
-    RelationType,
-    RelationsData,
-} from '../types';
+import type {DashkitMetaDataItemNoRelations, Datasets, RelationType, RelationsData} from '../types';
 
 import {getMappedConnectedControlField} from './helpersDatasets';
+import {
+    hasCommonDefaultsWithDefaults,
+    hasCommonUsedParamsWithDefaults,
+    isControl,
+    isDatasetControl,
+    isExternalControl,
+    isManualControl,
+} from './predicates';
 
-export const isControl = (item: DashkitMetaDataItem | DashkitMetaDataItemNoRelations) =>
-    item.type === DASH_WIDGET_TYPES.CONTROL;
-
-export const isManualControl = (item: DashkitMetaDataItemNoRelations) =>
-    isControl(item) && !item.datasetId && !item.chartId;
-
-export const isDatasetControl = (item: DashkitMetaDataItemNoRelations) =>
-    isControl(item) && item.datasetId;
-
-export const isExternalControl = (item: DashkitMetaDataItemNoRelations) =>
-    isControl(item) && item.chartId;
-
-export const hasCommonUsedParamsWithDefaults = (
-    widgetParams: StringParams,
-    usedParams: string[],
-) => {
-    return Boolean(intersection(Object.keys(widgetParams || {}), usedParams).length);
-};
-
-const hasCommonDefaultsWithDefaults = (
-    widgetParams: StringParams,
-    itemWidgetParams: StringParams,
-) => {
-    return Boolean(
-        intersection(Object.keys(widgetParams || {}), Object.keys(itemWidgetParams || {})).length,
-    );
-};
+export {isControl};
+export {isManualControl};
+export {isDatasetControl};
+export {isExternalControl};
+export {hasCommonDefaultsWithDefaults};
+export {hasCommonUsedParamsWithDefaults};
 
 /**
  * For current widget == control and widget in line == control
