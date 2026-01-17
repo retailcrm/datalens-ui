@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/datalens-tech/datalens-ui/compare/v0.1.1...v0.1.2) (2026-01-17)
+
+
+### Bug Fixes
+
+* Using history object for creating hrefs for breadcrumbs ([fbabcbd](https://github.com/datalens-tech/datalens-ui/commit/fbabcbd63e399e7d38e70546f0063fb47cbf5273))
+
 ### [0.1.1](https://github.com/datalens-tech/datalens-ui/compare/v0.1.0...v0.1.1) (2026-01-17)
 
 
