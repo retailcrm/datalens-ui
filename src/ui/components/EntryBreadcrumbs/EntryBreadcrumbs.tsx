@@ -15,7 +15,7 @@ import './EntryBreadcrumbs.scss';
 const b = block('entry-panel-breadcrumbs');
 
 export const EntryBreadcrumbs = (props: EntryBreadcrumbsProps) => {
-    const {renderRootContent, entry, workbookName, entityBreadcrumbs, endContent} = props;
+    const {entry, workbookName, entityBreadcrumbs, endContent} = props;
 
     const history = useHistory();
     const location = useLocation();
@@ -36,13 +36,7 @@ export const EntryBreadcrumbs = (props: EntryBreadcrumbsProps) => {
         <Breadcrumbs showRoot className={b()} endContent={endContent}>
             {breadcrumbsItems.map((item, index) => {
                 const last = index === breadcrumbsItems.length - 1;
-                let content: React.ReactNode = null;
-
-                if (index === 0 && !entry?.workbookId && renderRootContent) {
-                    content = renderRootContent(item);
-                }
-
-                content = item.text;
+                const url = new URL(item.path ?? '/', 'http://sample.test');
 
                 return (
                     <Breadcrumbs.Item
@@ -56,9 +50,9 @@ export const EntryBreadcrumbs = (props: EntryBreadcrumbsProps) => {
                         }}
                         className={b('item', {link: Boolean(item.path)})}
                         disabled={last}
-                        href={item.path}
+                        href={history.createHref({pathname: url.pathname, search: url.search})}
                     >
-                        {content}
+                        {item.text}
                     </Breadcrumbs.Item>
                 );
             })}
