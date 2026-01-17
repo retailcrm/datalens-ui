@@ -7,6 +7,7 @@ import react from '@vitejs/plugin-react';
 import {visualizer} from 'rollup-plugin-visualizer';
 import {defineConfig, transformWithEsbuild} from 'vite';
 import dts from 'vite-plugin-dts';
+import reactSvg from 'vite-plugin-svgr';
 
 const external = [
     /^axios/,
@@ -101,6 +102,9 @@ export default defineConfig({
     },
     plugins: [
         react(),
+        reactSvg({
+            include: 'src/ui/**/*.svg',
+        }),
         {
             name: 'i18n-translations',
             closeBundle() {
