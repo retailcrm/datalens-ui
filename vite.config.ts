@@ -8,12 +8,6 @@ import {visualizer} from 'rollup-plugin-visualizer';
 import {defineConfig, transformWithEsbuild} from 'vite';
 import dts from 'vite-plugin-dts';
 
-const chunks = {
-    'assets/images': /src\/ui\/assets\/images\/[^/]+\/([^/]+)\/([^/]+)\.svg$/,
-    components: /src\/ui\/components\/([^/]+)\//,
-    pages: /src\/ui\/datalens\/pages\/([^/]+)\//,
-};
-
 const external = [
     /^axios/,
     /^bem-cn-lite/,
@@ -108,7 +102,7 @@ export default defineConfig({
     plugins: [
         react(),
         dts({
-            outDir: 'dist-lib/types',
+            outDir: 'dist-lib',
             tsconfigPath: 'tsconfig.build.json',
             insertTypesEntry: true,
             staticImport: true,
@@ -207,42 +201,29 @@ export default defineConfig({
         },
         rollupOptions: {
             external,
-            treeshake: {
-                moduleSideEffects: (id) => id.endsWith('.css') || id.endsWith('.scss'),
-            },
+            treeshake: false,
             onwarn(warning, handle) {
-                if (['EVAL', 'UNUSED_EXTERNAL_IMPORT'].includes(warning.code as string)) return;
+                const knownProblems = ['CIRCULAR_DEPENDENCY', 'UNUSED_EXTERNAL_IMPORT'];
+                if (knownProblems.includes(warning.code as string)) return;
                 if (warning.message.includes('externalized for browser compatibility')) return;
                 handle(warning);
             },
             output: {
                 dir: 'dist-lib',
-                inlineDynamicImports: false,
-                assetFileNames: (asset) => {
-                    if (asset.names.some((name) => name.endsWith('.css'))) {
-                        return 'index.css';
-                    }
-                    return '[name][extname]';
-                },
-                chunkFileNames: '[name].js',
                 globals: {
                     react: 'React',
                     'react-dom': 'ReactDOM',
                 },
-                manualChunks: (id) => {
-                    if (id.includes('node_modules')) return 'vendor';
-
-                    const [, theme, imageName] = id.match(chunks['assets/images']) ?? [];
-                    if (theme && imageName) return 'assets/images/' + theme + '/' + imageName;
-
-                    const [, componentName] = id.match(chunks.components) ?? [];
-                    if (componentName) return 'components/' + componentName;
-
-                    const [, pageName] = id.match(chunks.pages) ?? [];
-                    if (pageName) return 'pages/' + pageName;
-
-                    return undefined;
+                inlineDynamicImports: false,
+                preserveModules: true,
+                preserveModulesRoot: path.resolve(__dirname, 'src'),
+                strict: false,
+                assetFileNames: (asset) => {
+                    return asset.names.some((name) => name.endsWith('.css'))
+                        ? 'index.css'
+                        : '[name][extname]';
                 },
+                entryFileNames: () => '[name].js',
             },
         },
         minify: false,
