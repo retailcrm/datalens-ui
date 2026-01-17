@@ -14,6 +14,7 @@ import {ActionPanelQA, EntryScope} from 'shared';
 import type {DatalensGlobalState, EntryDialogues} from 'ui';
 import type {FilterEntryContextMenuItems} from 'ui/components/EntryContextMenu';
 import {CounterName, GoalId, reachMetricaGoal} from 'ui/libs/metrica';
+import {getRouter} from 'ui/navigation';
 import {registry} from 'ui/registry';
 import type {BreadcrumbsItem} from 'ui/registry/units/common/types/components/EntryBreadcrumbs';
 import {
@@ -312,11 +313,14 @@ class EntryPanel extends React.Component<Props, State> {
 
     private renderRootContent = (rootItem: BreadcrumbsItem) => {
         if (rootItem.href) {
+            const url = new URL(rootItem.href);
+            const router = getRouter();
+
             return (
                 <Link
                     key={rootItem.text}
                     view="secondary"
-                    href={rootItem.href}
+                    href={router.history.createHref({pathname: url.pathname})}
                     title={rootItem.text}
                     onClick={rootItem.action}
                     className={b('item', {link: true})}
