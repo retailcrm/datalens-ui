@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/datalens-tech/datalens-ui/compare/v0.1.0...v0.1.1) (2026-01-17)
+
+
+### Bug Fixes
+
+* SVG icons loading ([6cda9a8](https://github.com/datalens-tech/datalens-ui/commit/6cda9a83cc5505560512656f44101d4673ecb8ad))
+
 ## [0.1.0](https://github.com/datalens-tech/datalens-ui/compare/v0.0.1...v0.1.0) (2026-01-17)
 
 
