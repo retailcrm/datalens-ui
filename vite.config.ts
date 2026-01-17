@@ -101,6 +101,37 @@ export default defineConfig({
     },
     plugins: [
         react(),
+        {
+            name: 'i18n-translations',
+            closeBundle() {
+                const __src = path.resolve(__dirname, 'dist/public/build/i18n');
+                const __dst = path.resolve(__dirname, 'dist-lib/public/i18n');
+
+                if (fs.existsSync(__src)) {
+                    copyFiles(__src, __dst);
+
+                    const files = fs.readdirSync(__dst);
+                    const manifest: Record<string, string> = {};
+
+                    files.forEach((name) => {
+                        const [, language] = name.match(/^([a-z]{2})\.[a-f0-9]+\.js$/) ?? [];
+                        if (language) {
+                            manifest[language] = name;
+                        }
+                    });
+
+                    if (Object.keys(manifest).length > 0) {
+                        fs.writeFileSync(
+                            path.join(__dst, 'manifest.json'),
+                            JSON.stringify(manifest, null, 2),
+                            'utf-8',
+                        );
+                    }
+                } else {
+                    console.warn(`[copy-i18n] Source folder ${__src} not found.`);
+                }
+            },
+        },
         dts({
             outDir: 'dist-lib',
             tsconfigPath: 'tsconfig.build.json',
@@ -238,3 +269,23 @@ export default defineConfig({
         },
     },
 });
+
+function copyFiles(src: string, dst: string) {
+    if (!fs.existsSync(src)) return;
+
+    const stats = fs.statSync(src);
+    if (stats.isDirectory()) {
+        if (!fs.existsSync(dst)) {
+            fs.mkdirSync(dst, {recursive: true});
+        }
+        fs.readdirSync(src).forEach((nested) => {
+            copyFiles(path.join(src, nested), path.join(dst, nested));
+        });
+    } else {
+        const dstDir = path.dirname(dst);
+        if (!fs.existsSync(dstDir)) {
+            fs.mkdirSync(dstDir, {recursive: true});
+        }
+        fs.copyFileSync(src, dst);
+    }
+}
