@@ -30,7 +30,7 @@ import {ITEM_TYPES} from '../constants';
 
 import {getCommonDataType} from './helpers';
 
-export const prepareFieldToMeasureTransformation = (item: Field): Field => {
+export function prepareFieldToMeasureTransformation(item: Field): Field {
     if (ITEM_TYPES.MEASURES_AND_PSEUDO.has(item.type) || isParameter(item)) {
         return item;
     }
@@ -46,7 +46,7 @@ export const prepareFieldToMeasureTransformation = (item: Field): Field => {
                 ? DatasetFieldAggregation.Sum
                 : DatasetFieldAggregation.Countunique,
     };
-};
+}
 
 export function getAvailableVisualizations(options?: ChartkitGlobalSettings) {
     const {yandexMap: {enabled: isYandexMapEnabled = false} = {}} = options || DL.CHARTKIT_SETTINGS;

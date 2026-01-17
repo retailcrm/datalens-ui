@@ -12,6 +12,7 @@ import {Utils, DL} from 'ui';
 
 import DatalensPage from 'datalens';
 import {renderDatalens} from 'datalens/render';
+import type {DatalensApplicationConfig} from 'datalens/render';
 import {getStore, resetStore} from 'ui/store';
 import {selectThemeSettings} from 'store/selectors/user';
 import {createHashHistory, getHistory, setHistory} from 'ui/navigation';
@@ -31,7 +32,11 @@ let currentRootElement: HTMLElement | null = null;
 
 export {Capability, capabilities} from 'ui/capabilities';
 
-export function mount(rootElement: HTMLElement, homePathname: string) {
+export function mount(
+    rootElement: HTMLElement,
+    homePathname: string,
+    config: DatalensApplicationConfig = {},
+) {
     setHistory(createHashHistory());
 
     currentRootElement = rootElement; // Store the element
@@ -57,7 +62,7 @@ export function mount(rootElement: HTMLElement, homePathname: string) {
         );
     };
 
-    const renderApp = () => {
+    renderDatalens(() => {
         Utils.setup();
 
         const history = getHistory();
@@ -73,9 +78,7 @@ export function mount(rootElement: HTMLElement, homePathname: string) {
             </Router>,
             rootElement,
         );
-    };
-
-    renderDatalens(renderApp, {});
+    }, config);
 }
 
 export function unmount(rootElement: HTMLElement | null) {
