@@ -2,7 +2,7 @@ import type {AppPluginsConfig} from '../registry/utils/register-app-plugins';
 import {registerAppPlugins} from '../registry/utils/register-app-plugins';
 import {initChartKitSettings} from '../libs/DatalensChartkit/ChartKit/init';
 
-type DatalensApplicationConfig = {
+export type DatalensApplicationConfig = {
     pluginsConfig?: AppPluginsConfig;
     registerPlugins?: () => void;
     setupAppConfiguration?: () => void;
