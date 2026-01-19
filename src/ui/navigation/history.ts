@@ -1,11 +1,15 @@
 import type {History} from 'history';
-import {createBrowserHistory} from 'history';
+import {createBrowserHistory, createMemoryHistory} from 'history';
 
 let history: History | undefined;
 
 export const getHistory = () => {
     if (!history) {
-        history = createBrowserHistory();
+        try {
+            history = createBrowserHistory();
+        } catch {
+            history = createMemoryHistory();
+        }
     }
 
     return history;
