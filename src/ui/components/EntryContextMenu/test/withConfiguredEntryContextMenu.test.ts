@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 import type {DLGlobalData, Permissions} from 'shared';
 import {EntryScope} from 'shared';
+import {getLocation} from 'ui/navigation';
 
 import type {ContextMenuParams} from '../types';
 import {getEntryContextMenuItems} from '../withConfiguredEntryContextMenu/withConfiguredEntryContextMenu';
@@ -27,6 +28,20 @@ jest.mock('ui', () => {
         },
     };
 });
+
+jest.mock('ui/navigation', () => ({
+    getLocation: jest.fn().mockReturnValue({
+        path: [],
+        pathname: '/editor',
+        search: '',
+        href: 'http://localhost/editor',
+        hash: '',
+        state: undefined,
+        params: () => new URLSearchParams(),
+        url: () => new URL('http://localhost/editor'),
+    }),
+}));
+
 jest.mock('../../../registry', () => ({
     registry: {
         common: {
@@ -459,6 +474,8 @@ const testDataContextMenu: Array<TestData> = [
     },
 ];
 
+const getLocationMock = getLocation as jest.MockedFunction<typeof getLocation>;
+
 describe('withConfiguredEntryContextMenu', () => {
     let windowSpy: jest.SpyInstance<{
         DL: DLGlobalData;
@@ -470,6 +487,7 @@ describe('withConfiguredEntryContextMenu', () => {
 
     afterEach(() => {
         windowSpy.mockRestore();
+        getLocationMock.mockRestore();
     });
 
     for (const testData of testDataContextMenu) {
@@ -480,6 +498,26 @@ describe('withConfiguredEntryContextMenu', () => {
 
         // eslint-disable-next-line @typescript-eslint/no-loop-func
         test(`check the creation of context menus with different rights - ${testSuffix}`, () => {
+            getLocationMock.mockImplementation(() => {
+                const url = new URL(
+                    testData.input.mock.showMenuInCharts ? '' : '/editor',
+                    'http://localhost',
+                );
+
+                url.search = `revId=${testData.input.mock.revId}`;
+
+                return {
+                    path: [],
+                    pathname: url.pathname,
+                    search: url.search,
+                    href: url.href,
+                    hash: url.hash,
+                    state: undefined,
+                    params: () => new URLSearchParams(url.searchParams),
+                    url: () => new URL(url),
+                };
+            });
+
             windowSpy.mockImplementation(() => ({
                 DL: {
                     dynamicFeatures: {
@@ -492,6 +530,7 @@ describe('withConfiguredEntryContextMenu', () => {
                     pathname: testData.input.mock.showMenuInCharts ? '' : '/editor',
                     search: testData.input.mock.revId ? `?revId=${testData.input.mock.revId}` : '',
                 },
+                testSuffix,
             }));
 
             const result = getEntryContextMenuItems(testData.input.params as ContextMenuParams);

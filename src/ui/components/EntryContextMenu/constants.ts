@@ -41,7 +41,6 @@ export const ENTRY_CONTEXT_MENU_ACTION = {
 
 const CONTEXT_MENU_COPY = {
     id: ENTRY_CONTEXT_MENU_ACTION.COPY,
-
     action: ENTRY_CONTEXT_MENU_ACTION.COPY,
     icon: Copy,
     qa: ActionPanelEntryContextMenuQa.Copy,
@@ -54,9 +53,10 @@ const CONTEXT_MENU_COPY = {
     },
     // remain Copy menu item in navigation, but show in actionPanel only if actual version is opened
     isVisible({showSpecificItems, entry}: ContextMenuParams) {
-        return !showSpecificItems && entry?.workbookId
-            ? false
-            : !showSpecificItems || !getLocation().params().get(URL_QUERY.REV_ID);
+        const workbookId = entry?.workbookId;
+        const revId = getLocation().params().get(URL_QUERY.REV_ID);
+
+        return showSpecificItems ? !revId || revId === 'null' : !workbookId;
     },
 };
 
