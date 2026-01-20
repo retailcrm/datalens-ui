@@ -67,6 +67,7 @@ export const CollectionBreadcrumbs = React.memo<Props>(
                 <Breadcrumbs className={b('container')}>
                     {items.map((item, index, list) => {
                         const isLast = index === list.length - 1;
+                        const url = new URL(item.path ?? '/', 'http://sample.test');
 
                         return (
                             <Breadcrumbs.Item
@@ -81,7 +82,10 @@ export const CollectionBreadcrumbs = React.memo<Props>(
                                 }}
                                 className={b('item')}
                                 disabled={isLast}
-                                href={item.path}
+                                href={router.history.createHref({
+                                    pathname: url.pathname,
+                                    search: url.search,
+                                })}
                             >
                                 {item.id === LOADING_ITEM_ID ? (
                                     <Skeleton className={b('skeleton')} />
