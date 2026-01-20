@@ -4,6 +4,7 @@ import {ActionBar} from '@gravity-ui/navigation';
 import {Skeleton} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import {Feature} from 'shared';
+import {Capability, useCapabilities} from 'ui/capabilities';
 import {DL} from 'ui/constants/common';
 import {registry} from 'ui/registry';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
@@ -52,7 +53,13 @@ export const CollectionsNavigationLayout = React.memo<Props>(
     ({layout, skeletonsSettings, children}) => {
         const {Footer} = registry.common.components.getAll();
 
-        const showTitleActionsBlock = !DL.IS_MOBILE && layout.titleActionsBlock;
+        const capabilities = useCapabilities();
+
+        const showTitleActionsBlock =
+            !DL.IS_MOBILE &&
+            layout.titleActionsBlock &&
+            capabilities[Capability.AccessibleWorkbookEditing];
+
         const showTitleRightBlock = !DL.IS_MOBILE && layout.titleRightBlock;
         const showDescription = !DL.IS_MOBILE && layout.description;
 
