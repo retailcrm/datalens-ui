@@ -13,6 +13,7 @@ import {I18N} from 'i18n';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useLocation} from 'react-router-dom';
 import {WorkbookPageActionsMoreQA} from 'shared/constants/qa';
+import {Capability, useCapabilities} from 'ui/capabilities';
 import {DIALOG_EXPORT_WORKBOOK} from 'ui/components/CollectionsStructure/ExportWorkbookDialog/ExportWorkbookDialog';
 import {DropdownAction} from 'ui/components/DropdownAction/DropdownAction';
 import {closeDialog, openDialog} from 'ui/store/actions/dialog';
@@ -42,6 +43,7 @@ type Props = {
 };
 
 export const WorkbookActions: React.FC<Props> = ({workbook, refreshWorkbookInfo}) => {
+    const capabilities = useCapabilities();
     const history = useHistory();
     const {search} = useLocation();
     const dispatch = useDispatch();
@@ -84,10 +86,9 @@ export const WorkbookActions: React.FC<Props> = ({workbook, refreshWorkbookInfo}
     const globallyEntrySettings = getGloballyEntrySettings();
     const isWorkbookExportDisabled = Boolean(globallyEntrySettings?.isWorkbookExportDisabled);
 
-    const additionalActions = useAdditionalWorkbookActions(workbook);
     const breadcrumbsError = useSelector(selectCollectionBreadcrumbsError);
 
-    const dropdownActions = [...additionalActions];
+    const dropdownActions = [...useAdditionalWorkbookActions(workbook)];
 
     const collectionAccessPermissionDenied =
         workbook.collectionId &&
@@ -205,9 +206,12 @@ export const WorkbookActions: React.FC<Props> = ({workbook, refreshWorkbookInfo}
         dropdownActions.push([...otherActions]);
     }
 
+    const actionsAvailable =
+        Boolean(dropdownActions.length) && capabilities[Capability.AccessibleWorkbookEditing];
+
     return (
         <div className={b()}>
-            {Boolean(dropdownActions.length) && (
+            {actionsAvailable && (
                 <DropdownMenu
                     defaultSwitcherProps={{view: 'normal', qa: WorkbookPageActionsMoreQA.SWITCHER}}
                     switcherWrapperClassName={b('item')}
