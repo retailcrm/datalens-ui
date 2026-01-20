@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/datalens-tech/datalens-ui/compare/v0.2.0...v0.2.1) (2026-01-20)
+
+
+### Bug Fixes
+
+* Follow router rules in collection breadcrumbs ([42089bd](https://github.com/datalens-tech/datalens-ui/commit/42089bdcd6a1e03d65270a7ff311ab0a388d993e))
+
 ## 0.2.0 (2026-01-20)
 
 
