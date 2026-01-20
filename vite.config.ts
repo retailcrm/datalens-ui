@@ -57,6 +57,8 @@ const external = [
     /^@tanstack\/.*/,
 ];
 
+const __dist = path.resolve(__dirname, 'dist-lib');
+
 export default defineConfig({
     optimizeDeps: {
         esbuildOptions: {
@@ -136,6 +138,20 @@ export default defineConfig({
                 }
             },
         },
+        {
+            name: 'entrypoint',
+            closeBundle() {
+                if (!fs.existsSync(__dist)) {
+                    fs.mkdirSync(__dist, {recursive: true});
+                }
+
+                fs.writeFileSync(
+                    path.join(__dist, 'index.js'),
+                    "export * from './ui/entries/main';\nexport {};\n",
+                    'utf-8',
+                );
+            },
+        },
         dts({
             outDir: 'dist-lib',
             tsconfigPath: 'tsconfig.build.json',
@@ -171,18 +187,17 @@ export default defineConfig({
                         : undefined;
                 };
 
-                const outDir = path.resolve(__dirname, 'dist-lib');
-                if (!fs.existsSync(outDir)) {
-                    fs.mkdirSync(outDir, {recursive: true});
+                if (!fs.existsSync(__dist)) {
+                    fs.mkdirSync(__dist, {recursive: true});
                 }
 
                 const licensePath = path.resolve(__dirname, 'LICENSE');
                 if (fs.existsSync(licensePath)) {
-                    fs.copyFileSync(licensePath, path.join(outDir, 'LICENSE'));
+                    fs.copyFileSync(licensePath, path.join(__dist, 'LICENSE'));
                 }
 
                 fs.writeFileSync(
-                    path.join(outDir, 'package.json'),
+                    path.join(__dist, 'package.json'),
                     JSON.stringify(
                         {
                             name: manifest.name,
