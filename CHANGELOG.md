@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/datalens-tech/datalens-ui/compare/v0.1.3...v0.1.4) (2026-01-21)
+
+
+### Bug Fixes
+
+* Creating history object in non-browser environment ([2872ce9](https://github.com/datalens-tech/datalens-ui/commit/2872ce9c2b5230057a2febc0e530829e39b4e751))
+* Follow router rules in collection breadcrumbs ([747410e](https://github.com/datalens-tech/datalens-ui/commit/747410eb37ca2b8da9b1cfadb1ba45b208d431ed))
+* Missing index.js ([12bfccc](https://github.com/datalens-tech/datalens-ui/commit/12bfcccd666cdaeff63dc0672b5afce7380f5178))
+* Showing/hiding workbook title edit button & actions menu according to the capability flag 'accessible-workbook-editing' ([bcb8343](https://github.com/datalens-tech/datalens-ui/commit/bcb8343b2b0eea2b29158af26fdde1adc119aced))
+
 ### [0.1.3](https://github.com/datalens-tech/datalens-ui/compare/v0.1.2...v0.1.3) (2026-01-18)
 
 
