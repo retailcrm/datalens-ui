@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/datalens-tech/datalens-ui/compare/v0.1.4...v0.1.5) (2026-01-21)
+
+
+### Bug Fixes
+
+* Loading svg from assets/images as base64, since they are used as src for img tag ([7a3bff5](https://github.com/datalens-tech/datalens-ui/commit/7a3bff574c18965abc43829843e678f0fb805bbe))
+
 ### [0.1.4](https://github.com/datalens-tech/datalens-ui/compare/v0.1.3...v0.1.4) (2026-01-21)
 
 
