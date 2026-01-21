@@ -106,6 +106,7 @@ export default defineConfig({
         react(),
         reactSvg({
             include: 'src/ui/**/*.svg',
+            exclude: 'src/ui/assets/images/**/*.svg',
         }),
         {
             name: 'i18n-translations',
