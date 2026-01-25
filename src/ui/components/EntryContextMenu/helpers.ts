@@ -34,6 +34,17 @@ export async function renameEntry(entryDialoguesRef: EntryDialoguesRef, entry: M
             const entryData = response.data ? response.data[0] : null;
             if (entryData) {
                 setEntryKey(entryData);
+
+                if (typeof document !== 'undefined') {
+                    const {scope, key} = entryData;
+                    if (scope === EntryScope.Dash) {
+                        document.dispatchEvent(
+                            new CustomEvent('datalens:dash:rename', {
+                                detail: {id: entry.entryId, name: getEntryNameByKey({key})},
+                            }),
+                        );
+                    }
+                }
             } else {
                 getRouter().reload();
             }

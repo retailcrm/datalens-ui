@@ -95,6 +95,14 @@ class DialogDeleteEntry extends React.Component<Props> {
         if (entry.scope === EntryScope.Connection) {
             reachMetricaGoal(CounterName.Main, GoalId.ConnectionDeleteSubmit, {type: entry.type});
         }
+
+        if (entry.scope === EntryScope.Dash && typeof document !== 'undefined') {
+            document.dispatchEvent(
+                new CustomEvent('datalens:dash:delete', {
+                    detail: {id: entry.entryId},
+                }),
+            );
+        }
     };
 }
 

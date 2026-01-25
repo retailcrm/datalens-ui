@@ -6,6 +6,7 @@ import {i18n} from 'i18n';
 import PropTypes from 'prop-types';
 import {EntryScope, NavigationInputQA} from 'shared';
 import {Utils} from 'ui';
+import {getRouter} from 'ui/navigation';
 
 import DropdownNavigation from '../../../../components/DropdownNavigation/DropdownNavigation';
 import {EntryTypeNode} from '../../modules/constants';
@@ -74,7 +75,10 @@ class NavigationInput extends React.PureComponent {
         const {showInput, isValidEntry} = this.state;
         const showOpenButton = isValidEntry && entryId && !isInvalid;
 
+        const router = getRouter();
+
         const href = getEntryLink ? getEntryLink(entryId) : getChartEditLink(entryId);
+        const url = new URL(href, 'https://sample.test');
 
         return (
             <React.Fragment>
@@ -97,7 +101,11 @@ class NavigationInput extends React.PureComponent {
                             className={b('button')}
                             qa={NavigationInputQA.Open}
                             target="_blank"
-                            href={href}
+                            href={router.history.createHref({
+                                pathname: url.pathname,
+                                search: url.search,
+                                hash: url.hash,
+                            })}
                         >
                             {i18n('dash.navigation-input.edit', 'button_open')}
                         </Button>

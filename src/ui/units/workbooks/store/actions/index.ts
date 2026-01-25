@@ -750,6 +750,15 @@ export const deleteEntry = ({
                         type: entry.type,
                     });
                 }
+
+                if (scope === EntryScope.Dash && typeof document !== 'undefined') {
+                    document.dispatchEvent(
+                        new CustomEvent('datalens:dash:delete', {
+                            detail: {id: entryId},
+                        }),
+                    );
+                }
+
                 dispatch({
                     type: DELETE_ENTRY_SUCCESS,
                     data,

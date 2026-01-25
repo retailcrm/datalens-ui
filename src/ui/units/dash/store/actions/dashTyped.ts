@@ -30,7 +30,7 @@ import type {
     DashTabItemWidget,
     RecursivePartial,
 } from 'shared';
-import {DashTabItemType, EntryScope, EntryUpdateMode, Feature} from 'shared';
+import {DashTabItemType, EntryScope, EntryUpdateMode, Feature, getEntryNameByKey} from 'shared';
 import {getRouter} from 'ui/navigation';
 import type {AppDispatch} from 'ui/store';
 import {
@@ -870,7 +870,7 @@ export function copyDash({
                 : selectDashEntry(state).annotation?.description ?? '';
         }
 
-        return sdk.charts.createDash({
+        const dash = await sdk.charts.createDash({
             data: {
                 data: migrateDataSettings(dataProcess ? dataProcess(dashData) : dashData),
                 mode: EntryUpdateMode.Publish,
@@ -881,6 +881,16 @@ export function copyDash({
                 annotation: {description},
             },
         });
+
+        if (typeof document !== 'undefined') {
+            document.dispatchEvent(
+                new CustomEvent('datalens:dash:create', {
+                    detail: {id: dash.entryId, name: getEntryNameByKey(dash)},
+                }),
+            );
+        }
+
+        return dash;
     };
 }
 

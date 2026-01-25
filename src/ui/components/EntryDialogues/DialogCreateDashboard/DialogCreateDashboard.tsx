@@ -4,6 +4,7 @@ import {I18n} from 'i18n';
 import type {ResolveThunks} from 'react-redux';
 import {connect} from 'react-redux';
 import type {EntryAnnotationArgs} from 'shared';
+import {getEntryNameByKey} from 'shared';
 import type {DashData} from 'shared/types/dash';
 import {showToast} from 'store/actions/toaster';
 import type {DataLensApiError} from 'typings';
@@ -68,9 +69,10 @@ class DialogCreateDashboard extends React.Component<Props> {
         );
     }
 
-    private onWorkbookApply = ({name}: {name: string}) => {
+    private onWorkbookApply = async ({name}: {name: string}) => {
         const {workbookId, data, annotation} = this.props;
-        return this.props.sdk.charts.createDash({
+
+        const dash = await this.props.sdk.charts.createDash({
             data: {
                 workbookId,
                 name,
@@ -78,6 +80,16 @@ class DialogCreateDashboard extends React.Component<Props> {
                 annotation,
             },
         });
+
+        if (typeof document !== 'undefined') {
+            document.dispatchEvent(
+                new CustomEvent('datalens:dash:create', {
+                    detail: {id: dash.entryId, name: getEntryNameByKey(dash)},
+                }),
+            );
+        }
+
+        return dash;
     };
 
     private onApply = async (key: string) => {
@@ -85,6 +97,14 @@ class DialogCreateDashboard extends React.Component<Props> {
         const response = await this.props.sdk.charts.createDash({
             data: {key, data, annotation},
         });
+
+        if (typeof document !== 'undefined') {
+            document.dispatchEvent(
+                new CustomEvent('datalens:dash:create', {
+                    detail: {id: response.entryId, name: getEntryNameByKey(response)},
+                }),
+            );
+        }
 
         return response;
     };

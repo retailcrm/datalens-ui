@@ -60,6 +60,7 @@ export const ListWithRemove = <T extends object | string>({
                 itemsHeight={restListProps.items.length * ITEM_HEIGHT}
                 renderItem={wrappedRenderItem}
                 qa={TabMenuQA.List}
+                sortable={false /*temporary disabling reorder*/}
             />
         </div>
     );
