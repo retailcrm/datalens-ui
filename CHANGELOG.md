@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/datalens-tech/datalens-ui/compare/v0.2.2...v0.2.3) (2026-01-25)
+
+
+### Features
+
+* Added document events for dashboard create/rename/delete ([1f88dea](https://github.com/datalens-tech/datalens-ui/commit/1f88dea2ae61390149f99bf3802399fccf3df7ed))
+
 ### [0.2.2](https://github.com/datalens-tech/datalens-ui/compare/v0.2.1...v0.2.2) (2026-01-22)
 
 
