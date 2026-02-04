@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.4](https://github.com/datalens-tech/datalens-ui/compare/v0.2.3...v0.2.4) (2026-02-04)
+
+
+### Features
+
+* CSS variable --datalens-scroll-behavior for overriding default scroll behavior ([b14dec5](https://github.com/datalens-tech/datalens-ui/commit/b14dec508524cf679f67836451b337a26f5d6560))
+
 ### [0.2.3](https://github.com/datalens-tech/datalens-ui/compare/v0.2.2...v0.2.3) (2026-01-25)
 
 
