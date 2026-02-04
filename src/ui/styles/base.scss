@@ -1,5 +1,9 @@
 @import '~@gravity-ui/uikit/styles/mixins';
 
+:root {
+    --datalens-scroll-behavior: smooth;
+}
+
 html,
 body,
 #root {
@@ -7,7 +11,7 @@ body,
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    scroll-behavior: smooth;
+    scroll-behavior: var(--datalens-scroll-behavior, smooth);
 }
 
 html,
