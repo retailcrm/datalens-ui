@@ -5,7 +5,7 @@ import type {
 } from '@gravity-ui/dashkit/helpers';
 import {generateUniqId} from '@gravity-ui/dashkit/helpers';
 import {I18n} from 'i18n';
-import {EntryScope} from 'shared';
+import {EntryScope, normalizeDestination} from 'shared';
 import type {FakeDashData} from 'shared/types/dash';
 import {DashLoadPriority} from 'shared/types/dash';
 import {DL, URL_QUERY} from 'ui/constants';
@@ -25,7 +25,7 @@ export const getFakeDashEntry = (workbookId?: string) => {
     const searchParams = getLocation().params();
     const searchCurrentPath = searchParams.get(URL_QUERY.CURRENT_PATH);
 
-    const path = searchCurrentPath || DL.USER_FOLDER;
+    const path = normalizeDestination(searchCurrentPath || DL.USER_FOLDER);
 
     const initialKey = `${path}${dashCreateI18n('label_default-name')}`;
 

@@ -16,6 +16,7 @@ type ViewControlsProps = {
     canEdit: boolean;
     progress: boolean;
     isLoadingEditMode: boolean;
+    showEditButton?: boolean;
     onEditClick: () => void;
     onAccessClick: () => void;
     entryDialoguesRef: React.RefObject<EntryDialogues>;
@@ -28,6 +29,7 @@ export const ViewControls = (props: ViewControlsProps) => {
         canEdit,
         progress,
         isLoadingEditMode,
+        showEditButton = true,
         onEditClick,
         onAccessClick,
         entryDialoguesRef,
@@ -49,7 +51,7 @@ export const ViewControls = (props: ViewControlsProps) => {
                 showOpenedDescription={showOpenedDescription}
             />
             <EntryDialogues ref={entryDialoguesRef} />
-            {canEdit && !DL.IS_MOBILE && (
+            {showEditButton && canEdit && !DL.IS_MOBILE && (
                 <Button
                     view="normal"
                     size="m"

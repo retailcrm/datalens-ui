@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import type {EntryAnnotationArgs} from 'shared';
 import {showToast} from 'store/actions/toaster';
 import type {DataLensApiError} from 'typings';
-import {isEntryAlreadyExists} from 'utils/errors/errorByCode';
+import {getEntryNameInputError} from 'utils/errors/errorByCode';
 
 import type {Entry} from '../../../typings/common';
 import {DialogCreateWorkbookEntry} from '../DialogCreateWorkbookEntry/DialogCreateWorkbookEntry';
@@ -96,9 +96,10 @@ class DialogCreateWizardChart extends React.Component<Props> {
     };
 
     private onError = (error: DataLensApiError) => {
-        if (isEntryAlreadyExists(error)) {
+        const inputError = getEntryNameInputError(error, i18n('label_entry-name-already-exists'));
+        if (inputError) {
             return {
-                inputError: i18n('label_entry-name-already-exists'),
+                inputError,
             };
         }
         this.props.showToast({

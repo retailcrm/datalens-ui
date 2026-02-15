@@ -12,6 +12,7 @@ import {ActionPanelEntryContextMenuQa} from 'shared/constants/qa/action-panel';
 import type {DatalensGlobalState, EntryDialogues} from 'ui';
 import {DL, EntryDialogName, EntryDialogResolveStatus} from 'ui';
 import ActionPanel from 'ui/components/ActionPanel/ActionPanel';
+import {ENTRY_CONTEXT_MENU_ACTION} from 'ui/components/EntryContextMenu';
 import {registry} from 'ui/registry';
 import {closeDialog as closeDialogConfirm, openDialogConfirm} from 'ui/store/actions/dialog';
 import {goBack, goForward} from 'ui/store/actions/editHistory';
@@ -63,6 +64,15 @@ import './DashActionPanel.scss';
 
 const b = block('dash-action-panel');
 const i18n = I18n.keyset('dash.action-panel.view');
+const HIDDEN_DASH_ACTION_PANEL_CONTEXT_MENU_ITEMS = new Set<string>([
+    ENTRY_CONTEXT_MENU_ACTION.RENAME,
+    ENTRY_CONTEXT_MENU_ACTION.DELETE,
+    ENTRY_CONTEXT_MENU_ACTION.MOVE,
+    ENTRY_CONTEXT_MENU_ACTION.COPY,
+    ENTRY_CONTEXT_MENU_ACTION.ACCESS,
+    ENTRY_CONTEXT_MENU_ACTION.SHARE,
+    ENTRY_CONTEXT_MENU_ACTION.MIGRATE_TO_WORKBOOK,
+]);
 
 type DispatchProps = ResolveThunks<typeof mapDispatchToProps>;
 
@@ -119,6 +129,7 @@ class DashActionPanel extends React.PureComponent<ActionPanelProps, ActionPanelS
                         <ActionPanel
                             entry={entry as GetEntryResponse}
                             additionalEntryItems={this.getAdditionalEntryItems()}
+                            filterEntryContextMenuItems={this.filterEntryContextMenuItems}
                             rightItems={[
                                 <DashActionPanelAdditionalButtons
                                     key="additional-buttons"
@@ -179,6 +190,7 @@ class DashActionPanel extends React.PureComponent<ActionPanelProps, ActionPanelS
                 canEdit={this.props.canEdit}
                 progress={this.props.progress}
                 isLoadingEditMode={this.props.isLoadingEditMode}
+                showEditButton={false}
                 onEditClick={this.props.handlerEditClick}
                 onAccessClick={this.openDialogAccess}
                 entryDialoguesRef={this.props.entryDialoguesRef}
@@ -327,6 +339,10 @@ class DashActionPanel extends React.PureComponent<ActionPanelProps, ActionPanelS
 
     private onValueTableOfContentsClick = () => {
         this.props.toggleTableOfContent();
+    };
+
+    private filterEntryContextMenuItems = ({items}: {items: EntryContextMenuItem[]}) => {
+        return items.filter((item) => !HIDDEN_DASH_ACTION_PANEL_CONTEXT_MENU_ITEMS.has(item.id));
     };
 
     private handleGoBack = () => {

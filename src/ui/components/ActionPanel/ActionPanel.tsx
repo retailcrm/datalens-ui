@@ -169,7 +169,11 @@ class ActionPanel extends React.Component<Props, State> {
             lastCrumbAdditionalContent,
         } = this.props;
 
-        const style: React.CSSProperties = {left: sidebarSize, ...externalStyle};
+        const leftOffset =
+            typeof sidebarSize === 'number' && sidebarSize > 0
+                ? `${sidebarSize}px`
+                : 'var(--gn-aside-header-size, 0px)';
+        const style: React.CSSProperties = {left: leftOffset, ...externalStyle};
 
         const entry = this.getEntry();
 
