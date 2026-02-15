@@ -5,12 +5,17 @@ import block from 'bem-cn-lite';
 import {i18n} from 'i18n';
 import {ErrorContentTypes} from 'shared';
 import {ErrorContent} from 'ui';
+import {getRouter} from 'ui/navigation';
 
 import './InaccessibleOnMobileInset.scss';
 
 const b = block('inaccessible-on-mobile-inset');
 
 export default function InaccessibleOnMobile(props) {
+    const handleNavigateToMain = React.useCallback(() => {
+        getRouter().push('/');
+    }, []);
+
     return (
         <div className={b()}>
             <ErrorContent
@@ -22,7 +27,12 @@ export default function InaccessibleOnMobile(props) {
                 action={{
                     content: (
                         <div className={b('actions')}>
-                            <Button className={b('action-button')} view="action" size="xl" href="/">
+                            <Button
+                                className={b('action-button')}
+                                view="action"
+                                size="xl"
+                                onClick={handleNavigateToMain}
+                            >
                                 {i18n(
                                     'component.inaccessible-on-mobile-inset.view',
                                     'button_back-to-main-page',

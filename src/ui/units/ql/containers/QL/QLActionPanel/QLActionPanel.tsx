@@ -17,6 +17,7 @@ import type {GetEntryResponse} from '../../../../../../shared/schema';
 import ActionPanel from '../../../../../components/ActionPanel/ActionPanel';
 import {ChartSaveControls} from '../../../../../components/ActionPanel/components/ChartSaveControls/ChartSaveControl';
 import type {EntryContextMenuItems} from '../../../../../components/EntryContextMenu/helpers';
+import {useRouter} from '../../../../../navigation';
 import {registry} from '../../../../../registry';
 import {openDialogSaveDraftChartAsActualConfirm} from '../../../../../store/actions/dialog';
 import {addEditHistoryPoint, resetEditHistoryUnit} from '../../../../../store/actions/editHistory';
@@ -89,6 +90,7 @@ export const QLActionPanel: React.FC<QLActionPanelProps> = (props: QLActionPanel
     const enablePublish = entry && isEnabledFeature(Feature.EnablePublishEntry) && !entry.fake;
 
     const dispatch = useDispatch();
+    const router = useRouter();
 
     const [dialogNoRightsVisible, setDialogNoRightsVisible] = React.useState(false);
     const [dialogSettingsVisible, setDialogSettingsVisible] = React.useState(false);
@@ -192,7 +194,7 @@ export const QLActionPanel: React.FC<QLActionPanelProps> = (props: QLActionPanel
                 return;
             }
 
-            window.history.replaceState({}, document.title, `/ql/${result.data.entryId}`);
+            router.replace({pathname: `/ql/${result.data.entryId}`});
 
             result.data.data = {
                 shared: JSON.parse(result.data.data.shared),
@@ -221,6 +223,7 @@ export const QLActionPanel: React.FC<QLActionPanelProps> = (props: QLActionPanel
             entryDialoguesRef,
             defaultChartName,
             qlState,
+            router,
             wizardState,
         ],
     );

@@ -4,6 +4,7 @@ import {ShieldCheck, ShieldKeyhole} from '@gravity-ui/icons';
 import {Dialog, Divider, Link, Text} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import type {SharedEntryBindingsItem} from 'shared/schema';
+import {DOCUMENTATION_LINK} from 'ui/components/AsideHeaderAdapter';
 import {getSharedEntryMockText} from 'ui/units/collections/components/helpers';
 
 import DialogManager from '../DialogManager/DialogManager';
@@ -76,11 +77,7 @@ export const DialogSharedEntryPermissions: React.FC<DialogSharedEntryPermissions
                 <div className={b('permissions-container')}>
                     <Text variant="body-1">
                         {getSharedEntryMockText('permissions-dialog-notice')}
-                        <Link
-                            // TODO doc link
-                            href="/"
-                            target="_blank"
-                        >
+                        <Link href={DOCUMENTATION_LINK} target="_blank" rel="noopener noreferrer">
                             {getSharedEntryMockText('permissions-dialog-documentation-link')}
                         </Link>
                     </Text>

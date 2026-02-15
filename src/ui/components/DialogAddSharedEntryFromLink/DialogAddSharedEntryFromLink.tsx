@@ -4,6 +4,7 @@ import {Alert, Dialog, Link, Text, TextInput, spacing} from '@gravity-ui/uikit';
 import {useDispatch} from 'react-redux';
 import {CollectionItemEntities} from 'shared';
 import type {GetEntryResponse} from 'shared/schema';
+import {DOCUMENTATION_LINK} from 'ui/components/AsideHeaderAdapter';
 import {getSdk} from 'ui/libs/schematic-sdk';
 import {registry} from 'ui/registry';
 import {showToast} from 'ui/store/actions/toaster';
@@ -130,9 +131,9 @@ export const DialogAddSharedEntryFromLink: React.FC<DialogAddSharedEntryFromLink
                         <Text variant="body-1">
                             {getSharedEntryMockText('add-shared-connection-from-link-info-message')}
                             <Link
-                                // TODO doc link
-                                href="/"
+                                href={DOCUMENTATION_LINK}
                                 target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 {getSharedEntryMockText('permissions-dialog-documentation-link')}
                             </Link>

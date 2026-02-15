@@ -221,6 +221,16 @@ export const AsideHeaderAdapter = ({
         setCurrentPopup(null);
     }, []);
 
+    const logoLinkTo = React.useMemo(() => {
+        const url = new URL('/', 'http://sample.test');
+
+        return {
+            pathname: url.pathname,
+            search: url.search,
+            hash: url.hash,
+        };
+    }, []);
+
     const renderFooter = () => {
         return (
             <React.Fragment>
@@ -335,9 +345,9 @@ export const AsideHeaderAdapter = ({
                 iconClassName: b('logo-icon'),
                 className: b('logo'),
                 wrapper: (logoElement) => (
-                    <a ref={logoWrapperRef} href="/" className={b('logo')}>
+                    <Link innerRef={logoWrapperRef} to={logoLinkTo} className={b('logo')}>
                         {logoElement}
-                    </a>
+                    </Link>
                 ),
             }}
             topAlert={topAlert}
