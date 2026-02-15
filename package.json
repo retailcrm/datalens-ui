@@ -29,6 +29,8 @@
     "typecheck:ui": "tsc -p src/ui --noEmit",
     "typecheck:tests": "cd tests && tsc --noEmit",
     "typecheck": "npm run i18n:prepare && npm run typecheck:server && npm run typecheck:ui && npm run typecheck:tests",
+    "ci:upstream:quick": "bash scripts/ci/upstream-sync-checks.sh --quick",
+    "ci:upstream": "bash scripts/ci/upstream-sync-checks.sh --full",
     "test:jest": "npm run i18n:prepare && jest",
     "test:jestWatch": "npm run i18n:prepare && jest --watchAll",
     "platform-tools": "platform-tools",

@@ -27,6 +27,10 @@ Local skill map for the `datalens-ui` repository:
   - Path: `skills/navigation-refinery/SKILL.md`
   - Use when replacing browser-driven internal navigation with router/history transitions.
 
+- `upstream-sync-guardrails`
+  - Path: `skills/upstream-sync-guardrails/SKILL.md`
+  - Use when syncing upstream changes into this fork and minimizing regressions with budgeted checks.
+
 - `yarn-lock-conflict-resolution`
   - Path: `skills/yarn-lock-conflict-resolution/SKILL.md`
   - Use when resolving `yarn.lock` conflicts during merge/rebase.

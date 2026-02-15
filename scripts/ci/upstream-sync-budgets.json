@@ -1,0 +1,12 @@
+{
+  "madge": {
+    "uiCircularMax": 36,
+    "serverCircularMax": 0,
+    "sharedCircularMax": 0
+  },
+  "debt": {
+    "tsDirectiveMax": 106,
+    "eslintDisableMax": 256,
+    "todoFixmeHackMax": 211
+  }
+}
