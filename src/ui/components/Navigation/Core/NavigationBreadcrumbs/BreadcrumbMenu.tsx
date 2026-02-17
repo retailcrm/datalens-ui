@@ -12,8 +12,12 @@ import navigateHelper from 'libs/navigateHelper';
 import {PLACE} from 'shared';
 import type {EntryFields, GetEntryResponse, ListDirectoryBreadCrumb} from 'shared/schema';
 import {EntryScope} from 'shared/types/common';
+import {Capability, capabilities} from 'ui/capabilities';
 import type {MenuClickHandler} from 'ui/components/EntryContextMenu/EntryContextMenu';
-import type {EntryContextMenuItems} from 'ui/components/EntryContextMenu/helpers';
+import type {
+    EntryContextMenuItem,
+    EntryContextMenuItems,
+} from 'ui/components/EntryContextMenu/helpers';
 import {DL} from 'ui/constants/common';
 import {useRouter} from 'ui/navigation';
 import {registry} from 'ui/registry';
@@ -28,6 +32,7 @@ const contextMenuI18n = I18n.keyset('component.entry-context-menu.view');
 
 const b = block('dl-core-navigation-breadcrumb-menu');
 const placement: PopupPlacement = ['bottom', 'bottom-start', 'bottom-end'];
+const DASH_BREADCRUMB_HIDDEN_ITEM_IDS = new Set(['edit', ENTRY_CONTEXT_MENU_ACTION.RENAME]);
 
 type Props = {
     breadCrumbs: ListDirectoryBreadCrumb[];
@@ -54,6 +59,9 @@ export const BreadcrumbMenu = ({
     const router = useRouter();
     const btnRef = React.useRef<HTMLButtonElement>(null);
     const [show, setShow] = React.useState(false);
+    const isDashboardBreadcrumbEditingAccessible = capabilities.has(
+        Capability.AccessibleDashboardBreadcrumbEditing,
+    );
 
     const breadCrumbEntry: BreadCrumbEntry = React.useMemo(() => {
         const breadCrumb = breadCrumbs[breadCrumbs.length - 1];
@@ -68,6 +76,41 @@ export const BreadcrumbMenu = ({
             workbookId: null,
         };
     }, [breadCrumbs]);
+
+    const menuItems = React.useMemo<EntryContextMenuItems>(() => {
+        const items = getContextMenuItems({entry: breadCrumbEntry}) as unknown as Array<
+            EntryContextMenuItem | EntryContextMenuItem[]
+        >;
+        const shouldHideEditingInDashBreadcrumbs =
+            currentPageEntry?.scope === EntryScope.Dash && !isDashboardBreadcrumbEditingAccessible;
+
+        if (!shouldHideEditingInDashBreadcrumbs) {
+            return items as EntryContextMenuItems;
+        }
+
+        return items
+            .map((item) => {
+                if (!Array.isArray(item)) {
+                    return DASH_BREADCRUMB_HIDDEN_ITEM_IDS.has(item.id) ? null : item;
+                }
+
+                const filteredGroup = item.filter(
+                    (groupItem) => !DASH_BREADCRUMB_HIDDEN_ITEM_IDS.has(groupItem.id),
+                );
+
+                return filteredGroup.length ? filteredGroup : null;
+            })
+            .filter(Boolean) as EntryContextMenuItems;
+    }, [
+        breadCrumbEntry,
+        currentPageEntry?.scope,
+        getContextMenuItems,
+        isDashboardBreadcrumbEditingAccessible,
+    ]);
+
+    if (!menuItems.length) {
+        return null;
+    }
 
     // eslint-disable-next-line complexity
     const handleMenuClick: MenuClickHandler<BreadCrumbEntry> = async ({entry, action}) => {
@@ -200,7 +243,7 @@ export const BreadcrumbMenu = ({
                     visible={show}
                     entry={breadCrumbEntry}
                     anchorElement={btnRef.current ?? undefined}
-                    items={getContextMenuItems({entry: breadCrumbEntry})}
+                    items={menuItems}
                     onMenuClick={handleMenuClick}
                     onClose={() => setShow(false)}
                     hasTail={true}

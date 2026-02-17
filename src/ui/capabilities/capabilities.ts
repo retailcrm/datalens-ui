@@ -1,6 +1,7 @@
 export enum Capability {
     AccessibleCollectionsRoot = 'accessible-collections-root',
     AccessibleSettings = 'accessible-settings',
+    AccessibleDashboardBreadcrumbEditing = 'accessible-dashboard-breadcrumb-editing',
     AccessibleWorkbookDuplication = 'accessible-workbook-duplication',
     AccessibleWorkbookEditing = 'accessible-workbook-editing',
     ManageableConnections = 'manageable-connections',
@@ -11,6 +12,7 @@ export type CapabilityName = Capability | `${Capability}`;
 const capabilities: Record<`${Capability}`, boolean> = {
     [Capability.AccessibleCollectionsRoot]: true,
     [Capability.AccessibleSettings]: true,
+    [Capability.AccessibleDashboardBreadcrumbEditing]: false,
     [Capability.AccessibleWorkbookDuplication]: true,
     [Capability.AccessibleWorkbookEditing]: true,
     [Capability.ManageableConnections]: true,

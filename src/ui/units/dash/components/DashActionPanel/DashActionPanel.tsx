@@ -7,10 +7,11 @@ import type {History, Location} from 'history';
 import {I18n} from 'i18n';
 import {connect} from 'react-redux';
 import type {ResolveThunks} from 'react-redux';
-import {Feature} from 'shared';
+import {EntryScope, Feature} from 'shared';
 import {ActionPanelEntryContextMenuQa} from 'shared/constants/qa/action-panel';
 import type {DatalensGlobalState, EntryDialogues} from 'ui';
 import {DL, EntryDialogName, EntryDialogResolveStatus} from 'ui';
+import {Capability, capabilities} from 'ui/capabilities';
 import ActionPanel from 'ui/components/ActionPanel/ActionPanel';
 import {ENTRY_CONTEXT_MENU_ACTION} from 'ui/components/EntryContextMenu';
 import {registry} from 'ui/registry';
@@ -72,6 +73,10 @@ const HIDDEN_DASH_ACTION_PANEL_CONTEXT_MENU_ITEMS = new Set<string>([
     ENTRY_CONTEXT_MENU_ACTION.ACCESS,
     ENTRY_CONTEXT_MENU_ACTION.SHARE,
     ENTRY_CONTEXT_MENU_ACTION.MIGRATE_TO_WORKBOOK,
+]);
+const DASH_BREADCRUMB_EDITING_MENU_ITEMS = new Set<string>([
+    'edit',
+    ENTRY_CONTEXT_MENU_ACTION.RENAME,
 ]);
 
 type DispatchProps = ResolveThunks<typeof mapDispatchToProps>;
@@ -342,7 +347,23 @@ class DashActionPanel extends React.PureComponent<ActionPanelProps, ActionPanelS
     };
 
     private filterEntryContextMenuItems = ({items}: {items: EntryContextMenuItem[]}) => {
-        return items.filter((item) => !HIDDEN_DASH_ACTION_PANEL_CONTEXT_MENU_ITEMS.has(item.id));
+        const isDashboardBreadcrumbEditingAccessible = capabilities.has(
+            Capability.AccessibleDashboardBreadcrumbEditing,
+        );
+        const shouldHideDashEditingItems =
+            this.props.entry?.scope === EntryScope.Dash && !isDashboardBreadcrumbEditingAccessible;
+
+        return items.filter((item) => {
+            if (HIDDEN_DASH_ACTION_PANEL_CONTEXT_MENU_ITEMS.has(item.id)) {
+                return false;
+            }
+
+            if (shouldHideDashEditingItems && DASH_BREADCRUMB_EDITING_MENU_ITEMS.has(item.id)) {
+                return false;
+            }
+
+            return true;
+        });
     };
 
     private handleGoBack = () => {
