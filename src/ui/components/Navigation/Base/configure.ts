@@ -7,7 +7,6 @@ import {
     Folders,
     LayoutCellsLarge,
     Star,
-    Thunderbolt,
 } from '@gravity-ui/icons';
 import type {IconData} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
@@ -53,7 +52,7 @@ export const getPlacesConfig = memoize(() => {
                 order: true,
             },
         },
-        {
+        /*{
             place: PLACE.CONNECTIONS,
             icon: Thunderbolt,
             iconClassName: b('sidebar-icon-connections'),
@@ -66,7 +65,7 @@ export const getPlacesConfig = memoize(() => {
                 order: true,
             },
             qa: NavigationMinimalPlaceSelectQa.Connections,
-        },
+        },*/
         {
             place: PLACE.DATASETS,
             icon: CirclesIntersection,
@@ -173,14 +172,14 @@ export const getCreatableEntriesConfig = memoize(() => {
             place: PLACE.DASHBOARDS,
             submenu: 'other',
         },
-        {
+        /*{
             value: CreateMenuValue.Connection,
             icon: Thunderbolt,
             type: 'connection',
             text: i18n('value_create-connection'),
             place: PLACE.CONNECTIONS,
             submenu: 'other',
-        },
+        },*/
         {
             value: CreateMenuValue.Dataset,
             icon: CirclesIntersection,
