@@ -13,6 +13,7 @@ import {CHART_SETTINGS} from 'ui/constants/visualizations';
 import {getRouter} from 'ui/navigation';
 import type {SaveWidgetArgs} from 'ui/store/actions/chartWidget';
 import {saveWidget} from 'ui/store/actions/chartWidget';
+import {setIsRenameWithoutReload} from 'ui/store/actions/entryContent';
 import {updateClientChartsConfig} from 'ui/units/wizard/actions/preview';
 
 import type {WizardDispatch} from '../reducers';
@@ -60,7 +61,12 @@ export function receiveWidgetAndPrepareMetadata({
             }
 
             if (!location.pathname.includes(entryId)) {
-                router.replace({pathname});
+                dispatch(setIsRenameWithoutReload(true));
+                try {
+                    router.replace({pathname});
+                } finally {
+                    dispatch(setIsRenameWithoutReload(false));
+                }
             }
         }
 

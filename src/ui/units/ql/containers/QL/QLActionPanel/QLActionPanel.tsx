@@ -21,7 +21,11 @@ import {useRouter} from '../../../../../navigation';
 import {registry} from '../../../../../registry';
 import {openDialogSaveDraftChartAsActualConfirm} from '../../../../../store/actions/dialog';
 import {addEditHistoryPoint, resetEditHistoryUnit} from '../../../../../store/actions/editHistory';
-import {reloadRevisionsOnSave} from '../../../../../store/actions/entryContent';
+import {
+    reloadRevisionsOnSave,
+    setIsRenameWithoutReload,
+} from '../../../../../store/actions/entryContent';
+import {selectIsRenameWithoutReload} from '../../../../../store/selectors/entryContent';
 import DialogSettings from '../../../components/Dialogs/Settings/Settings';
 import {QL_EDIT_HISTORY_UNIT_ID} from '../../../constants';
 import {prepareChartDataBeforeSave} from '../../../modules/helpers';
@@ -77,6 +81,7 @@ export const QLActionPanel: React.FC<QLActionPanelProps> = (props: QLActionPanel
     const redirectUrl = useSelector(getRedirectUrl);
     const previewData = useSelector(getPreviewData);
     const entry = useSelector(getEntry);
+    const isRenameWithoutReload = useSelector(selectIsRenameWithoutReload);
 
     const canEdit = !(entry && entry.permissions && entry.permissions.edit === false);
 
@@ -101,11 +106,11 @@ export const QLActionPanel: React.FC<QLActionPanelProps> = (props: QLActionPanel
 
     const handleBeforeunload = React.useCallback(
         (event: BeforeUnloadEvent) => {
-            if (!entryNotChanged) {
+            if (!entryNotChanged && !isRenameWithoutReload) {
                 event.returnValue = true;
             }
         },
-        [entryNotChanged],
+        [entryNotChanged, isRenameWithoutReload],
     );
 
     React.useEffect(() => {
@@ -194,7 +199,12 @@ export const QLActionPanel: React.FC<QLActionPanelProps> = (props: QLActionPanel
                 return;
             }
 
-            router.replace({pathname: `/ql/${result.data.entryId}`});
+            dispatch(setIsRenameWithoutReload(true));
+            try {
+                router.replace({pathname: `/ql/${result.data.entryId}`});
+            } finally {
+                dispatch(setIsRenameWithoutReload(false));
+            }
 
             result.data.data = {
                 shared: JSON.parse(result.data.data.shared),

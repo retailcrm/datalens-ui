@@ -53,6 +53,7 @@ import {
     reloadRevisionsOnSave,
     setRevisionsMode,
 } from '../../../../store/actions/entryContent';
+import {selectIsRenameWithoutReload} from '../../../../store/selectors/entryContent';
 import {RevisionsMode} from '../../../../store/typings/entryContent';
 import {getUrlParamFromStr, isUnreleasedByUrlParams} from '../../../../utils';
 import {isDraft, isEditMode} from '../../../dash/store/selectors/dashTypedSelectors';
@@ -285,10 +286,10 @@ class Wizard extends React.Component<Props, State> {
     }
 
     unloadConfirmation = (event: BeforeUnloadEvent) => {
-        const {previewHash, widgetHash, initialPreviewHash} = this.props;
+        const {previewHash, widgetHash, initialPreviewHash, isRenameWithoutReload} = this.props;
         const widgetChanged = previewHash !== widgetHash && previewHash !== initialPreviewHash;
 
-        if (widgetChanged) {
+        if (widgetChanged && !isRenameWithoutReload) {
             const message = i18n('wizard', 'toast_unsaved');
             (event || window.event).returnValue = message;
             return message;
@@ -639,6 +640,7 @@ const mapStateToProps = (state: DatalensGlobalState, ownProps: OwnProps) => {
         initialPreviewHash: selectInitialPreviewHash(state),
         wizardState: state.wizard,
         description: selectPreviewDescription(state),
+        isRenameWithoutReload: selectIsRenameWithoutReload(state),
     };
 };
 
