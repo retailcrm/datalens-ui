@@ -1,4 +1,5 @@
 {
   "label_unknown-error": "Unknown error",
-  "label_validation-slash_error": "Name cannot contain a slash “/”"
+  "label_validation-slash_error": "Name cannot contain a slash “/”",
+  "label_validation-symbols_error": "Name must start and end with a letter/digit or one of _ @ ( ) %. Inside, . , : ; ' | - $ * & and spaces are also allowed"
 }

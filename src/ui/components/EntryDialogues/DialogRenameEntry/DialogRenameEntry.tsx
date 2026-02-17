@@ -6,7 +6,7 @@ import {I18n} from 'i18n';
 import type {ResolveThunks} from 'react-redux';
 import {connect} from 'react-redux';
 import {showToast} from 'store/actions/toaster';
-import {isEntryAlreadyExists} from 'utils/errors/errorByCode';
+import {getEntryNameInputError} from 'utils/errors/errorByCode';
 
 import type {RenameEntryResponse} from '../../../../shared/schema';
 import {getSdk} from '../../../libs/schematic-sdk';
@@ -89,10 +89,13 @@ class DialogRenameEntry extends React.Component<Props, DialogRenameEntryState> {
     };
 
     private onError = (error: DataLensApiError) => {
-        if (isEntryAlreadyExists(error)) {
-            this.setState({inputError: i18n('label_entry-name-already-exists')});
+        const inputError = getEntryNameInputError(error, i18n('label_entry-name-already-exists'));
+
+        if (inputError) {
+            this.setState({inputError});
             return null;
         }
+
         this.props.showToast({
             title: i18n('toast_rename-failed'),
             name: 'DialogRenameEntryFailed',

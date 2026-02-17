@@ -585,18 +585,12 @@ export const renameEntry = ({
             .catch((error) => {
                 if (!getSdk().sdk.isCancel(error)) {
                     logger.logError('workbooks/renameEntry failed', error);
-                    dispatch(
-                        showToast({
-                            title: error.message,
-                            error,
-                        }),
-                    );
                 }
                 dispatch({
                     type: RENAME_ENTRY_FAILED,
                     error,
                 });
-                return null;
+                throw error;
             });
     };
 };

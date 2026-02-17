@@ -1,12 +1,16 @@
 import React from 'react';
 
 import {Dialog, TextInput} from '@gravity-ui/uikit';
+import type {TextInputProps} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import {I18n} from 'i18n';
 import {useDispatch, useSelector} from 'react-redux';
+import type {DataLensApiError} from 'ui/typings';
+import {getEntryNameInputError} from 'utils/errors/errorByCode';
 
 import DialogManager from '../../../../components/DialogManager/DialogManager';
 import type {AppDispatch} from '../../../../store';
+import {showToast} from '../../../../store/actions/toaster';
 import {renameEntry} from '../../store/actions';
 import {selectRenameEntryIsLoading} from '../../store/selectors';
 import type {WorkbookEntry} from '../../types';
@@ -35,23 +39,61 @@ const RenameEntryDialog = React.memo<Props>(({open, data, onClose}) => {
     const isLoading = useSelector(selectRenameEntryIsLoading);
 
     const [newNameValue, setNewNameValue] = React.useState(data.name);
+    const [inputError, setInputError] = React.useState<TextInputProps['error']>(false);
     const textInputControlRef = React.useRef<HTMLInputElement>(null);
 
-    const handleApply = React.useCallback(() => {
-        dispatch(
-            renameEntry({
-                entryId: data.entryId,
-                name: newNameValue,
-                updateInline: true,
-            }),
-        ).then(() => {
-            onClose();
-        });
+    React.useEffect(() => {
+        if (open) {
+            setNewNameValue(data.name);
+            setInputError(false);
+        }
+    }, [data.name, open]);
+
+    const handleApply = React.useCallback(async () => {
+        const name = newNameValue.trim();
+
+        try {
+            const renamedEntry = await dispatch(
+                renameEntry({
+                    entryId: data.entryId,
+                    name,
+                    updateInline: true,
+                }),
+            );
+
+            if (renamedEntry) {
+                onClose();
+            }
+        } catch (error) {
+            const errorMessage = getEntryNameInputError(
+                error as DataLensApiError,
+                i18n('label_entry-name-already-exists'),
+            );
+            if (errorMessage) {
+                setInputError(errorMessage);
+                return;
+            }
+
+            dispatch(
+                showToast({
+                    title: (error as DataLensApiError).message,
+                    name: 'RenameEntryDialogFailed',
+                    error,
+                    withReport: true,
+                }),
+            );
+        }
     }, [data.entryId, dispatch, newNameValue, onClose]);
 
+    const handleInputUpdate = React.useCallback((value: string) => {
+        setNewNameValue(value);
+        setInputError(false);
+    }, []);
+
     const propsButtonApply = React.useMemo(() => {
+        const normalizedValue = newNameValue.trim();
         return {
-            disabled: !newNameValue || newNameValue === data.name,
+            disabled: !normalizedValue || normalizedValue === data.name,
         };
     }, [data.name, newNameValue]);
 
@@ -69,7 +111,8 @@ const RenameEntryDialog = React.memo<Props>(({open, data, onClose}) => {
                 <TextInput
                     value={newNameValue}
                     controlRef={textInputControlRef}
-                    onUpdate={setNewNameValue}
+                    onUpdate={handleInputUpdate}
+                    error={inputError}
                 />
             </Dialog.Body>
             <Dialog.Footer
