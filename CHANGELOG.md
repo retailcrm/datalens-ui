@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.5](https://github.com/datalens-tech/datalens-ui/compare/v0.2.4...v0.2.5) (2026-02-18)
+
+
+### Bug Fixes
+
+* Beforeunload prompt was suppressed during chart save redirects ([93eb6f1](https://github.com/datalens-tech/datalens-ui/commit/93eb6f1452fbb1654061cff31e77dab32d908e0a))
+* Dashboard breadcrumb editing items were gated by capability ([0989bf2](https://github.com/datalens-tech/datalens-ui/commit/0989bf256eda59040f5d936b8ede4ed4bab3a8c9))
+* Entry rename validation messages were improved ([1c11cfd](https://github.com/datalens-tech/datalens-ui/commit/1c11cfdbea9b887dfed353f89583ee1b13c3d155))
+* Improved dashboard navigation and inline name validation handling ([0d7466d](https://github.com/datalens-tech/datalens-ui/commit/0d7466d94a36a9a26296ec14d958a9fc87c7eb2e))
+* Package-lock was synchronized for npm ci ([0ad0dfb](https://github.com/datalens-tech/datalens-ui/commit/0ad0dfb3a99a6e8444d668cbd756a0ddd8a12fba))
+
 ### [0.2.4](https://github.com/datalens-tech/datalens-ui/compare/v0.2.3...v0.2.4) (2026-02-04)
 
 
