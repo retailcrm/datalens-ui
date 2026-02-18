@@ -56,7 +56,7 @@ jobs:
         run: npm run build:lib
 
       - name: Push changes and tags
-        run: git push --follow-tags origin main
+        run: git push --follow-tags origin HEAD:${{ github.ref_name }}
 
       - name: Publish to NPM
         run: |
