@@ -16,7 +16,7 @@ import {FOCUSED_WIDGET_PARAM_NAME, Feature, MenuItemsIds, PREVIEW_ROUTE, WidgetK
 import {isWidgetTypeDoNotNeedOverlay} from 'ui/components/DashKit/plugins/Widget/components/helpers';
 import {URL_OPTIONS as COMMON_URL_OPTIONS, DL} from 'ui/constants';
 import {ICONS_MENU_DEFAULT_SIZE} from 'ui/libs/DatalensChartkit/menu/constants';
-import {getLocation} from 'ui/navigation';
+import {getLocation, getRouter} from 'ui/navigation';
 import {registry} from 'ui/registry';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
@@ -58,6 +58,16 @@ export const getExportMenuItem = getExportItem;
 export const getInspectorMenuItem: () => MenuItemConfig = Inspector;
 
 const alertI18n = I18n.keyset('component.chartkit-alerts.view');
+
+const openInternalUrlInNewTab = (rawUrl: string) => {
+    const url = new URL(rawUrl, window.location.origin);
+
+    getRouter().openTab({
+        pathname: url.pathname,
+        search: url.search,
+        hash: url.hash,
+    });
+};
 
 export const getAlertsMenuItem = ({
     chartsDataProvider,
@@ -151,7 +161,7 @@ export const getNewWindowMenuItem = ({
                 ),
             );
 
-            window.open(link);
+            openInternalUrlInNewTab(link.toString());
         }),
 });
 
@@ -171,14 +181,16 @@ export const getEditMenuItem = ({
     action:
         customConfig?.action ||
         (({loadedData = {}, propsData, chartsDataProvider: dataProvider}) => {
-            window.open(
-                (dataProvider || chartsDataProvider)?.getGoAwayLink(
-                    {loadedData, propsData},
-                    {
-                        idPrefix: '/navigate/',
-                    },
-                ),
+            const url = (dataProvider || chartsDataProvider)?.getGoAwayLink(
+                {loadedData, propsData},
+                {
+                    idPrefix: '/navigate/',
+                },
             );
+
+            if (url) {
+                openInternalUrlInNewTab(url);
+            }
         }),
 });
 
@@ -209,15 +221,15 @@ export const getOpenAsTableMenuItem = ({
     action:
         customConfig?.action ||
         (({loadedData, propsData, chartsDataProvider: dataProvider}) => {
-            window.open(
-                (dataProvider || chartsDataProvider).getGoAwayLink(
-                    {loadedData, propsData},
-                    {
-                        extraParams: {_chart_type: 'table'},
-                        idPrefix: '/preview/',
-                    },
-                ),
+            const url = (dataProvider || chartsDataProvider).getGoAwayLink(
+                {loadedData, propsData},
+                {
+                    extraParams: {_chart_type: 'table'},
+                    idPrefix: '/preview/',
+                },
             );
+
+            openInternalUrlInNewTab(url);
         }),
 });
 

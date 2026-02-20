@@ -7,6 +7,7 @@ import merge from 'lodash/merge';
 import set from 'lodash/set';
 
 import type {GoToEventHandler, GraphWidgetEventScope} from '../../../../../shared';
+import {getRouter} from '../../../../navigation';
 import {clearVmProp} from '../../modules/data-provider/charts/utils';
 import type {GraphWidget} from '../../types';
 import type {ChartKitAdapterProps} from '../types';
@@ -17,6 +18,30 @@ import {
 } from './action-params-handlers';
 import type {ShapedAction} from './types';
 import {extractHcTypeFromData, getEscapedActionParams} from './utils';
+
+const openGoToUrl = (rawUrl: string, target?: GoToEventHandler['target']) => {
+    if (typeof window === 'undefined') {
+        return;
+    }
+
+    const windowTarget = target === '_self' ? '_self' : '_blank';
+    const sanitizedUrl = sanitizeUrl(rawUrl);
+    const parsedUrl = new URL(sanitizedUrl, window.location.origin);
+
+    if (parsedUrl.origin === window.location.origin) {
+        getRouter().open(
+            {
+                pathname: parsedUrl.pathname,
+                search: parsedUrl.search,
+                hash: parsedUrl.hash,
+            },
+            windowTarget,
+        );
+        return;
+    }
+
+    window.open(parsedUrl.toString(), windowTarget);
+};
 
 export const fixPieTotals = (args: {data: GraphWidget}) => {
     const {data} = args;
@@ -167,8 +192,7 @@ function handleSeriesClickForGoTo(args: {
     }
 
     try {
-        const url = sanitizeUrl(pointUrl);
-        window.open(url, target === '_self' ? '_self' : '_blank');
+        openGoToUrl(pointUrl, target as GoToEventHandler['target']);
     } catch (e) {
         console.error(e);
     }

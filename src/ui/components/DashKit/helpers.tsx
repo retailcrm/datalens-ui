@@ -53,10 +53,10 @@ export function getDashKitMenu(onRemoveItem?: (configItem: ConfigItem) => void):
                 const entryId = getEntryId(configItem, state);
                 if (entryId) {
                     // does not work properly in DEV mode without navigator
-                    getRouter().open(
-                        {pathname: `/navigate/${entryId}`, search: toSearchParams(params)},
-                        '_blank',
-                    );
+                    getRouter().openTab({
+                        pathname: `/navigate/${entryId}`,
+                        search: toSearchParams(params),
+                    });
                 }
             },
             visible: (configItem) => {

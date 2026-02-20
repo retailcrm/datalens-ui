@@ -195,7 +195,7 @@ class DashActionPanel extends React.PureComponent<ActionPanelProps, ActionPanelS
                 canEdit={this.props.canEdit}
                 progress={this.props.progress}
                 isLoadingEditMode={this.props.isLoadingEditMode}
-                showEditButton={false}
+                showEditButton={this.isDashboardBreadcrumbEditingAccessible()}
                 onEditClick={this.props.handlerEditClick}
                 onAccessClick={this.openDialogAccess}
                 entryDialoguesRef={this.props.entryDialoguesRef}
@@ -346,10 +346,13 @@ class DashActionPanel extends React.PureComponent<ActionPanelProps, ActionPanelS
         this.props.toggleTableOfContent();
     };
 
+    private isDashboardBreadcrumbEditingAccessible = () => {
+        return capabilities.has(Capability.AccessibleDashboardBreadcrumbEditing);
+    };
+
     private filterEntryContextMenuItems = ({items}: {items: EntryContextMenuItem[]}) => {
-        const isDashboardBreadcrumbEditingAccessible = capabilities.has(
-            Capability.AccessibleDashboardBreadcrumbEditing,
-        );
+        const isDashboardBreadcrumbEditingAccessible =
+            this.isDashboardBreadcrumbEditingAccessible();
         const shouldHideDashEditingItems =
             this.props.entry?.scope === EntryScope.Dash && !isDashboardBreadcrumbEditingAccessible;
 

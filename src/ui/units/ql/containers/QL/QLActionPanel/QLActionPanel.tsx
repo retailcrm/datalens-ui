@@ -149,13 +149,24 @@ export const QLActionPanel: React.FC<QLActionPanelProps> = (props: QLActionPanel
                 icon: <Icon data={iconMonitoring} width={16} height={16} />,
                 id: 'sql-to-monitoring',
                 action: () => {
-                    window.open(redirectUrl, '_blank');
+                    const url = new URL(redirectUrl, window.location.origin);
+
+                    if (url.origin === window.location.origin) {
+                        router.openTab({
+                            pathname: url.pathname,
+                            search: url.search,
+                            hash: url.hash,
+                        });
+                        return;
+                    }
+
+                    window.open(url.toString(), '_blank');
                 },
             });
         }
 
         return items;
-    }, [redirectUrl]);
+    }, [redirectUrl, router]);
 
     const defaultChartName = React.useMemo(() => {
         if (connection === null) {

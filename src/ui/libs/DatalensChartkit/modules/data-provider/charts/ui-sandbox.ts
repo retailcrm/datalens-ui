@@ -6,6 +6,7 @@ import merge from 'lodash/merge';
 import set from 'lodash/set';
 import type {InterruptHandler, QuickJSWASMModule} from 'quickjs-emscripten';
 import {chartStorage} from 'ui/libs/DatalensChartkit/ChartKit/plugins/chart-storage';
+import {getRouter} from 'ui/navigation';
 
 import type {ChartKitHtmlItem, StringParams} from '../../../../../../shared';
 import {
@@ -32,6 +33,30 @@ import {clearVmProp} from './utils';
 
 export const UI_SANDBOX_TOTAL_TIME_LIMIT = 3000;
 export const UI_SANDBOX_FN_TIME_LIMIT = 100;
+
+const openSandboxUrl = (rawUrl: string, target?: string) => {
+    if (typeof window === 'undefined') {
+        return;
+    }
+
+    const windowTarget = target === '_self' ? '_self' : '_blank';
+    const href = sanitizeUrl(rawUrl);
+    const url = new URL(href, window.location.origin);
+
+    if (url.origin === window.location.origin) {
+        getRouter().open(
+            {
+                pathname: url.pathname,
+                search: url.search,
+                hash: url.hash,
+            },
+            windowTarget,
+        );
+        return;
+    }
+
+    window.open(url.toString(), windowTarget);
+};
 
 let uiSandbox: QuickJSWASMModule | undefined;
 let getInterruptAfterDeadlineHandler: (deadline: Date | number) => InterruptHandler;
@@ -261,8 +286,7 @@ async function getUnwrappedFunction(args: {
                     window: {
                         open: function (url: string, target?: string) {
                             try {
-                                const href = sanitizeUrl(url);
-                                window.open(href, target === '_self' ? '_self' : '_blank');
+                                openSandboxUrl(url, target);
                             } catch (e) {
                                 console.error(e);
                             }
