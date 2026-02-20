@@ -59,6 +59,32 @@ const external = [
 
 const __dist = path.resolve(__dirname, 'dist-lib');
 
+const NON_RUNTIME_PACKAGE_PATTERNS = [
+    /^@gravity-ui\/browserslist-config$/,
+    /^@gravity-ui\/eslint-config$/,
+    /^@gravity-ui\/prettier-config$/,
+    /^@gravity-ui\/stylelint-config$/,
+    /^@gravity-ui\/tsconfig$/,
+    /^@modulify\/pkg$/,
+    /^@playwright\/test$/,
+    /^@statoscope\/.*/,
+    /^@testing-library\/.*/,
+    /^@types\/.*/,
+    /^@vitejs\/.*/,
+    /^conventional-(changelog|changelog-conventionalcommits|recommended-bump)$/,
+    /^eslint($|[-/])/,
+    /^husky$/,
+    /^jest($|[-/])/,
+    /^lint-staged$/,
+    /^prettier($|[-/])/,
+    /^rollup-plugin-.*/,
+    /^stylelint($|[-/])/,
+    /^ts-node$/,
+    /^typescript$/,
+    /^vite($|[-/])/,
+    /^vite-plugin-.*/,
+];
+
 export default defineConfig({
     optimizeDeps: {
         esbuildOptions: {
@@ -173,9 +199,12 @@ export default defineConfig({
             name: 'npm-prerequisites',
             async closeBundle() {
                 const manifest = readManifest(__dirname);
+
                 const prepare = (deps: Record<string, string>) => {
-                    const keys = Object.keys(deps).filter((name) =>
-                        external.some((regex) => regex.test(name)),
+                    const keys = Object.keys(deps).filter(
+                        (name) =>
+                            external.some((regex) => regex.test(name)) &&
+                            !NON_RUNTIME_PACKAGE_PATTERNS.some((regex) => regex.test(name)),
                     );
 
                     return keys.length
