@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.6](https://github.com/datalens-tech/datalens-ui/compare/v0.2.5...v0.2.6) (2026-02-20)
+
+
+### Bug Fixes
+
+* Cleaning generated dependencies from tooling packages ([e6af87c](https://github.com/datalens-tech/datalens-ui/commit/e6af87c751e7db4e04c004121e0e5b21db79dc13))
+* Dashboard edit visibility and internal opens were normalized ([a4f6bee](https://github.com/datalens-tech/datalens-ui/commit/a4f6bee116dc8981336dc2f5a2d6a10c3734129d))
+
 ### [0.2.5](https://github.com/datalens-tech/datalens-ui/compare/v0.2.4...v0.2.5) (2026-02-18)
 
 
