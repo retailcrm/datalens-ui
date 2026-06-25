@@ -10,6 +10,7 @@ describe('chartkit/utils', () => {
         [NaN, undefined, 'NaN'],
         ['0.2211556', undefined, '0.2211556'],
         ['0.2211556', {precision: 4}, '0.2212'],
+        [0.42, {labelMode: 'percent'}, '42%'],
     ])('formatNumber (args: {value: %p, options: %p})', (value, options, expected) => {
         const result = formatNumber(value as number, options);
         expect(result).toEqual(expected);
