@@ -1,4 +1,4 @@
-import type {ChartData} from '@gravity-ui/chartkit/gravity-charts';
+import type {ChartData, ChartYAxis} from '@gravity-ui/chartkit/gravity-charts';
 
 import type {LayerChartMeta} from '../../../preparers/types';
 
@@ -30,10 +30,23 @@ export const extendCombinedChartGraphs = (args: ExtendCombinedChartGraphsArgs) =
             case 'line':
                 {
                     const placeholders = layer.placeholders;
-                    const hasItemsInYPlaceholder = placeholders[1].items.length;
-                    const hasItemsInY2Placeholder = placeholders[2].items.length;
+                    const hasItemsInYPlaceholder = placeholders.some(
+                        (placeholder) => placeholder.id === 'y' && placeholder.items.length,
+                    );
+                    const hasItemsInY2Placeholder = placeholders.some(
+                        (placeholder) => placeholder.id === 'y2' && placeholder.items.length,
+                    );
+                    const hasItemsInYPlaceholderInAnyLayer = layers.some((chartLayer) =>
+                        chartLayer.placeholders.some(
+                            (placeholder) => placeholder.id === 'y' && placeholder.items.length,
+                        ),
+                    );
 
-                    if (!hasItemsInYPlaceholder && hasItemsInY2Placeholder && layers.length > 1) {
+                    if (
+                        !hasItemsInYPlaceholder &&
+                        hasItemsInY2Placeholder &&
+                        hasItemsInYPlaceholderInAnyLayer
+                    ) {
                         graph.yAxis = 1;
                     }
                 }
@@ -52,15 +65,51 @@ export const extendCombinedChartGraphs = (args: ExtendCombinedChartGraphsArgs) =
 
 export function combineLayersIntoSingleChart({layers}: {layers: Partial<ChartData>[]}) {
     if (layers.length > 1) {
+        const axesByKey = new Map<string, ChartYAxis>();
+
+        layers.forEach((layer) => {
+            layer.yAxis?.forEach((axis) => {
+                axesByKey.set(getYAxisKey(axis), axis);
+            });
+        });
+
+        const yAxis = Array.from(axesByKey.values()).sort((axisA, axisB) => {
+            const positionA = axisA.position === 'right' ? 1 : 0;
+            const positionB = axisB.position === 'right' ? 1 : 0;
+
+            return positionA - positionB || (axisA.plotIndex ?? 0) - (axisB.plotIndex ?? 0);
+        });
+        const yAxisIndexByKey = new Map(yAxis.map((axis, index) => [getYAxisKey(axis), index]));
+
         return {
             ...layers[0],
+            ...(yAxis.length ? {yAxis} : {}),
             series: {
                 options: layers.reduce(
                     (acc, layerData) => ({...acc, ...layerData.series?.options}),
                     {} as ChartData['series']['options'],
                 ),
                 data: layers.reduce(
-                    (acc, layerData) => [...acc, ...(layerData.series?.data ?? [])],
+                    (acc, layerData) => {
+                        const series = (layerData.series?.data ?? []).map((seriesItem) => {
+                            const localYAxisIndex =
+                                'yAxis' in seriesItem && typeof seriesItem.yAxis === 'number'
+                                    ? seriesItem.yAxis
+                                    : 0;
+                            const localYAxis = layerData.yAxis?.[localYAxisIndex];
+
+                            if (!localYAxis) {
+                                return seriesItem;
+                            }
+
+                            return {
+                                ...seriesItem,
+                                yAxis: yAxisIndexByKey.get(getYAxisKey(localYAxis)),
+                            };
+                        });
+
+                        return [...acc, ...series];
+                    },
                     [] as ChartData['series']['data'],
                 ),
             },
@@ -68,6 +117,10 @@ export function combineLayersIntoSingleChart({layers}: {layers: Partial<ChartDat
     }
 
     return layers[0];
+}
+
+function getYAxisKey(axis: ChartYAxis) {
+    return `${axis.position ?? 'left'}:${axis.plotIndex ?? 0}`;
 }
 
 const isChartWithoutData = (graph: {data: any[]}) => {
