@@ -4,9 +4,9 @@ import type {AliasClickHandlerArgs} from 'ui/components/DialogRelations/types';
 import type {DatalensGlobalState} from 'ui/index';
 
 import type {DialogRelationsProps} from '../../../../../components/DialogRelations/DialogRelations';
-import {DIALOG_RELATIONS} from '../../../../../components/DialogRelations/DialogRelations';
 import type {DialogAliasesProps} from '../../../../../components/DialogRelations/components/DialogAliases/DialogAliases';
 import {DIALOG_ALIASES} from '../../../../../components/DialogRelations/components/DialogAliases/DialogAliases';
+import {DIALOG_RELATIONS} from '../../../../../components/DialogRelations/constants';
 import {closeDialog, openDialog} from '../../../../../store/actions/dialog';
 import {
     selectCurrentTabAliases,

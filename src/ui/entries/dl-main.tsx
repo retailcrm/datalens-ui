@@ -8,6 +8,7 @@ import {Provider, useSelector} from 'react-redux';
 import {HotkeysProvider} from 'react-hotkeys-hook';
 
 import DialogManager from 'components/DialogManager/DialogManagerContainer';
+import 'components/DialogRelations/DialogRelations';
 import {registerSDKDispatch} from 'libs/schematic-sdk/parse-error';
 import {Utils, DL, APP_ROOT_CLASS} from 'ui';
 

@@ -43,3 +43,5 @@ export const FULL_RELATIONS = [
 export const INPUT_RELATIONS = [RELATION_TYPES.input, RELATION_TYPES.ignore];
 
 export const OUTPUT_RELATIONS = [RELATION_TYPES.output, RELATION_TYPES.ignore];
+
+export const DIALOG_RELATIONS = Symbol('dash/DIALOG_RELATIONS');
