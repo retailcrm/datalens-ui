@@ -125,12 +125,8 @@ export function formatNumber(value: number | string, options: FormatNumberOption
     let changedMultiplier = multiplier;
     let prePostfix = '';
 
-    if (format === 'percent') {
+    if (format === 'percent' || labelMode === 'percent') {
         changedMultiplier = 100;
-        prePostfix = '%';
-    }
-
-    if (labelMode === 'percent') {
         prePostfix = '%';
     }
 
