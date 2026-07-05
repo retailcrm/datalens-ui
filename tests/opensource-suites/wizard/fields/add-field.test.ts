@@ -53,7 +53,18 @@ datalensTest.describe('Wizard', () => {
             await wizardPage.fieldEditor.setName(invalidField);
             await wizardPage.fieldEditor.setFormula('invalid formula');
             // An error icon should be displayed in the formula editor
-            await expect(page.locator('.dl-field-editor__formula-editor-glyph')).toBeVisible();
+            const formulaErrorGlyph = page.locator('.dl-field-editor__formula-editor-glyph');
+            await expect(formulaErrorGlyph).toBeVisible();
+            await formulaErrorGlyph.hover();
+            await expect(
+                page.locator('.monaco-hover:not(.hidden) .hover-contents'),
+            ).not.toBeEmpty();
+            const formulaErrorMarker = page.locator('.monaco-editor .squiggly-error').first();
+            await expect(formulaErrorMarker).toBeVisible();
+            await formulaErrorMarker.hover();
+            await expect(
+                page.locator('.monaco-hover:not(.hidden) .hover-contents'),
+            ).not.toBeEmpty();
             await wizardPage.fieldEditor.clickToApplyButton();
             const invalidFieldLocator = datasetFields.locator(slct(invalidField), {
                 hasText: invalidField,

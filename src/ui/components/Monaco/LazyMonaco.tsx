@@ -3,6 +3,7 @@ import React from 'react';
 import {Loader} from '@gravity-ui/uikit';
 import block from 'bem-cn-lite';
 import {I18n} from 'i18n';
+import 'monaco-editor/esm/vs/editor/contrib/hover/browser/hover';
 import type {MonacoDiffEditorProps, MonacoEditorProps} from 'react-monaco-editor';
 
 import './LazyMonaco.scss';
