@@ -7,6 +7,7 @@
     display: flex;
 
     &__body {
+        overflow: auto;
         padding-top: 0;
         padding-bottom: var(--g-spacing-4);
     }
