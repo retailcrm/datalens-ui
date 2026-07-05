@@ -19,6 +19,7 @@ import {getHistory} from 'ui/navigation';
 import {getOverridedTheme} from 'ui/utils/getOverridedTheme';
 
 import {HOTKEYS_SCOPES} from '../constants/misc';
+import 'components/DialogRelations/DialogRelations';
 
 import '@gravity-ui/uikit/styles/styles.scss';
 // eslint-disable-next-line import/no-extraneous-dependencies
