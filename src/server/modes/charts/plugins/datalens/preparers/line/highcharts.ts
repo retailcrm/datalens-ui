@@ -175,6 +175,7 @@ function getHighchartsConfig(args: PrepareFunctionArgs & {graphs: any[]}) {
                     placeholder: layerYPlaceholder,
                 });
             } else {
+                customConfig.yAxis.opposite = true;
                 addAxisFormatter({
                     axisConfig: customConfig.yAxis,
                     placeholder: layerY2Placeholder,
