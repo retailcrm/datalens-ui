@@ -57,6 +57,7 @@ export function prepareGravityChartArea(args: PrepareFunctionArgs) {
         idToDataType,
         colors,
         segments: split,
+        layerSettings,
     } = args;
     const xPlaceholder = placeholders.find((p) => p.id === PlaceholderId.X);
     const xField: ServerField | undefined = xPlaceholder?.items?.[0];
@@ -125,7 +126,7 @@ export function prepareGravityChartArea(args: PrepareFunctionArgs) {
         return {
             name: seriesName,
             type: 'area',
-            stackId: graph.stack,
+            stackId: [layerSettings?.id, graph.stack].filter(Boolean).join('__') || undefined,
             stacking,
             color: graph.color,
             data: graph.data.reduce((acc: ExtendedLineSeriesData[], item: any, index: number) => {
