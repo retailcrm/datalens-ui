@@ -25,6 +25,7 @@ import {
     isMarkupField,
     isNumberField,
 } from '../../../../../../../shared';
+import {wrapHtml} from '../../../../../../../shared/utils/ui-sandbox';
 import {getBaseChartConfig, getYAxisBaseConfig} from '../../gravity-charts/utils';
 import {getFormattedLabel} from '../../gravity-charts/utils/dataLabels';
 import {getFieldFormatOptions} from '../../gravity-charts/utils/format';
@@ -109,16 +110,23 @@ export function prepareGravityChartArea(args: PrepareFunctionArgs) {
     const shouldUsePercentStacking = visualizationId === WizardVisualizationId.Area100p;
     const seriesData: ExtendedLineSeries[] = preparedData.graphs.map<AreaSeries>((graph: any) => {
         let seriesName = graph.title;
+        let stacking: AreaSeries['stacking'];
 
         if (graph.custom?.segmentTitle) {
             seriesName = `${graph.custom.segmentTitle}: ${seriesName}`;
+        }
+
+        if (shouldUsePercentStacking) {
+            stacking = 'percent';
+        } else if (shared.extraSettings?.stacking !== 'off') {
+            stacking = 'normal';
         }
 
         return {
             name: seriesName,
             type: 'area',
             stackId: graph.stack,
-            stacking: shouldUsePercentStacking ? 'percent' : 'normal',
+            stacking,
             color: graph.color,
             data: graph.data.reduce((acc: ExtendedLineSeriesData[], item: any, index: number) => {
                 const dataItem: ExtendedLineSeriesData = {
