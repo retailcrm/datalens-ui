@@ -5,13 +5,9 @@ services:
     init: true
     environment:
       - PATH=/project/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      - npm_config_cache=/home/node/.npm
+      - npm_config_cache=/tmp/npm-cache
     volumes:
       - ./:/project
-      - npm-cache:/home/node/.npm
     working_dir: /project
     ports:
       - "8080:8080"
-
-volumes:
-  npm-cache:
