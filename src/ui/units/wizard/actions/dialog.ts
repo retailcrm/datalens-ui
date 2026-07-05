@@ -171,7 +171,7 @@ export function openDialogMetric({extraSettings, onApply}: OpenDialogMetricArgum
                         //           };
 
                         const metricSettins = {
-                            metricFontColorIndex: colorIndex,
+                            metricFontColorIndex: color ? undefined : colorIndex,
                             metricFontSize: size,
                             metricFontColorPalette: palette,
                             metricFontColor: color,
