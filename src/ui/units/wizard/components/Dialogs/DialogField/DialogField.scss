@@ -18,6 +18,10 @@
         }
     }
 
+    &__body {
+        overflow-y: auto;
+    }
+
     &__divider {
         margin: 0 auto 16px;
     }
