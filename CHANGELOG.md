@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.7](https://github.com/datalens-tech/datalens-ui/compare/v0.2.6...v0.2.7) (2026-07-07)
+
+
+### Bug Fixes
+
+* Area stacking was separated between combined chart layers ([76714d5](https://github.com/datalens-tech/datalens-ui/commit/76714d5d8331f6ced466f5b72eab3888fd483356))
+* Dash relations dialog registration was restored ([227c43a](https://github.com/datalens-tech/datalens-ui/commit/227c43af7e273b675e1427f9b9f64451b4d37e6c))
+* Disabled stacking was respected in area charts ([4269c7c](https://github.com/datalens-tech/datalens-ui/commit/4269c7c9d7ade9e9bce8da44e79aef68aafa7af4))
+* Field and group control dialog scrolling was fixed ([305fb7c](https://github.com/datalens-tech/datalens-ui/commit/305fb7c64057bb08aa6b0ad996f307faf3dc064d))
+* Formula error hover was restored in field editor ([90654a3](https://github.com/datalens-tech/datalens-ui/commit/90654a316cbf9a3a2f03e42639bdb74fb329cc99))
+* Metric color selection was fixed ([afe7331](https://github.com/datalens-tech/datalens-ui/commit/afe7331f85dc8e1c41a2e12cae93e106236459c8))
+* Percent label formatting was fixed ([fff3b59](https://github.com/datalens-tech/datalens-ui/commit/fff3b59759db01759df69c61787c5db8eae3c92d))
+* QL chart type detection was fixed ([5ac9592](https://github.com/datalens-tech/datalens-ui/commit/5ac959253a58d6c1744517a32ffea6b55acb4bdd))
+* Table widget first-load rendering was fixed ([665bcc4](https://github.com/datalens-tech/datalens-ui/commit/665bcc4d7348d23de83122a403176dcc7b0030a7))
+* Y2 axis binding was fixed in combined charts ([9a6a685](https://github.com/datalens-tech/datalens-ui/commit/9a6a6850bb04b0442a6aca6685f40c203c197d8a))
+
 ### [0.2.6](https://github.com/datalens-tech/datalens-ui/compare/v0.2.5...v0.2.6) (2026-02-20)
 
 
